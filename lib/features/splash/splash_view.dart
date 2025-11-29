@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../../core/constants/app_colors.dart';
+import '../../core/helper/spacing.dart';
 
 class SplashView extends StatelessWidget {
   const SplashView({super.key});
@@ -12,12 +13,10 @@ class SplashView extends StatelessWidget {
       backgroundColor: AppColors.primary,
       body: Column(
         children: [
-          SizedBox(height: MediaQuery.of(context).size.height * 0.4),
+          verticalSpace(MediaQuery.of(context).size.height * 0.35),
           SvgPicture.asset('assets/splash/splash_logo.svg'),
           const Spacer(),
-          const Image(
-            image: AssetImage('assets/splash/splash_image.png'),
-          ),
+          Image.asset('assets/splash/splash_image.png')
         ],
       ),
     );

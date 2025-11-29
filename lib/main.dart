@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'core/routes/app_routes.dart';
 import 'features/splash/splash_view.dart';
 
 void main() {
@@ -12,6 +13,7 @@ class HungryApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return const MaterialApp(
+      onGenerateRoute: AppRoutes.generateRoute,
       debugShowCheckedModeBanner: false,
       home: SplashView(),
     );
