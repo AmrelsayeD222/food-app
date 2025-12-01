@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/auth/views/sign_up_view.dart';
 
 import 'core/routes/app_routes.dart';
-import 'features/auth/views/login_view.dart';
 
 void main() {
   runApp(const HungryApp());
@@ -15,7 +15,7 @@ class HungryApp extends StatelessWidget {
     return const MaterialApp(
       onGenerateRoute: AppRoutes.generateRoute,
       debugShowCheckedModeBanner: false,
-      home: LoginView(),
+      home: SignUpView(),
     );
   }
 }

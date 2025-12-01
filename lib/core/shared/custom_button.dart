@@ -4,9 +4,11 @@ class CustomButton extends StatelessWidget {
   const CustomButton({
     super.key,
     required GlobalKey<FormState> formKey,
+    required this.text,
   }) : _formKey = formKey;
 
   final GlobalKey<FormState> _formKey;
+  final String text;
 
   @override
   Widget build(BuildContext context) {
@@ -20,8 +22,8 @@ class CustomButton extends StatelessWidget {
       onPressed: () {
         if (_formKey.currentState!.validate()) {}
       },
-      child: const Text(
-        'Login',
+      child: Text(
+        text,
       ),
     );
   }
