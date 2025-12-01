@@ -14,7 +14,7 @@ class CustomTextFormField extends StatelessWidget {
   });
   final String hintText;
   final bool? obscureText;
-  final String? Function(String?) validator;
+  final String? Function(String?)? validator;
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final AutovalidateMode? autovalidateMode;
