@@ -6,11 +6,12 @@ class CustomTextFormField extends StatelessWidget {
   const CustomTextFormField({
     super.key,
     required this.hintText,
-    required this.validator,
+    this.validator,
     this.obscureText,
     this.suffixIcon,
     this.controller,
     this.autovalidateMode,
+    this.prefixIcon,
   });
   final String hintText;
   final bool? obscureText;
@@ -18,6 +19,7 @@ class CustomTextFormField extends StatelessWidget {
   final TextEditingController? controller;
   final Widget? suffixIcon;
   final AutovalidateMode? autovalidateMode;
+  final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
@@ -30,15 +32,19 @@ class CustomTextFormField extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
         enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)),
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
         focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white)),
-        errorBorder:
-            const OutlineInputBorder(borderSide: BorderSide(color: Colors.red)),
+            borderSide: BorderSide(color: Colors.white),
+            borderRadius: BorderRadius.all(Radius.circular(16))),
+        errorBorder: const OutlineInputBorder(
+          borderSide: BorderSide(color: Colors.red),
+        ),
         hintText: hintText,
         fillColor: Colors.white,
         filled: true,
         suffixIcon: suffixIcon,
+        prefixIcon: prefixIcon,
       ),
     );
   }
