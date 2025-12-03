@@ -39,6 +39,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
   Widget build(BuildContext context) {
     return Scaffold(
       body: PageView(
+        physics: const NeverScrollableScrollPhysics(),
         controller: _viewController,
         children: views,
       ),
