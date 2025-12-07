@@ -11,4 +11,21 @@ class TextStyles {
     fontWeight: FontWeight.w500,
     color: Color(0xff6A6A6A),
   );
+  static const textStyle14 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+  );
+  static const textStyle18 = TextStyle(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+  );
+  static const textStyle12 = TextStyle(
+    fontSize: 14,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+  static const textStyle32 = TextStyle(
+    fontSize: 32,
+    fontWeight: FontWeight.w400,
+  );
 }

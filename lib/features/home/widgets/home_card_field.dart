@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/home/views/widgets/home_card.dart';
+
+import 'home_card.dart';
 
 class HomeCardBuilder extends StatelessWidget {
   const HomeCardBuilder({

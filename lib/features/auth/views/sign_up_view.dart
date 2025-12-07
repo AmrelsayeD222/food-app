@@ -24,94 +24,89 @@ class _SignUpViewState extends State<SignUpView> {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        FocusScope.of(context).unfocus();
-      },
-      child: Scaffold(
-        backgroundColor: AppColors.primary,
-        body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
-          child: Form(
-            key: _formKey,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  verticalSpace(100),
-                  SvgPicture.asset('assets/splash/splash_logo.svg'),
-                  verticalSpace(10),
-                  const Text(
-                    'Welcome Back,Discover The Fast Food',
-                    style: TextStyles.textStyle13,
-                  ),
-                  verticalSpace(50),
-                  CustomTextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: nameController,
-                      hintText: 'Your Name',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter your name';
-                        }
-                        return null;
-                      }),
-                  verticalSpace(20),
-                  CustomTextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: emailController,
-                      hintText: 'Email Address',
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter your password';
-                        }
-                        return null;
-                      }),
-                  verticalSpace(20),
-                  CustomTextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: passController,
-                      suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isObscure = !isObscure;
-                            });
-                          },
-                          child: isObscure
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility)),
-                      hintText: 'Password',
-                      obscureText: isObscure,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter your password';
-                        }
-                        return null;
-                      }),
-                  verticalSpace(20),
-                  CustomTextFormField(
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      controller: confirmPassController,
-                      suffixIcon: GestureDetector(
-                          onTap: () {
-                            setState(() {
-                              isObscure = !isObscure;
-                            });
-                          },
-                          child: isObscure
-                              ? const Icon(Icons.visibility_off)
-                              : const Icon(Icons.visibility)),
-                      hintText: 'Confirm Password',
-                      obscureText: isObscure,
-                      validator: (value) {
-                        if (value == null || value.isEmpty) {
-                          return 'Enter password confirmation';
-                        }
-                        return null;
-                      }),
-                  verticalSpace(50),
-                  CustomButton(text: 'Sign Up', formKey: _formKey)
-                ],
-              ),
+    return Scaffold(
+      backgroundColor: AppColors.primary,
+      body: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Form(
+          key: _formKey,
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+                verticalSpace(100),
+                SvgPicture.asset('assets/splash/splash_logo.svg'),
+                verticalSpace(10),
+                const Text(
+                  'Welcome Back,Discover The Fast Food',
+                  style: TextStyles.textStyle13,
+                ),
+                verticalSpace(50),
+                CustomTextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: nameController,
+                    hintText: 'Your Name',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter your name';
+                      }
+                      return null;
+                    }),
+                verticalSpace(20),
+                CustomTextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: emailController,
+                    hintText: 'Email Address',
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter your password';
+                      }
+                      return null;
+                    }),
+                verticalSpace(20),
+                CustomTextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: passController,
+                    suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isObscure = !isObscure;
+                          });
+                        },
+                        child: isObscure
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility)),
+                    hintText: 'Password',
+                    obscureText: isObscure,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter your password';
+                      }
+                      return null;
+                    }),
+                verticalSpace(20),
+                CustomTextFormField(
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    controller: confirmPassController,
+                    suffixIcon: GestureDetector(
+                        onTap: () {
+                          setState(() {
+                            isObscure = !isObscure;
+                          });
+                        },
+                        child: isObscure
+                            ? const Icon(Icons.visibility_off)
+                            : const Icon(Icons.visibility)),
+                    hintText: 'Confirm Password',
+                    obscureText: isObscure,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Enter password confirmation';
+                      }
+                      return null;
+                    }),
+                verticalSpace(50),
+                CustomButton(text: 'Sign Up', formKey: _formKey)
+              ],
             ),
           ),
         ),
