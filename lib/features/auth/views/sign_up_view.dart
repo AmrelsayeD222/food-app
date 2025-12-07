@@ -19,7 +19,8 @@ class _SignUpViewState extends State<SignUpView> {
   late TextEditingController passController;
   late TextEditingController confirmPassController;
   late TextEditingController nameController;
-  bool isObscure = true;
+  bool isPasswordObscure = true;
+  bool isConfirmPasswordObscure = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
 
   @override
@@ -87,14 +88,14 @@ class _SignUpViewState extends State<SignUpView> {
                     suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            isObscure = !isObscure;
+                            isPasswordObscure = !isPasswordObscure;
                           });
                         },
-                        child: isObscure
+                        child: isPasswordObscure
                             ? const Icon(Icons.visibility_off)
                             : const Icon(Icons.visibility)),
                     hintText: 'Password',
-                    obscureText: isObscure,
+                    obscureText: isPasswordObscure,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter your password';
@@ -108,14 +109,15 @@ class _SignUpViewState extends State<SignUpView> {
                     suffixIcon: GestureDetector(
                         onTap: () {
                           setState(() {
-                            isObscure = !isObscure;
+                            isConfirmPasswordObscure =
+                                !isConfirmPasswordObscure;
                           });
                         },
-                        child: isObscure
+                        child: isConfirmPasswordObscure
                             ? const Icon(Icons.visibility_off)
                             : const Icon(Icons.visibility)),
                     hintText: 'Confirm Password',
-                    obscureText: isObscure,
+                    obscureText: isConfirmPasswordObscure,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
                         return 'Enter password confirmation';

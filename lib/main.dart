@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/cart/views/cart_view.dart';
 
 import 'core/routes/app_routes.dart';
-import 'features/productDetalis/view/product_detalis_view.dart';
 
 void main() {
   runApp(const HungryApp());
@@ -18,7 +18,7 @@ class HungryApp extends StatelessWidget {
       ),
       onGenerateRoute: AppRoutes.generateRoute,
       debugShowCheckedModeBanner: false,
-      home: const ProductDetalisView(),
+      home: const CartView(),
     );
   }
 }
