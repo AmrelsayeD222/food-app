@@ -15,12 +15,30 @@ class SignUpView extends StatefulWidget {
 }
 
 class _SignUpViewState extends State<SignUpView> {
-  TextEditingController? emailController;
-  TextEditingController? passController;
-  TextEditingController? confirmPassController;
-  TextEditingController? nameController;
+  late TextEditingController emailController;
+  late TextEditingController passController;
+  late TextEditingController confirmPassController;
+  late TextEditingController nameController;
   bool isObscure = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    nameController = TextEditingController();
+    emailController = TextEditingController();
+    passController = TextEditingController();
+    confirmPassController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    emailController.dispose();
+    passController.dispose();
+    confirmPassController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -58,7 +76,7 @@ class _SignUpViewState extends State<SignUpView> {
                     hintText: 'Email Address',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Enter your password';
+                        return 'Enter your Email';
                       }
                       return null;
                     }),

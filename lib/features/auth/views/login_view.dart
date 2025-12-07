@@ -17,10 +17,24 @@ class LoginView extends StatefulWidget {
 }
 
 class _LoginViewState extends State<LoginView> {
-  TextEditingController? emailController;
-  TextEditingController? passwordController;
+  late TextEditingController emailController;
+  late TextEditingController passwordController;
   bool isObscure = true;
   final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+
+  @override
+  void initState() {
+    super.initState();
+    emailController = TextEditingController();
+    passwordController = TextEditingController();
+  }
+
+  @override
+  void dispose() {
+    emailController.dispose();
+    passwordController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,7 +61,7 @@ class _LoginViewState extends State<LoginView> {
                     hintText: 'Email Address',
                     validator: (value) {
                       if (value == null || value.isEmpty) {
-                        return 'Enter your password';
+                        return 'Enter your Email';
                       }
                       return null;
                     }),

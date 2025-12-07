@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../../features/splash/splash_view.dart';
+import '../../features/home/views/home_view.dart';
 
 class AppRoutes {
   static const splash = '/';
@@ -10,6 +11,8 @@ class AppRoutes {
     switch (settings.name) {
       case splash:
         return MaterialPageRoute(builder: (_) => const SplashView());
+      case home:
+        return MaterialPageRoute(builder: (_) => const HomeView());
 
       default:
         return MaterialPageRoute(
