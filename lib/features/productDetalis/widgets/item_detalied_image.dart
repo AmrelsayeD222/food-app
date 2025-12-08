@@ -7,10 +7,10 @@ class ItemDetaliedImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Image(
-      height: MediaQuery.of(context).size.height * 0.32,
-      width: MediaQuery.of(context).size.width * 0.35,
-      image: const AssetImage('assets/splash/burger_detalis.png'),
+    return const Image(
+      height: 280,
+      width: 150,
+      image: AssetImage('assets/splash/burger_detalis.png'),
     );
   }
 }

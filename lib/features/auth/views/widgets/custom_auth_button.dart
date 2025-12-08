@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class CustomButton extends StatelessWidget {
-  const CustomButton({
+class CustomAuthBotton extends StatelessWidget {
+  const CustomAuthBotton({
     super.key,
     required GlobalKey<FormState> formKey,
     required this.text,

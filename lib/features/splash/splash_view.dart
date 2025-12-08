@@ -13,7 +13,7 @@ class SplashView extends StatelessWidget {
       backgroundColor: AppColors.primary,
       body: Column(
         children: [
-          verticalSpace(MediaQuery.of(context).size.height * 0.35),
+          verticalSpace(300),
           SvgPicture.asset('assets/splash/splash_logo.svg'),
           const Spacer(),
           Image.asset('assets/splash/splash_image.png')

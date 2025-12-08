@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/cart/views/cart_view.dart';
+import 'package:foods_app/core/routes/bottom_navi_bar.dart';
 
 import 'core/routes/app_routes.dart';
 
@@ -18,7 +18,7 @@ class HungryApp extends StatelessWidget {
       ),
       onGenerateRoute: AppRoutes.generateRoute,
       debugShowCheckedModeBanner: false,
-      home: const CartView(),
+      home: const BottomNaviBar(),
     );
   }
 }

@@ -16,7 +16,7 @@ class _ListviewSideOptionBuilderState extends State<ListviewSideOptionBuilder> {
   final List<Map> sideOption = const [
     {'name': 'Onion', 'image': 'assets/detalis/Onion.png'},
     {'name': 'Salad', 'image': 'assets/detalis/Salad.png'},
-    {'name': 'Coleslaw', 'image': 'assets/detalis/Coleslaw.png'},
+    {'name': 'Coleslaw', 'image': 'assets/detalis/Coleslow.png'},
     {'name': 'Fries', 'image': 'assets/detalis/Fries.png'},
   ];
   @override

@@ -17,63 +17,64 @@ class ToppingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: MediaQuery.of(context).size.width * 0.25,
-      height: MediaQuery.of(context).size.height * 0.30,
+      width: 110,
+      height: 150,
       decoration: const BoxDecoration(
         color: AppColors.brown,
         borderRadius: BorderRadius.all(
           Radius.circular(22),
         ),
       ),
-      child: SizedBox(
-        width: MediaQuery.of(context).size.width * 0.25,
-        height: MediaQuery.of(context).size.height * 0.30,
-        child: Column(
-          children: [
-            Container(
-              width: MediaQuery.of(context).size.width * 0.25,
-              height: MediaQuery.of(context).size.height * 0.11,
-              decoration: const BoxDecoration(
-                color: AppColors.white,
-                borderRadius: BorderRadius.all(
-                  Radius.circular(22),
-                ),
-              ),
-              child: Image.asset(
+      child: Column(
+        children: [
+          Container(
+            width: 110,
+            height: 100,
+            decoration: BoxDecoration(
+              color: AppColors.white,
+              image: DecorationImage(
+                alignment: Alignment.center,
                 fit: BoxFit.fill,
-                itemImage,
+                image: AssetImage(itemImage),
+              ),
+              borderRadius: const BorderRadius.all(
+                Radius.circular(22),
               ),
             ),
-            SizedBox(
-              width: MediaQuery.of(context).size.width * 0.25,
-              child: Padding(
-                padding: const EdgeInsets.only(left: 4),
-                child: Row(
-                  children: [
-                    Expanded(
-                      child: Text(
-                        itemName,
-                        style: TextStyles.textStyle12,
-                        overflow: TextOverflow.ellipsis,
-                      ),
-                    ),
-                    IconButton(
-                      style: IconButton.styleFrom(
-                        foregroundColor: AppColors.white,
-                        iconSize: 18,
-                        minimumSize: const Size(15, 15),
-                        padding: const EdgeInsets.all(2),
-                        backgroundColor: bottomColor,
-                      ),
-                      onPressed: () {},
-                      icon: const Icon(Icons.add),
-                    )
-                  ],
+          ),
+          Container(
+            decoration: const BoxDecoration(
+              color: AppColors.brown,
+              borderRadius: BorderRadius.only(
+                bottomLeft: Radius.circular(22),
+                bottomRight: Radius.circular(22),
+              ),
+            ),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    itemName,
+                    style: TextStyles.textStyle12,
+                    overflow: TextOverflow.ellipsis,
+                  ),
                 ),
-              ),
+                IconButton(
+                  style: IconButton.styleFrom(
+                    foregroundColor: AppColors.white,
+                    iconSize: 18,
+                    minimumSize: const Size(15, 15),
+                    padding: const EdgeInsets.all(2),
+                    backgroundColor: bottomColor,
+                  ),
+                  onPressed: () {},
+                  icon: const Icon(Icons.add),
+                )
+              ],
             ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }

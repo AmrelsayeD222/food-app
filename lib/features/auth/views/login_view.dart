@@ -4,7 +4,7 @@ import 'package:foods_app/core/helper/spacing.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/text_style.dart';
-import '../../../core/shared/custom_button.dart';
+import 'widgets/custom_auth_button.dart';
 import '../../../core/shared/custom_text_form_field.dart';
 
 class LoginView extends StatefulWidget {
@@ -87,7 +87,7 @@ class _LoginViewState extends State<LoginView> {
                       return null;
                     }),
                 verticalSpace(50),
-                CustomButton(text: 'Login', formKey: _formKey)
+                CustomAuthBotton(text: 'Login', formKey: _formKey)
               ],
             ),
           ),

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/helper/spacing.dart';
-import '../../../../core/shared/category_bottom.dart';
+import 'category_bottom.dart';
 
 class HomeCategoyList extends StatefulWidget {
   const HomeCategoyList({super.key});

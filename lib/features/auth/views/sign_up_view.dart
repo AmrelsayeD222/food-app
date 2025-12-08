@@ -4,7 +4,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
 import '../../../core/helper/text_style.dart';
-import '../../../core/shared/custom_button.dart';
+import 'widgets/custom_auth_button.dart';
 import '../../../core/shared/custom_text_form_field.dart';
 
 class SignUpView extends StatefulWidget {
@@ -125,7 +125,7 @@ class _SignUpViewState extends State<SignUpView> {
                       return null;
                     }),
                 verticalSpace(50),
-                CustomButton(text: 'Sign Up', formKey: _formKey)
+                CustomAuthBotton(text: 'Sign Up', formKey: _formKey)
               ],
             ),
           ),

@@ -3,7 +3,7 @@ import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 
 import '../../../core/helper/text_style.dart';
-import '../widgets/custom_add_bottom.dart';
+import '../../cart/widgets/custom_cart_bottom.dart';
 import '../widgets/custom_slider.dart';
 import '../widgets/explain_text.dart';
 import '../widgets/item_detalied_image.dart';
@@ -27,37 +27,38 @@ class ProductDetalisView extends StatelessWidget {
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  const ItemDetaliedImage(),
-                  SizedBox(
-                    width: MediaQuery.of(context).size.width * 0.5,
-                    child: const Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        ExplainText(),
-                        CustomSlider(),
-                      ],
-                    ),
+          child:
+              Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            const Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                ItemDetaliedImage(),
+                SizedBox(
+                  width: 200,
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      ExplainText(),
+                      CustomSlider(),
+                    ],
                   ),
-                ],
-              ),
-              verticalSpace(10),
-              const Text('Toppings', style: TextStyles.textStyle18),
-              verticalSpace(20),
-              const ListviewToppingBuilder(),
-              verticalSpace(20),
-              const Text('Side Options', style: TextStyles.textStyle18),
-              const ListviewSideOptionBuilder(),
-              verticalSpace(20),
-              const CustomAddBottom(),
-              verticalSpace(20),
-            ],
-          ),
+                ),
+              ],
+            ),
+            verticalSpace(10),
+            const Text('Toppings', style: TextStyles.textStyle18),
+            verticalSpace(20),
+            const ListviewToppingBuilder(),
+            verticalSpace(20),
+            const Text('Side Options', style: TextStyles.textStyle18),
+            const ListviewSideOptionBuilder(),
+            verticalSpace(20),
+            const CustomCartBottom(
+              text: 'Add to cart',
+              price: '\$18.19',
+            ),
+            verticalSpace(20),
+          ]),
         ),
       ),
     );

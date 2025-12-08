@@ -19,7 +19,7 @@ class HomeAppBar extends StatelessWidget {
           children: [
             SvgPicture.asset(
               'assets/splash/splash_logo.svg',
-              width: MediaQuery.of(context).size.width * 0.50,
+              width: 220,
               colorFilter:
                   const ColorFilter.mode(AppColors.primary, BlendMode.srcIn),
               fit: BoxFit.cover,
