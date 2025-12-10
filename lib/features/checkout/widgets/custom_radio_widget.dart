@@ -19,7 +19,7 @@ class CustomRadioWidget extends StatelessWidget {
       value: value,
       groupValue: groupValue,
       onChanged: onChanged,
-      activeColor: AppColors.blue,
+      activeColor: AppColors.red,
     );
   }
 }

@@ -20,7 +20,8 @@ class _CheckBoxState extends State<CheckBox> {
     return Row(
       children: [
         Checkbox(
-          value: true,
+          splashRadius: 0,
+          value: isChecked,
           onChanged: (value) {
             setState(() {
               isChecked = value!;
