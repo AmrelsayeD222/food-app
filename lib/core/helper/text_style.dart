@@ -28,4 +28,8 @@ class TextStyles {
     fontSize: 32,
     fontWeight: FontWeight.w400,
   );
+  static const textStyle20 = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.w600,
+  );
 }

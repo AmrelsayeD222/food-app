@@ -8,9 +8,12 @@ class CustomCartBottom extends StatelessWidget {
     super.key,
     required this.text,
     required this.price,
+    this.onpressed,
   });
   final String text;
   final String price;
+  final Function()? onpressed;
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,8 +26,9 @@ class CustomCartBottom extends StatelessWidget {
             Text(price, style: TextStyles.textStyle32)
           ],
         ),
-        const CustomBottom(
-          text: 'CheckOut',
+        CustomBottom(
+          text: text,
+          onPressed: onpressed,
         )
       ],
     );

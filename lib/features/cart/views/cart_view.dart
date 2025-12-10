@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 
-import '../../../core/constants/app_colors.dart';
-import '../widgets/custom_cart_bottom.dart';
+import '../../../core/shared/custom_bottom_sheet.dart';
+import '../../checkout/views/checkout_view.dart';
 import '../widgets/cart_card_item_builder.dart';
 
 class CartView extends StatelessWidget {
@@ -11,16 +11,13 @@ class CartView extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      bottomSheet: Container(
-        color: AppColors.white,
-        height: 110,
-        child: const Padding(
-          padding: EdgeInsets.all(14.0),
-          child: CustomCartBottom(
-            text: 'CheckOut',
-            price: '\$99.19',
-          ),
-        ),
+      bottomSheet: CustomBottomSheet(
+        onpressed: () {
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const CheckoutView()));
+        },
+        text: 'CheckOut',
+        price: '\$20.00',
       ),
       body: Column(children: [
         verticalSpace(30),

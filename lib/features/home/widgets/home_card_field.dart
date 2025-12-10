@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/productDetalis/view/product_detalis_view.dart';
 
 import 'home_card.dart';
 
@@ -18,7 +19,14 @@ class HomeCardBuilder extends StatelessWidget {
       ),
       delegate: SliverChildBuilderDelegate(
         childCount: 50,
-        (context, index) => const HomeCard(),
+        (context, index) => GestureDetector(
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const ProductDetalisView()));
+            },
+            child: const HomeCard()),
       ),
     );
   }

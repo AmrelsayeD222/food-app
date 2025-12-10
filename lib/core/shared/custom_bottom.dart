@@ -10,18 +10,20 @@ class CustomBottom extends StatelessWidget {
       this.borderRadius,
       this.width,
       this.backgroundColor,
-      this.foregroundColor});
+      this.foregroundColor,
+      this.onPressed});
   final String text;
   final double? height;
   final double? width;
   final double? borderRadius;
   final Color? backgroundColor;
   final Color? foregroundColor;
+  final Function()? onPressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? AppColors.primary,
         foregroundColor: foregroundColor ?? AppColors.white,

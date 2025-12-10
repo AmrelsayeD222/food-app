@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/spacing.dart';
+import 'package:foods_app/core/shared/custom_bottom_sheet.dart';
 
 import '../../../core/helper/text_style.dart';
-import '../../cart/widgets/custom_cart_bottom.dart';
 import '../widgets/custom_slider.dart';
 import '../widgets/explain_text.dart';
 import '../widgets/item_detalied_image.dart';
@@ -23,6 +23,11 @@ class ProductDetalisView extends StatelessWidget {
         backgroundColor: AppColors.white,
         leading:
             IconButton(onPressed: () {}, icon: const Icon(Icons.arrow_back)),
+      ),
+      bottomSheet: CustomBottomSheet(
+        onpressed: () {},
+        text: 'Add to Cart',
+        price: '\$20.00',
       ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
@@ -53,10 +58,6 @@ class ProductDetalisView extends StatelessWidget {
             const Text('Side Options', style: TextStyles.textStyle18),
             const ListviewSideOptionBuilder(),
             verticalSpace(20),
-            const CustomCartBottom(
-              text: 'Add to cart',
-              price: '\$18.19',
-            ),
             verticalSpace(20),
           ]),
         ),
