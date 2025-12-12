@@ -10,7 +10,6 @@ class CustomTextFormField extends StatelessWidget {
     this.obscureText,
     this.suffixIcon,
     this.controller,
-    this.autovalidateMode,
     this.prefixIcon,
   });
   final String hintText;
@@ -18,14 +17,13 @@ class CustomTextFormField extends StatelessWidget {
   final String? Function(String?)? validator;
   final TextEditingController? controller;
   final Widget? suffixIcon;
-  final AutovalidateMode? autovalidateMode;
+
   final Widget? prefixIcon;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
-      autovalidateMode: autovalidateMode ?? AutovalidateMode.disabled,
       cursorHeight: 20,
       controller: controller,
       obscureText: obscureText ?? false,
@@ -34,13 +32,13 @@ class CustomTextFormField extends StatelessWidget {
       decoration: InputDecoration(
         enabledBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.all(Radius.circular(16))),
+            borderRadius: BorderRadius.all(Radius.circular(5))),
         focusedBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.white),
-            borderRadius: BorderRadius.all(Radius.circular(16))),
+            borderRadius: BorderRadius.all(Radius.circular(5))),
         errorBorder: const OutlineInputBorder(
-          borderSide: BorderSide(color: Colors.red),
-        ),
+            borderSide: BorderSide(color: Colors.red),
+            borderRadius: BorderRadius.all(Radius.circular(5))),
         hintText: hintText,
         fillColor: Colors.white,
         filled: true,

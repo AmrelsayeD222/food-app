@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/features/productDetalis/view/product_detalis_view.dart';
+import 'package:foods_app/core/helper/navigation_extentions.dart';
 
+import '../../../core/routes/app_routes.dart';
 import 'home_card.dart';
 
 class HomeCardBuilder extends StatelessWidget {
@@ -21,10 +22,7 @@ class HomeCardBuilder extends StatelessWidget {
         childCount: 50,
         (context, index) => GestureDetector(
             onTap: () {
-              Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                      builder: (context) => const ProductDetalisView()));
+              context.pushNamed(AppRoutes.productDetalisView);
             },
             child: const HomeCard()),
       ),

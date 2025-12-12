@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/shared/custom_bottom.dart';
 
 import '../../../core/helper/spacing.dart';
@@ -35,7 +36,7 @@ class SuccessDialog extends StatelessWidget {
             verticalSpace(20),
             CustomBottom(
               text: 'Go Back',
-              onPressed: () => Navigator.pop(context),
+              onPressed: () => context.pop(),
             )
           ],
         ),

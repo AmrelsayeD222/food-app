@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:foods_app/core/routes/bottom_navi_bar.dart';
 
 import 'core/routes/app_routes.dart';
 
@@ -17,8 +16,8 @@ class HungryApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       onGenerateRoute: AppRoutes.generateRoute,
+      initialRoute: AppRoutes.login,
       debugShowCheckedModeBanner: false,
-      home: const BottomNaviBar(),
     );
   }
 }
