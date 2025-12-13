@@ -1,0 +1,31 @@
+import 'package:flutter/material.dart';
+
+import '../../../core/constants/app_colors.dart';
+import '../../../core/helper/text_style.dart';
+
+class ProfileVisaTile extends StatelessWidget {
+  const ProfileVisaTile({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      minTileHeight: 80,
+      tileColor: AppColors.greyLight,
+      shape: RoundedRectangleBorder(
+        borderRadius: BorderRadius.circular(8),
+      ),
+      leading: Image.asset(
+        'assets/detalis/visa.png',
+        width: 60,
+        fit: BoxFit.fill,
+      ),
+      title: const Text('Debit card', style: TextStyles.textStyle14),
+      subtitle:
+          const Text('3566 **** **** 0505', style: TextStyles.textStyle14),
+      trailing: const Text(
+        'Default',
+        style: TextStyles.textStyle14,
+      ),
+    );
+  }
+}

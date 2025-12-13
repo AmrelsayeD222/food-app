@@ -7,7 +7,7 @@ import '../../../core/helper/spacing.dart';
 import '../../../core/helper/text_style.dart';
 import '../../../core/routes/app_routes.dart';
 
-import 'widgets/custom_auth_button.dart';
+import '../widgets/custom_auth_button.dart';
 import '../../../core/shared/custom_text_form_field.dart';
 
 class SignUpView extends StatefulWidget {

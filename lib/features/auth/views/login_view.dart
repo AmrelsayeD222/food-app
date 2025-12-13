@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foods_app/core/helper/spacing.dart';
-import 'package:foods_app/features/auth/views/widgets/custom_auth_button.dart';
+import 'package:foods_app/features/auth/widgets/custom_auth_button.dart';
 import '../../../core/helper/navigation_extentions.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/text_style.dart';
@@ -123,9 +123,9 @@ class _LoginViewState extends State<LoginView> {
                         onPressed: () {
                           context.pushNamed(AppRoutes.bottomNaviBar);
                         },
-                        child: Text('Continue as a guest',
+                        child: Text('Continue as a guest ?',
                             style: TextStyles.textStyle14.copyWith(
-                              color: AppColors.orange,
+                              color: AppColors.white,
                             )),
                       )
                     ],
