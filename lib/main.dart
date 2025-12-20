@@ -1,18 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import 'core/routes/app_routes.dart';
 
-void main() {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  SystemChrome.setPreferredOrientations([
-    DeviceOrientation.portraitUp,
-  ]);
-  runApp(const HungryApp());
+  SystemChrome.setPreferredOrientations([DeviceOrientation.portraitUp]);
+
+  final prefs = await SharedPreferences.getInstance();
+  final isLoggedIn = prefs.getBool('isLoggedIn') ?? false;
+
+  runApp(HungryApp(isLoggedIn: isLoggedIn));
 }
 
 class HungryApp extends StatelessWidget {
-  const HungryApp({super.key});
+  final bool isLoggedIn;
+  const HungryApp({super.key, required this.isLoggedIn});
 
   @override
   Widget build(BuildContext context) {
@@ -21,7 +25,7 @@ class HungryApp extends StatelessWidget {
         scaffoldBackgroundColor: Colors.white,
       ),
       onGenerateRoute: AppRoutes.generateRoute,
-      initialRoute: AppRoutes.login,
+      initialRoute: isLoggedIn ? AppRoutes.bottomNaviBar : AppRoutes.signUp,
       debugShowCheckedModeBanner: false,
     );
   }

@@ -1,5 +1,4 @@
 import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,15 +12,8 @@ import '../../../core/shared/custom_text_form_field.dart';
 import '../manager/login_cubit/loign_cubit.dart';
 import '../manager/login_cubit/loign_state.dart';
 
-class LoginView extends StatefulWidget {
+class LoginView extends StatelessWidget {
   const LoginView({super.key});
-
-  @override
-  State<LoginView> createState() => _LoginViewState();
-}
-
-class _LoginViewState extends State<LoginView> {
-  bool isObscure = true;
 
   @override
   Widget build(BuildContext context) {
@@ -32,118 +24,145 @@ class _LoginViewState extends State<LoginView> {
         if (state is LoginFailure) {
           log(state.message);
           ScaffoldMessenger.of(context).showSnackBar(
-            SnackBar(content: Text(state.message)),
-          );
-        } else if (state is LoginLoading) {
-          ScaffoldMessenger.of(context).showSnackBar(
-            const SnackBar(content: Text('Loading...')),
+            SnackBar(
+              content: Text(state.message),
+              backgroundColor: Colors.red,
+            ),
           );
         } else if (state is LoginSuccess) {
           context.pushReplacementNamed(AppRoutes.bottomNaviBar);
+          cubit.clearFields();
         }
       },
       builder: (context, state) {
+        final isLoading = state is LoginLoading;
+
         return Scaffold(
           backgroundColor: AppColors.white,
-          body: Form(
-            key: cubit.formKey,
-            child: Column(
-              children: [
-                Column(
-                  children: [
-                    verticalSpace(200),
-                    SvgPicture.asset(
-                      'assets/splash/splash_logo.svg',
-                      colorFilter: const ColorFilter.mode(
-                        AppColors.primary,
-                        BlendMode.srcIn,
-                      ),
+          resizeToAvoidBottomInset: true,
+          body: SafeArea(
+            child: CustomScrollView(
+              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+              slivers: [
+                /// ================= HEADER =================
+                SliverAppBar(
+                  expandedHeight: 350,
+                  backgroundColor: AppColors.white,
+                  automaticallyImplyLeading: false,
+                  flexibleSpace: FlexibleSpaceBar(
+                    background: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        SvgPicture.asset(
+                          'assets/splash/splash_logo.svg',
+                          colorFilter: const ColorFilter.mode(
+                            AppColors.primary,
+                            BlendMode.srcIn,
+                          ),
+                        ),
+                        verticalSpace(10),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 20),
+                          child: Text(
+                            'Welcome Back, Discover The Fast Food',
+                            style: TextStyles.textStyle13.copyWith(
+                              color: AppColors.primary,
+                            ),
+                            textAlign: TextAlign.center,
+                          ),
+                        ),
+                      ],
                     ),
-                    verticalSpace(10),
-                    Text(
-                      'Welcome Back,Discover The Fast Food',
-                      style: TextStyles.textStyle13.copyWith(
-                        color: AppColors.primary,
-                      ),
-                    ),
-                    verticalSpace(110),
-                  ],
+                  ),
                 ),
-                Expanded(
-                  child: Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 16),
-                    decoration: const BoxDecoration(
-                      color: AppColors.primary,
-                      borderRadius: BorderRadius.only(
-                        topLeft: Radius.circular(20),
-                        topRight: Radius.circular(20),
+
+                /// ================= FORM =================
+                SliverFillRemaining(
+                  hasScrollBody: false,
+                  child: Form(
+                    key: cubit.loginFormKey,
+                    child: Container(
+                      width: double.infinity,
+                      padding: const EdgeInsets.all(24),
+                      decoration: const BoxDecoration(
+                        color: AppColors.primary,
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(20),
+                          topRight: Radius.circular(20),
+                        ),
                       ),
-                    ),
-                    child: SingleChildScrollView(
                       child: Column(
+                        mainAxisSize: MainAxisSize.min,
                         children: [
-                          verticalSpace(50),
+                          verticalSpace(10),
                           CustomTextFormField(
-                            controller: cubit.emailController,
+                            controller: cubit.loginEmailController,
                             hintText: 'Email Address',
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter your Email';
-                              }
-                              return null;
-                            },
+                            keyboardType: TextInputType.emailAddress,
+                            enabled: !isLoading,
+                            validator: (value) => value == null || value.isEmpty
+                                ? 'Enter your Email'
+                                : null,
                           ),
                           verticalSpace(20),
                           CustomTextFormField(
-                            controller: cubit.passwordController,
-                            suffixIcon: GestureDetector(
-                              onTap: () {
-                                setState(() {
-                                  isObscure = !isObscure;
-                                });
-                              },
-                              child: Icon(
-                                isObscure
+                            controller: cubit.loginPasswordController,
+                            hintText: 'Password',
+                            obscureText: cubit.loginIsObscure,
+                            enabled: !isLoading,
+                            suffixIcon: IconButton(
+                              onPressed: isLoading
+                                  ? null
+                                  : cubit.togglePasswordVisibility,
+                              icon: Icon(
+                                cubit.loginIsObscure
                                     ? Icons.visibility_off
                                     : Icons.visibility,
                               ),
                             ),
-                            hintText: 'Password',
-                            obscureText: isObscure,
-                            validator: (value) {
-                              if (value == null || value.isEmpty) {
-                                return 'Enter your password';
-                              }
-                              return null;
-                            },
+                            validator: (value) => value == null || value.isEmpty
+                                ? 'Enter your password'
+                                : null,
                           ),
-                          verticalSpace(20),
-
-                          /// Login Button (fixed)
+                          verticalSpace(30),
                           CustomAuthButton(
                             backGroundColor: AppColors.primary,
                             foreGroundColor: AppColors.white,
-                            text:
-                                state is LoginLoading ? 'Loading...' : 'Login',
-                            onpressed: () {
-                              if (state is! LoginLoading) {
-                                cubit.validateAndLogin();
-                              }
-                            },
+                            onpressed:
+                                isLoading ? null : cubit.validateAndLogin,
+                            child: isLoading
+                                ? const CircularProgressIndicator(
+                                    color: AppColors.white,
+                                    strokeWidth: 3,
+                                  )
+                                : const Text(
+                                    'Login',
+                                    style: TextStyle(color: AppColors.white),
+                                  ),
                           ),
                           verticalSpace(10),
                           CustomAuthButton(
                             backGroundColor: AppColors.white,
                             foreGroundColor: AppColors.primary,
-                            text: 'Sign Up',
-                            onpressed: () {},
+                            onpressed: isLoading
+                                ? null
+                                : () {
+                                    context.pushNamed(AppRoutes.signUp);
+                                  },
+                            child: const Text(
+                              'Sign Up',
+                              style: TextStyle(color: AppColors.primary),
+                            ),
                           ),
                           TextButton(
-                            onPressed: () {
-                              context.pushNamed(AppRoutes.bottomNaviBar);
-                            },
+                            onPressed: isLoading
+                                ? null
+                                : () {
+                                    context.pushReplacementNamed(
+                                        AppRoutes.bottomNaviBar);
+                                  },
                             child: Text(
-                              'Continue as a guest ?',
+                              'Continue as a guest?',
                               style: TextStyles.textStyle14.copyWith(
                                 color: AppColors.white,
                               ),

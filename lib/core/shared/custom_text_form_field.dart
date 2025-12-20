@@ -13,6 +13,8 @@ class CustomTextFormField extends StatelessWidget {
     this.prefixIcon,
     this.fillColor,
     this.label,
+    this.enabled,
+    this.keyboardType,
   });
   final String? hintText;
   final bool? obscureText;
@@ -23,10 +25,13 @@ class CustomTextFormField extends StatelessWidget {
   final Widget? prefixIcon;
   final Color? fillColor;
   final String? label;
+  final bool? enabled;
+  final TextInputType? keyboardType;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      keyboardType: keyboardType,
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
       cursorHeight: 20,
       controller: controller,
@@ -50,6 +55,7 @@ class CustomTextFormField extends StatelessWidget {
         filled: true,
         suffixIcon: suffixIcon,
         prefixIcon: prefixIcon,
+        enabled: enabled ?? true,
       ),
     );
   }

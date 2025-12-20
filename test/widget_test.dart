@@ -13,8 +13,11 @@ import 'package:foods_app/main.dart';
 void main() {
   testWidgets('App loads and displays ProductDetalisView',
       (WidgetTester tester) async {
+    // Define the isLoggedIn variable (for example: set it to true for testing)
+    const bool isLoggedIn = true;
+
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const HungryApp());
+    await tester.pumpWidget(const HungryApp(isLoggedIn: isLoggedIn));
 
     // Verify that the app loads successfully
     expect(find.byType(MaterialApp), findsOneWidget);

@@ -1,8 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 
-import '../../features/auth/data/repo/login_repo_impl.dart';
+import '../../features/auth/data/repo/repo_impl.dart';
 import '../../features/auth/manager/login_cubit/loign_cubit.dart';
 import '../../features/auth/views/login_view.dart';
 import '../../features/auth/views/sign_up_view.dart';
@@ -24,8 +25,8 @@ class AppRoutes {
   static final ApiServices apiServices = ApiServices(dio);
   static final SharedPrefsService prefsService = SharedPrefsService();
 
-  static final LoginRepoImpl loginRepo =
-      LoginRepoImpl(apiServices, prefsService);
+  static final RepoImpl loginRepo = RepoImpl(apiServices, prefsService);
+  static final RepoImpl signUpRepo = RepoImpl(apiServices, prefsService);
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -39,7 +40,10 @@ class AppRoutes {
 
       case signUp:
         return MaterialPageRoute(
-          builder: (_) => const SignUpView(),
+          builder: (_) => BlocProvider(
+            create: (_) => SignUpCubit(signUpRepo),
+            child: const SignUpView(),
+          ),
         );
 
       case bottomNaviBar:

@@ -1,16 +1,16 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
-
-import '../../data/repo/login_repo.dart';
+import '../../data/repo/repo.dart';
 import 'loign_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
-  final LoginRepo loginRepo;
+  final Repo loginRepo;
 
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController loginEmailController = TextEditingController();
+  final TextEditingController loginPasswordController = TextEditingController();
+  final GlobalKey<FormState> loginFormKey = GlobalKey<FormState>();
 
-  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
+  bool loginIsObscure = true;
 
   LoginCubit(this.loginRepo) : super(LoginInitial());
 
@@ -18,8 +18,8 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginLoading());
 
     final result = await loginRepo.login(
-      email: emailController.text.trim(),
-      password: passwordController.text.trim(),
+      email: loginEmailController.text.trim(),
+      password: loginPasswordController.text.trim(),
     );
 
     result.fold(
@@ -29,15 +29,28 @@ class LoginCubit extends Cubit<LoginState> {
   }
 
   void validateAndLogin() {
-    if (formKey.currentState?.validate() ?? false) {
+    if (loginFormKey.currentState?.validate() ?? false) {
       login();
     }
   }
 
+  void togglePasswordVisibility() {
+    loginIsObscure = !loginIsObscure;
+    emit(LoginPasswordVisibilityChanged());
+  }
+
+  void clearFields() {
+    loginEmailController.clear();
+    loginPasswordController.clear();
+    loginIsObscure = true;
+    loginFormKey.currentState?.reset();
+    emit(LoginInitial());
+  }
+
   @override
   Future<void> close() {
-    emailController.dispose();
-    passwordController.dispose();
+    loginEmailController.dispose();
+    loginPasswordController.dispose();
     return super.close();
   }
 }

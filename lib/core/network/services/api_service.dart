@@ -8,7 +8,10 @@ class ApiServices {
   Future<Map<String, dynamic>> post(
       {required String endPoint, required dynamic data}) async {
     final response = await _dio.post('$baseUrl$endPoint',
-        data: data, options: Options(headers: {}));
+        data: data,
+        options: Options(headers: {
+          'Accept': 'application/json',
+        }));
     return response.data;
   }
 }

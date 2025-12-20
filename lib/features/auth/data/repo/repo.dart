@@ -2,8 +2,12 @@ import 'package:dartz/dartz.dart';
 
 import '../../../../core/network/errors/failure.dart';
 import '../model/login_model.dart';
+import '../model/sign_up_model.dart';
 
-abstract class LoginRepo {
+abstract class Repo {
   Future<Either<Failure, LoginModel>> login(
       {required String email, required String password});
+
+  Future<Either<Failure, SignUpModel>> signUp(
+      {required String name, required String email, required String password});
 }
