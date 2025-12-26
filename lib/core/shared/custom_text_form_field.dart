@@ -40,12 +40,12 @@ class CustomTextFormField extends StatelessWidget {
       validator: validator,
       decoration: InputDecoration(
         labelText: label,
-        labelStyle: const TextStyle(color: AppColors.white),
+        labelStyle: const TextStyle(color: AppColors.grey),
         enabledBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: Colors.grey),
             borderRadius: BorderRadius.all(Radius.circular(5))),
         focusedBorder: const OutlineInputBorder(
-            borderSide: BorderSide(color: Colors.white),
+            borderSide: BorderSide(color: AppColors.greyLight),
             borderRadius: BorderRadius.all(Radius.circular(5))),
         errorBorder: const OutlineInputBorder(
             borderSide: BorderSide(color: Colors.red),

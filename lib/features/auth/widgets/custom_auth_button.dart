@@ -8,21 +8,24 @@ class CustomAuthButton extends StatelessWidget {
       required this.child,
       required this.onpressed,
       this.backGroundColor,
+      this.width,
+      this.height,
       this.foreGroundColor});
   final Widget child;
   final VoidCallback? onpressed;
   final Color? backGroundColor;
   final Color? foreGroundColor;
+  final double? width;
+  final double? height;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-          side: const BorderSide(color: AppColors.white),
           backgroundColor: backGroundColor ?? AppColors.white,
           foregroundColor: foreGroundColor ?? AppColors.primary,
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(3)),
-          minimumSize: const Size(double.infinity, 50),
+          minimumSize: Size(width ?? 0, height ?? 50),
         ),
         onPressed: onpressed,
         child: child);

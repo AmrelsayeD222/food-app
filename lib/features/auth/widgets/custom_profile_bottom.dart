@@ -24,7 +24,7 @@ class CustomProfileBottom extends StatelessWidget {
         padding: const EdgeInsets.all(5),
         backgroundColor: backColor,
         foregroundColor: foreColor,
-        minimumSize: const Size(200, 70),
+        minimumSize: const Size(190, 60),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(12),
           side: const BorderSide(color: AppColors.primary, width: 2),

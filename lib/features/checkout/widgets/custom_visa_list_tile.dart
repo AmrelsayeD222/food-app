@@ -7,12 +7,7 @@ import 'custom_radio_widget.dart';
 class CustomVisaListTile extends StatelessWidget {
   const CustomVisaListTile({
     super.key,
-    required this.groupValue,
-    required this.onChanged,
   });
-
-  final String groupValue;
-  final Function(String?) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +25,8 @@ class CustomVisaListTile extends StatelessWidget {
       title: const Text('Debit card', style: TextStyles.textStyle14),
       subtitle:
           const Text('3566 **** **** 0505', style: TextStyles.textStyle14),
-      trailing: CustomRadioWidget(
+      trailing: const CustomRadioWidget(
         value: 'visa',
-        groupValue: groupValue,
-        onChanged: onChanged,
       ),
     );
   }

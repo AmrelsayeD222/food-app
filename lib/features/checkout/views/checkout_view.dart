@@ -61,14 +61,16 @@ class CheckoutView extends StatelessWidget {
                 verticalSpace(30),
                 const Text('Payment methods', style: TextStyles.textStyle20),
                 verticalSpace(20),
-                CustomCashListTile(
+                RadioGroup<String>(
                   groupValue: selectedPayment,
                   onChanged: (v) => selectedPaymentNotifier.value = v!,
-                ),
-                verticalSpace(20),
-                CustomVisaListTile(
-                  groupValue: selectedPayment,
-                  onChanged: (v) => selectedPaymentNotifier.value = v!,
+                  child: Column(
+                    children: [
+                      const CustomCashListTile(),
+                      verticalSpace(20),
+                      const CustomVisaListTile(),
+                    ],
+                  ),
                 ),
                 verticalSpace(20),
                 const CheckBox(),

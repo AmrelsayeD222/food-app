@@ -7,12 +7,7 @@ import 'custom_radio_widget.dart';
 class CustomCashListTile extends StatelessWidget {
   const CustomCashListTile({
     super.key,
-    required this.groupValue,
-    required this.onChanged,
   });
-
-  final String groupValue;
-  final Function(String?) onChanged;
 
   @override
   Widget build(BuildContext context) {
@@ -30,10 +25,8 @@ class CustomCashListTile extends StatelessWidget {
         'Cash on Delivery',
         style: TextStyles.textStyle16.copyWith(color: AppColors.white),
       ),
-      trailing: CustomRadioWidget(
+      trailing: const CustomRadioWidget(
         value: 'cash',
-        groupValue: groupValue,
-        onChanged: onChanged,
       ),
     );
   }

@@ -1,8 +1,11 @@
+import 'dart:developer';
+
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import 'package:foods_app/core/network/errors/failure.dart';
 import 'package:foods_app/core/network/services/api_service.dart';
+import 'package:foods_app/features/auth/data/model/get_profile_mode.dart';
 
 import 'package:foods_app/features/auth/data/model/login_model.dart';
 import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
@@ -80,6 +83,30 @@ class RepoImpl implements Repo {
         return Left(
           ServerFailure(e.toString()),
         );
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, GetProfileDataModel>> getProfileData({
+    required String token,
+  }) async {
+    try {
+      final response = await apiServices.get(
+        endPoint: 'profile',
+        token: token,
+      );
+
+      log('PROFILE RESPONSE => $response');
+
+      final model = GetProfileDataModel.fromJson(response);
+
+      return Right(model);
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      } else {
+        return Left(ServerFailure(e.toString()));
       }
     }
   }

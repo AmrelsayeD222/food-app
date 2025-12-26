@@ -22,19 +22,19 @@ class CustomProfiledata extends StatelessWidget {
       children: [
         verticalSpace(40),
         CustomTextFormField(
-          fillColor: AppColors.primary,
+          fillColor: AppColors.white,
           controller: profileNameController,
           label: 'Name',
         ),
         verticalSpace(20),
         CustomTextFormField(
-          fillColor: AppColors.primary,
+          fillColor: AppColors.white,
           controller: profileEmailController,
           label: 'Email',
         ),
         verticalSpace(20),
         CustomTextFormField(
-          fillColor: AppColors.primary,
+          fillColor: AppColors.white,
           controller: profileAddressController,
           label: 'Address',
         ),

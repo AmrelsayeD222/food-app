@@ -1,8 +1,11 @@
 import 'package:flutter/material.dart';
 
 class CustomProfileImage extends StatelessWidget {
+  final String? imageUrl;
+
   const CustomProfileImage({
     super.key,
+    this.imageUrl,
   });
 
   @override
@@ -12,14 +15,11 @@ class CustomProfileImage extends StatelessWidget {
       width: 150,
       decoration: BoxDecoration(
         borderRadius: const BorderRadius.all(Radius.circular(10)),
-        border: Border.all(
-          color: Colors.white,
-          width: 5,
-        ),
-        image: const DecorationImage(
-          image: AssetImage(
-            'assets/detalis/sonic_profile.png',
-          ),
+        image: DecorationImage(
+          image: imageUrl != null && imageUrl!.isNotEmpty
+              ? NetworkImage(imageUrl!)
+              : const AssetImage('assets/detalis/sonic_profile.png')
+                  as ImageProvider,
           fit: BoxFit.fill,
         ),
       ),
