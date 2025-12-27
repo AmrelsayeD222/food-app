@@ -10,16 +10,18 @@ class CustomProfileBottom extends StatelessWidget {
     required this.backColor,
     required this.foreColor,
     required this.icon,
+    this.onpressed,
   });
   final String text;
   final Color backColor;
   final Color foreColor;
   final IconData icon;
+  final void Function()? onpressed;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: () {},
+      onPressed: onpressed,
       style: ElevatedButton.styleFrom(
         padding: const EdgeInsets.all(5),
         backgroundColor: backColor,

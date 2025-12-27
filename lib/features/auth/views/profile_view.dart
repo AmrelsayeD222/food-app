@@ -4,6 +4,7 @@ import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
 import 'package:foods_app/features/auth/data/repo/repo_impl.dart';
+import 'package:foods_app/features/auth/manager/Update_profile/update_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/profile_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_profile_bottom.dart';
 import 'package:foods_app/features/auth/widgets/custom_profile_data.dart';
@@ -15,27 +16,28 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (_) {
-        final cubit = GetProfileDataCubit(
-          RepoImpl(AppRoutes.apiServices, AppRoutes.prefsService),
-        );
+    final repo = RepoImpl(AppRoutes.apiServices, AppRoutes.prefsService);
 
-        // load profile after cubit is created
-        AppRoutes.prefsService.getToken().then((token) {
-          if (token != null && token.isNotEmpty) {
-            if (!cubit.isClosed) {
-              cubit.getProfileData(token: token);
-            }
-          } else {
-            debugPrint('❌ TOKEN IS NULL');
-          }
-        });
-
-        return cubit;
-      },
+    return MultiBlocProvider(
+      providers: [
+        BlocProvider<GetProfileDataCubit>(
+          create: (_) {
+            final cubit = GetProfileDataCubit(repo);
+            AppRoutes.prefsService.getToken().then((token) {
+              if (token != null && token.isNotEmpty && !cubit.isClosed) {
+                cubit.getProfileData(token: token);
+              }
+            });
+            return cubit;
+          },
+        ),
+        BlocProvider<UpdateProfileDataCubit>(
+          create: (_) => UpdateProfileDataCubit(repo),
+        ),
+      ],
       child: Builder(builder: (context) {
-        final cubit = context.read<GetProfileDataCubit>();
+        final getCubit = context.read<GetProfileDataCubit>();
+        final updateCubit = context.read<UpdateProfileDataCubit>();
 
         return Scaffold(
           backgroundColor: AppColors.white,
@@ -50,51 +52,99 @@ class ProfileView extends StatelessWidget {
           bottomSheet: Container(
             height: 100,
             color: AppColors.white,
-            child: const Row(
+            child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                CustomProfileBottom(
-                  text: 'Edit Profile',
-                  backColor: AppColors.primary,
-                  foreColor: AppColors.white,
-                  icon: Icons.edit,
+                BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
+                  builder: (context, state) {
+                    return CustomProfileBottom(
+                      text: 'Edit Profile',
+                      backColor: AppColors.primary,
+                      foreColor: AppColors.white,
+                      icon: Icons.edit,
+                      onpressed: () async {
+                        final token = await AppRoutes.prefsService.getToken();
+                        if (token != null && token.isNotEmpty) {
+                          updateCubit.updateProfile(token: token);
+                        }
+                      },
+                    );
+                  },
                 ),
-                CustomProfileBottom(
+                const CustomProfileBottom(
                   text: 'Log out',
                   backColor: AppColors.white,
                   foreColor: AppColors.primary,
                   icon: Icons.logout,
-                )
+                ),
               ],
             ),
           ),
-          body: BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
-            builder: (context, state) {
-              if (state is GetProfileDataLoading) {
-                return const Center(child: CircularProgressIndicator());
-              } else if (state is GetProfileDataFailure) {
-                return Center(child: Text(state.failure.errMessage));
-              } else if (state is GetProfileDataSuccess) {
-                final data = state.data.data;
-                return Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    children: [
-                      CustomProfileImage(imageUrl: data?.image),
-                      CustomProfiledata(
-                        profileNameController: cubit.profileNameController,
-                        profileEmailController: cubit.profileEmailController,
-                        profileAddressController:
-                            cubit.profileAddressController,
-                      ),
-                      ProfileVisaTile(visa: data?.visa),
-                    ],
+          body: BlocListener<UpdateProfileDataCubit, UpdateProfileDataState>(
+            listener: (context, state) {
+              if (state is UpdateProfileDataSuccess) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  const SnackBar(
+                    content: Text('Profile updated successfully!'),
+                    backgroundColor: Colors.green,
                   ),
                 );
-              } else {
-                return const SizedBox();
+                // بعد التحديث، أعد جلب البيانات
+                AppRoutes.prefsService.getToken().then((token) {
+                  if (token != null && token.isNotEmpty) {
+                    getCubit.getProfileData(token: token);
+                  }
+                });
+              } else if (state is UpdateProfileDataFailure) {
+                ScaffoldMessenger.of(context).showSnackBar(
+                  SnackBar(
+                    content: Text(state.failure.errMessage),
+                    backgroundColor: Colors.red,
+                  ),
+                );
               }
             },
+            child: BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
+              builder: (context, state) {
+                if (state is GetProfileDataLoading) {
+                  return const Center(child: CircularProgressIndicator());
+                } else if (state is GetProfileDataFailure) {
+                  return Center(child: Text(state.failure.errMessage));
+                } else if (state is GetProfileDataSuccess) {
+                  final data = state.data.data;
+                  // تعبئة الـ controllers فقط إذا كانت فارغة
+                  if (getCubit.profileNameController.text.isEmpty) {
+                    getCubit.profileNameController.text = data?.name ?? '';
+                  }
+                  if (getCubit.profileEmailController.text.isEmpty) {
+                    getCubit.profileEmailController.text = data?.email ?? '';
+                  }
+                  if (getCubit.profileAddressController.text.isEmpty) {
+                    getCubit.profileAddressController.text =
+                        data?.address ?? '';
+                  }
+
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      children: [
+                        CustomProfileImage(imageUrl: data?.image),
+                        CustomProfiledata(
+                          profileNameController: getCubit.profileNameController,
+                          profileEmailController:
+                              getCubit.profileEmailController,
+                          profileAddressController:
+                              getCubit.profileAddressController,
+                        ),
+                        ProfileVisaTile(visa: data?.visa),
+                      ],
+                    ),
+                  );
+                } else {
+                  return const SizedBox();
+                }
+              },
+            ),
           ),
         );
       }),

@@ -3,7 +3,7 @@ import 'dart:developer';
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/network/errors/failure.dart';
-import 'package:foods_app/features/auth/data/model/get_profile_mode.dart';
+import 'package:foods_app/features/auth/data/model/get_profile_model.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
 
 part 'get_profile_data_state.dart';
