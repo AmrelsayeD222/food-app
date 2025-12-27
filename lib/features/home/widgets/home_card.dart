@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:foods_app/features/home/data/model/home_product_model.dart';
 
-import '../../../../core/constants/app_colors.dart';
 import '../../../../core/helper/text_style.dart';
 
 class HomeCard extends StatelessWidget {
+  final Product product;
   const HomeCard({
     super.key,
+    required this.product,
   });
 
   @override
@@ -16,28 +19,39 @@ class HomeCard extends StatelessWidget {
         color: AppColors.white,
         elevation: 4,
         child: Padding(
-          padding: const EdgeInsets.all(8.0),
+          padding: const EdgeInsets.all(8),
           child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const Expanded(
-                child: Image(
-                  image: AssetImage('assets/splash/burger1.png'),
-                  fit: BoxFit.cover,
+              Expanded(
+                child: Image.network(
+                  product.image,
+                  fit: BoxFit.fill,
+                  errorBuilder: (_, __, ___) =>
+                      const Icon(Icons.image_not_supported),
                 ),
               ),
+              const SizedBox(height: 5),
               Text(
-                'Cheeseburger',
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                product.name,
                 style: TextStyles.textStyle16.copyWith(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.black,
                 ),
               ),
               Text(
-                "Wendy's Burger",
-                style: TextStyles.textStyle16.copyWith(),
+                maxLines: 2,
+                overflow: TextOverflow.ellipsis,
+                product.description,
+                style: const TextStyle(
+                  height: 1.1,
+                ),
               ),
-              const Text("⭐ 4.9"),
+              const SizedBox(height: 5),
+              Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text("  ⭐     ${product.ratingAsDouble}")),
             ],
           ),
         ),
