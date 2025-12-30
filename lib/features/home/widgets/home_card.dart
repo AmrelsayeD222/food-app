@@ -51,7 +51,7 @@ class HomeCard extends StatelessWidget {
               const SizedBox(height: 5),
               Align(
                   alignment: Alignment.centerLeft,
-                  child: Text("  ⭐     ${product.ratingAsDouble}")),
+                  child: Text("⭐ ${product.ratingAsDouble}")),
             ],
           ),
         ),

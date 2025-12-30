@@ -11,14 +11,33 @@ import '../widgets/home_card_field.dart';
 import '../widgets/home_categoy_list.dart';
 import '../widgets/search_field.dart';
 
-class HomeView extends StatelessWidget {
+class HomeView extends StatefulWidget {
   const HomeView({super.key});
 
   @override
+  State<HomeView> createState() => _HomeViewState();
+}
+
+class _HomeViewState extends State<HomeView> {
+  late final HomeProductCubit _cubit;
+
+  @override
+  void initState() {
+    super.initState();
+    _cubit = HomeProductCubit(HomeRepoImpl(ApiServices(Dio())));
+    _cubit.fetchProduct();
+  }
+
+  @override
+  void dispose() {
+    _cubit.close();
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
-    return BlocProvider(
-      create: (context) =>
-          HomeProductCubit(HomeRepoImpl(ApiServices(Dio())))..fetchProduct(),
+    return BlocProvider.value(
+      value: _cubit,
       child: Scaffold(
         body: Padding(
           padding: const EdgeInsets.all(16.0),

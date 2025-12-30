@@ -5,8 +5,13 @@ import '../../../core/helper/spacing.dart';
 import '../../../core/helper/text_style.dart';
 
 class CustomSlider extends StatefulWidget {
+  final double initialValue;
+  final ValueChanged<double> onChanged;
+
   const CustomSlider({
     super.key,
+    required this.initialValue,
+    required this.onChanged,
   });
 
   @override
@@ -14,32 +19,33 @@ class CustomSlider extends StatefulWidget {
 }
 
 class _CustomSliderState extends State<CustomSlider> {
-  double initvalue = .5;
+  late double value;
+
+  @override
+  void initState() {
+    super.initState();
+    value = widget.initialValue;
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         verticalSpace(10),
-        Text(
-          'Spicy',
-          style: TextStyles.textStyle14.copyWith(
-            fontWeight: FontWeight.w700,
-          ),
-        ),
         Slider(
-          padding: const EdgeInsets.all(0),
-          value: initvalue,
+          padding: EdgeInsets.zero,
+          value: value,
           min: 0,
           max: 1,
+          divisions: 10,
           activeColor: AppColors.primary,
           inactiveColor: AppColors.greyLight,
           thumbColor: AppColors.primary,
-          onChanged: (value) {
-            setState(
-              () {
-                initvalue = value;
-              },
-            );
+          onChanged: (newValue) {
+            setState(() {
+              value = newValue;
+            });
+            widget.onChanged(newValue);
           },
         ),
         const Row(
@@ -48,7 +54,13 @@ class _CustomSliderState extends State<CustomSlider> {
             Text('🥶', style: TextStyle(fontSize: 16)),
             Text('🌶️', style: TextStyle(fontSize: 16)),
           ],
-        )
+        ),
+        Text(
+          'Spicy',
+          style: TextStyles.textStyle14.copyWith(
+            fontWeight: FontWeight.w700,
+          ),
+        ),
       ],
     );
   }

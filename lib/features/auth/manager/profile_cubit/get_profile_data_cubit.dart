@@ -16,10 +16,14 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
       TextEditingController();
 
   GetProfileDataCubit(this.getProfileDataRepo) : super(GetProfileDataInitial());
+
   Future<void> getProfileData({required String token}) async {
+    if (isClosed) return; // حماية قبل البداية
     emit(GetProfileDataLoading());
 
     final result = await getProfileDataRepo.getProfileData(token: token);
+
+    if (isClosed) return; // حماية بعد العودة من async
 
     result.fold(
       (failure) {

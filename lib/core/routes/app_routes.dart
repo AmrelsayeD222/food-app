@@ -2,6 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
+import 'package:foods_app/features/cart/views/cart_view.dart';
+import 'package:foods_app/features/home/data/model/home_product_model.dart';
+import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
+import 'package:foods_app/features/productDetalis/data/repo/product_detalis_repoimpl.dart';
 
 import '../../features/auth/data/repo/repo_impl.dart';
 import '../../features/auth/manager/login_cubit/loign_cubit.dart';
@@ -21,12 +25,16 @@ class AppRoutes {
   static const productDetalisView = '/productDetalisView';
   static const checkoutView = '/checkoutView';
   static const successDialog = '/successDialog';
+  static const cartView = '/CartView';
+
   static final Dio dio = Dio();
   static final ApiServices apiServices = ApiServices(dio);
   static final SharedPrefsService prefsService = SharedPrefsService();
 
   static final RepoImpl loginRepo = RepoImpl(apiServices, prefsService);
   static final RepoImpl signUpRepo = RepoImpl(apiServices, prefsService);
+  static final ProductDetalisRepoimpl productDetalisRepo =
+      ProductDetalisRepoimpl(apiServices);
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -51,9 +59,22 @@ class AppRoutes {
           builder: (_) => const BottomNaviBar(),
         );
 
-      case productDetalisView:
+      case AppRoutes.productDetalisView:
+        final product = settings.arguments;
+
+        if (product == null || product is! Product) {
+          return MaterialPageRoute(
+            builder: (_) => const Scaffold(
+              body: Center(child: Text('Product not found')),
+            ),
+          );
+        }
+
         return MaterialPageRoute(
-          builder: (_) => const ProductDetalisView(),
+          builder: (_) => BlocProvider(
+            create: (_) => OrderRequestCubit(productDetalisRepo),
+            child: ProductDetalisView(product: product),
+          ),
         );
 
       case checkoutView:
@@ -64,6 +85,11 @@ class AppRoutes {
       case successDialog:
         return MaterialPageRoute(
           builder: (_) => const SuccessDialog(),
+        );
+
+      case cartView:
+        return MaterialPageRoute(
+          builder: (_) => const CartView(),
         );
 
       default:

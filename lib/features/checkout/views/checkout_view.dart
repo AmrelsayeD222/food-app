@@ -33,10 +33,11 @@ class CheckoutView extends StatelessWidget {
             ),
           ),
           bottomSheet: CustomBottomSheet(
+            sheetText: 'Total',
             onpressed: () {
               context.pushNamed(AppRoutes.successDialog);
             },
-            text: 'Pay now',
+            bottomText: 'Pay now',
             price: '\$20.00',
           ),
           body: Padding(

@@ -6,13 +6,15 @@ import '../../../core/shared/custom_bottom.dart';
 class CustomBottomSheet extends StatelessWidget {
   const CustomBottomSheet({
     super.key,
-    required this.text,
+    required this.bottomText,
     required this.price,
     this.onpressed,
+    required this.sheetText,
   });
-  final String text;
+  final String bottomText;
   final String price;
   final Function()? onpressed;
+  final String sheetText;
 
   @override
   Widget build(BuildContext context) {
@@ -29,12 +31,12 @@ class CustomBottomSheet extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              const Text('Total', style: TextStyles.textStyle18),
+              Text(sheetText, style: TextStyles.textStyle18),
               Text(price, style: TextStyles.textStyle32)
             ],
           ),
           CustomBottom(
-            text: text,
+            text: bottomText,
             onPressed: onpressed,
           )
         ],

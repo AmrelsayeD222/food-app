@@ -16,7 +16,8 @@ class CartView extends StatelessWidget {
         onpressed: () {
           context.pushNamed(AppRoutes.checkoutView);
         },
-        text: 'CheckOut',
+        bottomText: 'CheckOut',
+        sheetText: 'Total',
         price: '\$20.00',
       ),
       body: Column(children: [

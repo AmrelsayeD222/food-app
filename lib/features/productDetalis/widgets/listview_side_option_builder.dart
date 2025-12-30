@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
 import 'topping_item.dart';
 
 class ListviewSideOptionBuilder extends StatefulWidget {
-  const ListviewSideOptionBuilder({super.key});
+  final ValueChanged<List<int>>? onSelectionChanged;
+
+  const ListviewSideOptionBuilder({
+    super.key,
+    this.onSelectionChanged,
+  });
 
   @override
   State<ListviewSideOptionBuilder> createState() =>
@@ -13,25 +17,46 @@ class ListviewSideOptionBuilder extends StatefulWidget {
 }
 
 class _ListviewSideOptionBuilderState extends State<ListviewSideOptionBuilder> {
-  final List<Map> sideOption = const [
-    {'name': 'Onion', 'image': 'assets/detalis/Onion.png'},
-    {'name': 'Salad', 'image': 'assets/detalis/Salad.png'},
-    {'name': 'Coleslaw', 'image': 'assets/detalis/Coleslow.png'},
-    {'name': 'Fries', 'image': 'assets/detalis/Fries.png'},
+  final List<Map<String, dynamic>> sideOptionList = const [
+    {'id': 1, 'name': 'Onion', 'image': 'assets/detalis/Onion.png'},
+    {'id': 2, 'name': 'Salad', 'image': 'assets/detalis/Salad.png'},
+    {'id': 3, 'name': 'Coleslaw', 'image': 'assets/detalis/Coleslow.png'},
+    {'id': 4, 'name': 'Fries', 'image': 'assets/detalis/Fries.png'},
   ];
+
+  final Set<int> selectedIds = {};
+
+  void _toggleSelection(int id) {
+    setState(() {
+      if (selectedIds.contains(id)) {
+        selectedIds.remove(id);
+      } else {
+        selectedIds.add(id);
+      }
+    });
+    widget.onSelectionChanged?.call(selectedIds.toList());
+  }
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       height: 150,
       child: ListView.separated(
-        separatorBuilder: (context, index) => horizontalSpace(10),
         scrollDirection: Axis.horizontal,
-        itemBuilder: (context, index) => ToppingItem(
-          itemName: sideOption[index]['name'],
-          itemImage: sideOption[index]['image'],
-          bottomColor: AppColors.green,
-        ),
-        itemCount: sideOption.length,
+        separatorBuilder: (_, __) => horizontalSpace(10),
+        itemCount: sideOptionList.length,
+        itemBuilder: (context, index) {
+          final option = sideOptionList[index];
+          final isSelected = selectedIds.contains(option['id'] as int);
+          return GestureDetector(
+            onTap: () => _toggleSelection(option['id'] as int),
+            child: ToppingItem(
+              itemName: option['name'] as String,
+              itemImage: option['image'] as String,
+              color: isSelected ? AppColors.primary : AppColors.brown,
+            ),
+          );
+        },
       ),
     );
   }

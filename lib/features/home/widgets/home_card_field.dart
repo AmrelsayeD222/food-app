@@ -13,17 +13,21 @@ class HomeCardBuilder extends StatelessWidget {
     return BlocBuilder<HomeProductCubit, HomeProductState>(
       builder: (context, state) {
         if (state is HomeProductLoading) {
-          return const SliverToBoxAdapter(
-            child: Center(child: CircularProgressIndicator()),
+          return const SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: CircularProgressIndicator(),
+            ),
           );
         }
-
         if (state is HomeProductError) {
-          return SliverToBoxAdapter(
-            child: Center(child: Text(state.message)),
+          return SliverFillRemaining(
+            hasScrollBody: false,
+            child: Center(
+              child: Text(state.message),
+            ),
           );
         }
-
         if (state is HomeProductLoaded) {
           return SliverGrid(
             gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

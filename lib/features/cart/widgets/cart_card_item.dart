@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 import '../../../core/constants/app_colors.dart';
-import 'item_count.dart';
 import 'item_disciption.dart';
 
 class CartCardItem extends StatelessWidget {
@@ -18,7 +17,7 @@ class CartCardItem extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.spaceEvenly,
         children: [
           ItemDisciption(),
-          ItemCount(),
+          // ItemCount(),
         ],
       ),
     );
