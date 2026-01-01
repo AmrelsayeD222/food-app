@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
-import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/spacing.dart';
-import 'package:foods_app/core/routes/app_routes.dart';
+import 'package:foods_app/core/routes/bottom_navi_bar.dart';
 import 'package:foods_app/core/shared/custom_bottom_sheet.dart';
 import 'package:foods_app/features/home/data/model/home_product_model.dart';
 import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
@@ -47,7 +46,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
         if (!mounted) return;
 
         if (state is OrderRequestLoading) {
-          // عرض Loading Dialog
           showDialog(
             context: context,
             barrierDismissible: false,
@@ -58,7 +56,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
         }
 
         if (state is OrderRequestSuccess || state is OrderRequestFailure) {
-          // إغلاق الـ Loading Dialog لو مفتوح
           if (Navigator.canPop(context)) Navigator.pop(context);
         }
 
@@ -66,8 +63,12 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.successMessage)),
           );
-          // الانتقال للصفحة التالية بعد النجاح
-          context.pushNamed(AppRoutes.checkoutView);
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (_) => const BottomNaviBar(initialIndex: 1),
+            ),
+          );
         }
 
         if (state is OrderRequestFailure) {

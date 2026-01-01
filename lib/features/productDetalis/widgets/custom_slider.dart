@@ -27,38 +27,100 @@ class _CustomSliderState extends State<CustomSlider> {
     value = widget.initialValue;
   }
 
+  String _getSpicyLabel() {
+    if (value == 0) return 'Not Spicy';
+    if (value <= 0.3) return 'Mild';
+    if (value <= 0.6) return 'Medium';
+    if (value <= 0.8) return 'Hot';
+    return 'Extra Hot';
+  }
+
   @override
   Widget build(BuildContext context) {
     return Column(
       children: [
         verticalSpace(10),
-        Slider(
-          padding: EdgeInsets.zero,
-          value: value,
-          min: 0,
-          max: 1,
-          divisions: 10,
-          activeColor: AppColors.primary,
-          inactiveColor: AppColors.greyLight,
-          thumbColor: AppColors.primary,
-          onChanged: (newValue) {
-            setState(() {
-              value = newValue;
-            });
-            widget.onChanged(newValue);
-          },
-        ),
-        const Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Text('🥶', style: TextStyle(fontSize: 16)),
-            Text('🌶️', style: TextStyle(fontSize: 16)),
-          ],
-        ),
+
+        // Spicy Label
         Text(
-          'Spicy',
+          _getSpicyLabel(),
           style: TextStyles.textStyle14.copyWith(
             fontWeight: FontWeight.w700,
+            color: AppColors.primary,
+          ),
+        ),
+
+        verticalSpace(8),
+
+        // Slider
+        SliderTheme(
+          data: SliderThemeData(
+            trackHeight: 4,
+            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
+            overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+            activeTrackColor: AppColors.primary,
+            inactiveTrackColor: AppColors.greyLight,
+            thumbColor: AppColors.primary,
+            overlayColor: AppColors.primary.withValues(alpha: .2),
+          ),
+          child: Slider(
+            value: value,
+            min: 0,
+            max: 1,
+            divisions: 10,
+            onChanged: (newValue) {
+              setState(() {
+                value = newValue;
+              });
+              widget.onChanged(newValue);
+            },
+          ),
+        ),
+
+        // Fire Icons Row with Padding
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: List.generate(
+              5,
+              (index) {
+                // حساب مستوى التوابل (0-5)
+                double spicyLevel = value * 5;
+
+                return Icon(
+                  Icons.local_fire_department,
+                  size: 24,
+                  color: index < spicyLevel ? Colors.red : Colors.grey[300],
+                );
+              },
+            ),
+          ),
+        ),
+
+        verticalSpace(8),
+
+        // Min/Max Labels
+        Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 12),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Not Spicy',
+                style: TextStyles.textStyle14.copyWith(
+                  color: Colors.grey[600],
+                  fontSize: 12,
+                ),
+              ),
+              Text(
+                'Extra Hot',
+                style: TextStyles.textStyle14.copyWith(
+                  color: Colors.grey[600],
+                  fontSize: 12,
+                ),
+              ),
+            ],
           ),
         ),
       ],

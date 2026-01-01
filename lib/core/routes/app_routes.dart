@@ -2,8 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
+import 'package:foods_app/features/cart/data/repo/cart_repo_impl.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
 import 'package:foods_app/features/home/data/model/home_product_model.dart';
+import 'package:foods_app/features/home/data/repo/home_repo_impl.dart';
 import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
 import 'package:foods_app/features/productDetalis/data/repo/product_detalis_repoimpl.dart';
 
@@ -35,6 +37,10 @@ class AppRoutes {
   static final RepoImpl signUpRepo = RepoImpl(apiServices, prefsService);
   static final ProductDetalisRepoimpl productDetalisRepo =
       ProductDetalisRepoimpl(apiServices);
+  static final CartRepoImpl cartRepo = CartRepoImpl(apiServices: apiServices);
+  static final HomeRepoImpl homeRepo = HomeRepoImpl(
+    apiServices,
+  );
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -86,7 +92,6 @@ class AppRoutes {
         return MaterialPageRoute(
           builder: (_) => const SuccessDialog(),
         );
-
       case cartView:
         return MaterialPageRoute(
           builder: (_) => const CartView(),

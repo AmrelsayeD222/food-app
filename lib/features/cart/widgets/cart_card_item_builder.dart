@@ -1,24 +1,19 @@
 import 'package:flutter/material.dart';
-
+import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
 import 'cart_card_item.dart';
 
 class CartCardItemBuilder extends StatelessWidget {
-  const CartCardItemBuilder({super.key});
+  final List<CartItem> items;
+
+  const CartCardItemBuilder({super.key, required this.items});
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
-      padding: const EdgeInsets.only(bottom: 110, left: 8, right: 8),
-      itemCount: 10,
+      padding: const EdgeInsets.only(bottom: 10, left: 8, right: 8, top: 10),
+      itemCount: items.length,
       itemBuilder: (context, index) {
-        return const Padding(
-          padding: EdgeInsets.all(0),
-          child: SizedBox(
-            width: double.infinity,
-            height: 200,
-            child: CartCardItem(),
-          ),
-        );
+        return CartCardItem(item: items[index]);
       },
     );
   }
