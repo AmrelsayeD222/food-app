@@ -1,16 +1,15 @@
 // bottom_navi_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foods_app/core/constants/app_colors.dart';
-import 'package:foods_app/core/helper/shared_pref_storage.dart';
-import 'package:foods_app/core/routes/app_routes.dart';
 
-import 'package:foods_app/features/auth/views/profile_view.dart';
+import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:foods_app/core/di/service_locator.dart';
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
+
 import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
 import 'package:foods_app/features/home/data/manager/cubit/home_product_cubit.dart';
 import 'package:foods_app/features/home/views/home_view.dart';
-import 'package:foods_app/features/orderHistory/views/order_history_view.dart';
 
 class BottomNaviBar extends StatefulWidget {
   final int initialIndex;
@@ -36,24 +35,23 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
   }
 
   Future<void> _loadTokenAndInitViews() async {
-    token = await SharedPrefsService().getToken();
+    token = await getIt<SharedPrefsService>().getToken();
 
     views = [
-      BlocProvider(
-        create: (context) =>
-            HomeProductCubit(AppRoutes.homeRepo)..fetchProduct(),
+      /// ✅ Home (Singleton – no reload)
+      BlocProvider.value(
+        value: getIt<HomeProductCubit>(),
         child: const HomeView(),
       ),
-      BlocProvider(
-        create: (_) =>
-            CartCubitCubit(AppRoutes.cartRepo)..getCart(token: token ?? ''),
+
+      /// ✅ Cart (Factory – reload when needed)
+      BlocProvider.value(
+        value: getIt<CartCubitCubit>()..getCart(token: token ?? ''),
         child: const CartView(),
       ),
-      const OrderHistoryView(),
-      const ProfileView(),
     ];
 
-    setState(() {}); // rebuild بعد ما views تجهز
+    setState(() {}); // مهم
   }
 
   @override
@@ -106,11 +104,6 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.shopping_cart), label: "Cart"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.restaurant_sharp),
-                    label: "Orders History"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person), label: "Profile"),
               ],
               onTap: (index) {
                 _selectedIndex = index;

@@ -30,7 +30,6 @@ class SignUpView extends StatelessWidget {
           );
         } else if (state is SignUpSuccess) {
           context.pushReplacementNamed(AppRoutes.bottomNaviBar);
-          cubit.signClearFields();
         }
       },
       builder: (context, state) {

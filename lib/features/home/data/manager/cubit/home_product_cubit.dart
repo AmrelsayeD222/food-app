@@ -9,13 +9,16 @@ class HomeProductCubit extends Cubit<HomeProductState> {
 
   HomeProductCubit(this.homeRepo) : super(HomeProductInitial());
 
-  Future<void> fetchProduct() async {
-    if (isClosed) return; // حماية قبل البداية
+  Future<void> fetchProduct({bool forceRefresh = false}) async {
+    if (isClosed) return;
+
+    if (!forceRefresh && state is HomeProductLoaded) return;
+
     emit(HomeProductLoading());
 
     final result = await homeRepo.fetchProduct();
 
-    if (isClosed) return; // حماية بعد العودة من async
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(HomeProductError(failure.errMessage)),

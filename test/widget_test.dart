@@ -7,6 +7,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
+import 'package:foods_app/core/routes/app_routes.dart';
 
 import 'package:foods_app/main.dart';
 
@@ -16,7 +17,8 @@ void main() {
     // Define the isLoggedIn variable (for example: set it to true for testing)
 
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const HungryApp());
+    await tester
+        .pumpWidget(const HungryApp(initialRoute: AppRoutes.bottomNaviBar));
 
     // Verify that the app loads successfully
     expect(find.byType(MaterialApp), findsOneWidget);

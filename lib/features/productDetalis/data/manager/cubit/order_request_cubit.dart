@@ -8,12 +8,20 @@ class OrderRequestCubit extends Cubit<OrderRequestState> {
   final ProductDetalisRepo repo;
 
   OrderRequestCubit(this.repo) : super(OrderRequestInitial());
-  Future<void> createOrder(
-      {required String token, required OrderRequest request}) async {
+
+  /// ينشئ أمر جديد
+  /// [forceRefreshCart] هنا غير موجود، لأنه مسؤولية CartCubit تحديث نفسه بعد Success
+  Future<void> createOrder({
+    required String token,
+    required OrderRequest request,
+  }) async {
     if (isClosed) return;
+
     emit(OrderRequestLoading());
+
     final result = await repo.createOrder(token: token, orderRequest: request);
-    if (isClosed) return; // لو اتقفِل Cubit ما نكملش
+
+    if (isClosed) return;
 
     result.fold(
       (failure) => emit(OrderRequestFailure(

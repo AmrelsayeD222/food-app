@@ -1,15 +1,11 @@
-import 'dart:developer';
-
 import 'package:dartz/dartz.dart';
 import 'package:dio/dio.dart';
 
 import 'package:foods_app/core/network/errors/failure.dart';
 import 'package:foods_app/core/network/services/api_service.dart';
-import 'package:foods_app/features/auth/data/model/get_profile_model.dart';
 
 import 'package:foods_app/features/auth/data/model/login_model.dart';
 import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
-import 'package:foods_app/features/auth/data/model/update_profile_model.dart';
 
 import '../../../../core/helper/shared_pref_storage.dart';
 import 'repo.dart';
@@ -75,66 +71,6 @@ class RepoImpl implements Repo {
       }
 
       return Right(signUpModel);
-    } catch (e) {
-      if (e is DioException) {
-        return Left(
-          ServerFailure.fromDioError(e),
-        );
-      } else {
-        return Left(
-          ServerFailure(e.toString()),
-        );
-      }
-    }
-  }
-
-  @override
-  Future<Either<Failure, GetProfileDataModel>> getProfileData({
-    required String token,
-  }) async {
-    try {
-      final response = await apiServices.get(
-        endPoint: 'profile',
-        token: token,
-      );
-
-      log('PROFILE RESPONSE => $response');
-
-      final model = GetProfileDataModel.fromJson(response);
-
-      return Right(model);
-    } catch (e) {
-      if (e is DioException) {
-        return Left(ServerFailure.fromDioError(e));
-      } else {
-        return Left(ServerFailure(e.toString()));
-      }
-    }
-  }
-
-  @override
-  Future<Either<Failure, UpdateProfileData>> updateProfile(
-      {String? name,
-      String? email,
-      String? address,
-      required String token,
-      String? image,
-      String? visa}) async {
-    try {
-      var response = await apiServices.post(
-        endPoint: 'update-profile',
-        token: token,
-        data: {
-          'name': name,
-          'email': email,
-          'address': address,
-          'image': image,
-          'Visa': visa,
-        },
-      );
-      final updateProfileData = UpdateProfileData.fromJson(response);
-
-      return Right(updateProfileData);
     } catch (e) {
       if (e is DioException) {
         return Left(

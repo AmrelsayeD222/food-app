@@ -16,6 +16,14 @@ class CartView extends StatelessWidget {
           if (state is CartCubitLoading) {
             return const Center(child: CircularProgressIndicator());
           }
+          if (state is CartCubitEmpty) {
+            return Center(
+              child: Text(
+                state.message,
+                style: const TextStyle(fontSize: 16, color: Colors.grey),
+              ),
+            );
+          }
 
           if (state is CartCubitFailure) {
             return Center(child: Text(state.errMessage));
