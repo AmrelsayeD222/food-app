@@ -51,9 +51,8 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         value: getIt<CartCubitCubit>()..getCart(token: token ?? ''),
         child: const CartView(),
       ),
-      BlocProvider(
-        create: (_) =>
-            getIt<GetProfileDataCubit>()..getProfileData(token: token ?? ''),
+      BlocProvider.value(
+        value: getIt<GetProfileDataCubit>()..getProfileData(token: token ?? ''),
         child: const ProfileView(),
       ),
     ];

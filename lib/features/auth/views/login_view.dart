@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:foods_app/core/helper/spacing.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_auth_button.dart';
 import '../../../core/helper/navigation_extentions.dart';
 import '../../../core/constants/app_colors.dart';
@@ -30,8 +31,14 @@ class LoginView extends StatelessWidget {
             ),
           );
         } else if (state is LoginSuccess) {
-          context.pushReplacementNamed(AppRoutes.bottomNaviBar);
-          cubit.clearFields();
+          final token = state.loginModel.data?.token;
+          if (token != null && token.isNotEmpty) {
+            final profileCubit = context.read<GetProfileDataCubit>();
+            profileCubit.getProfileData(token: token);
+
+            if (!context.mounted) return;
+            context.pushReplacementNamed(AppRoutes.bottomNaviBar);
+          }
         }
       },
       builder: (context, state) {

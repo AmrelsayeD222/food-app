@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
 
 import '../../data/repo/repo.dart';
 
@@ -28,7 +29,7 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     result.fold(
       (failure) => emit(SignUpFailure(failure.errMessage)),
-      (_) => emit(SignUpSuccess()),
+      (response) => emit(SignUpSuccess(response)),
     );
   }
 

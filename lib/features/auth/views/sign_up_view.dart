@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -29,7 +30,14 @@ class SignUpView extends StatelessWidget {
             ),
           );
         } else if (state is SignUpSuccess) {
-          context.pushReplacementNamed(AppRoutes.bottomNaviBar);
+          final token = state.signUpModel.data?.token;
+          if (token != null && token.isNotEmpty) {
+            final profileCubit = context.read<GetProfileDataCubit>();
+            profileCubit.getProfileData(token: token);
+
+            if (!context.mounted) return;
+            context.pushReplacementNamed(AppRoutes.bottomNaviBar);
+          }
         }
       },
       builder: (context, state) {

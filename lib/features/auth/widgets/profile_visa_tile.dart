@@ -22,7 +22,7 @@ class ProfileVisaTile extends StatelessWidget {
       ),
       title: const Text('Debit card', style: TextStyles.textStyle14),
       subtitle: Text(
-        visa != null && visa!.isNotEmpty ? visa! : 'No Card',
+        visa ?? '**** **** **** ****',
         style: TextStyles.textStyle14,
       ),
       trailing: const Text(

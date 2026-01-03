@@ -5,6 +5,7 @@ import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/core/di/service_locator.dart';
+import 'package:foods_app/core/helper/text_style.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_profile_bottom.dart';
@@ -41,34 +42,23 @@ class ProfileView extends StatelessWidget {
               final profile = state.profileData;
 
               return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  CustomProfileImage(imageUrl: profile.image),
+                  Center(child: CustomProfileImage(imageUrl: profile.image)),
                   verticalSpace(20),
-                  Text(
-                    profile.name,
-                    style: const TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.black),
-                  ),
-                  verticalSpace(10),
-                  Text(
-                    profile.email,
-                    style: const TextStyle(fontSize: 16, color: Colors.black),
-                  ),
+                  Text('Name : ${profile.name}', style: TextStyles.textStyle18),
+                  verticalSpace(20),
+                  Text('Email :${profile.email}',
+                      style: TextStyles.textStyle18),
+                  verticalSpace(20),
+                  Text('Address :${profile.address}',
+                      style: TextStyles.textStyle18),
                   verticalSpace(20),
                   ProfileVisaTile(visa: profile.visa),
-                  verticalSpace(10),
-                  if (profile.address != null && profile.address!.isNotEmpty)
-                    Text(
-                      profile.address!,
-                      style:
-                          const TextStyle(fontSize: 14, color: Colors.black54),
-                    ),
                 ],
               );
             } else {
-              return const SizedBox(); // initial state
+              return const SizedBox();
             }
           },
         ),

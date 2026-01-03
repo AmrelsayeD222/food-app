@@ -29,7 +29,14 @@ class CartCubitCubit extends Cubit<CartCubitState> {
     if (isClosed) return;
 
     result.fold(
-      (failure) => emit(CartCubitFailure(errMessage: failure.errMessage)),
+      (failure) {
+        if (failure.errMessage.contains('cart') ||
+            failure.errMessage.contains('id')) {
+          emit(CartCubitEmpty(message: "Your cart is empty"));
+        } else {
+          emit(CartCubitFailure(errMessage: failure.errMessage));
+        }
+      },
       (response) {
         if (response.items.isEmpty) {
           emit(CartCubitEmpty(message: "please login to continue shopping!"));

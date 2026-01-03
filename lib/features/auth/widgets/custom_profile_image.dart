@@ -18,8 +18,7 @@ class CustomProfileImage extends StatelessWidget {
         image: DecorationImage(
           image: imageUrl != null && imageUrl!.isNotEmpty
               ? NetworkImage(imageUrl!)
-              : const AssetImage('assets/detalis/sonic_profile.png')
-                  as ImageProvider,
+              : const AssetImage('assets/detalis/sonic_profile.png'),
           fit: BoxFit.fill,
         ),
       ),

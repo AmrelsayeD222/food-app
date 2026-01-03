@@ -6,6 +6,7 @@ import 'package:foods_app/core/network/services/api_service.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 
 import 'package:foods_app/features/auth/data/model/login_model.dart';
+import 'package:foods_app/features/auth/data/model/post_profile_data_model.dart';
 import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
 
 import '../../../../core/helper/shared_pref_storage.dart';
@@ -93,7 +94,8 @@ class RepoImpl implements Repo {
         endPoint: 'profile',
         token: token,
       );
-      return Right(GetProfileDataModel.fromJson(response));
+      final profileData = response['data'] ?? {};
+      return Right(GetProfileDataModel.fromJson(profileData));
     } catch (e) {
       if (e is DioException) {
         return Left(
@@ -103,6 +105,44 @@ class RepoImpl implements Repo {
         return Left(
           ServerFailure(e.toString()),
         );
+      }
+    }
+  }
+
+  @override
+  Future<Either<Failure, PostProfileResponse>> postProfileData({
+    required String token,
+    required String email,
+    String? name,
+    String? address,
+    String? phone,
+    String? imagePath,
+  }) async {
+    try {
+      final formData = FormData.fromMap({
+        'email': email,
+        if (name != null) 'name': name,
+        if (address != null) 'address': address,
+        if (phone != null) 'phone': phone,
+        if (imagePath != null)
+          'image': await MultipartFile.fromFile(
+            imagePath,
+            filename: imagePath.split('/').last,
+          ),
+      });
+
+      final response = await apiServices.postFormData(
+        endPoint: 'update-profile',
+        data: formData,
+        token: token,
+      );
+
+      return Right(PostProfileResponse.fromJson(response));
+    } catch (e) {
+      if (e is DioException) {
+        return Left(ServerFailure.fromDioError(e));
+      } else {
+        return Left(ServerFailure(e.toString()));
       }
     }
   }
