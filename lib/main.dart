@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:foods_app/core/di/service_locator.dart';
@@ -10,10 +12,9 @@ void main() async {
 
   setupServiceLocator();
 
-  // 🔹 فحص التوكن
   final token = await getIt<SharedPrefsService>().getToken();
   final hasToken = token != null && token.isNotEmpty;
-
+  log(token.toString());
   runApp(HungryApp(
       initialRoute: hasToken ? AppRoutes.bottomNaviBar : AppRoutes.signUp));
 }

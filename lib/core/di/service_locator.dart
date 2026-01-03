@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:get_it/get_it.dart';
 
 import '../network/services/api_service.dart';
@@ -71,5 +72,8 @@ void setupServiceLocator() {
 
   getIt.registerFactory<OrderRequestCubit>(
     () => OrderRequestCubit(getIt<ProductDetalisRepoimpl>()),
+  );
+  getIt.registerLazySingleton<GetProfileDataCubit>(
+    () => GetProfileDataCubit(getIt<RepoImpl>()),
   );
 }

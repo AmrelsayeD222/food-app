@@ -5,6 +5,8 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/auth/views/profile_view.dart';
 
 import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
@@ -48,6 +50,11 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
       BlocProvider.value(
         value: getIt<CartCubitCubit>()..getCart(token: token ?? ''),
         child: const CartView(),
+      ),
+      BlocProvider(
+        create: (_) =>
+            getIt<GetProfileDataCubit>()..getProfileData(token: token ?? ''),
+        child: const ProfileView(),
       ),
     ];
 
@@ -104,6 +111,8 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
                 BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
                 BottomNavigationBarItem(
                     icon: Icon(Icons.shopping_cart), label: "Cart"),
+                BottomNavigationBarItem(
+                    icon: Icon(Icons.person), label: "Profile"),
               ],
               onTap: (index) {
                 _selectedIndex = index;

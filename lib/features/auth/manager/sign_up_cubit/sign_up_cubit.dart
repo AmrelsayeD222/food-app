@@ -51,12 +51,4 @@ class SignUpCubit extends Cubit<SignUpState> {
     signUpFormKey.currentState?.reset();
     emit(SignUpInitial());
   }
-
-  @override
-  Future<void> close() {
-    signUpEmailController.dispose();
-    signUpPasswordController.dispose();
-    nameController.dispose();
-    return super.close();
-  }
 }

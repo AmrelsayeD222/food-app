@@ -46,11 +46,4 @@ class LoginCubit extends Cubit<LoginState> {
     loginFormKey.currentState?.reset();
     emit(LoginInitial());
   }
-
-  @override
-  Future<void> close() {
-    loginEmailController.dispose();
-    loginPasswordController.dispose();
-    return super.close();
-  }
 }
