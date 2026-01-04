@@ -11,7 +11,9 @@ class CartResponseModel {
 
   factory CartResponseModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'];
-
+    if (data == null) {
+      throw Exception('Cart data is null');
+    }
     return CartResponseModel(
       id: data['id'],
       totalPrice: double.tryParse(data['total_price'].toString()) ?? 0.0,

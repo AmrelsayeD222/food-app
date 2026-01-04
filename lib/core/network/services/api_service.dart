@@ -28,6 +28,7 @@ class ApiServices {
       options: Options(
         headers: {
           'Accept': 'application/json',
+          'Content-Type': 'multipart/form-data',
           if (token != null && token.isNotEmpty)
             'Authorization': 'Bearer $token',
         },

@@ -11,35 +11,35 @@ class PostProfileResponse {
 
   factory PostProfileResponse.fromJson(Map<String, dynamic> json) {
     return PostProfileResponse(
-      code: json['code'],
-      message: json['message'],
-      data: ProfileData.fromJson(json['data']),
+      code: json['code'] ?? 0,
+      message: json['message'] ?? '',
+      data: ProfileData.fromJson(json['data'] ?? {}),
     );
   }
 }
 
 class ProfileData {
-  final String name;
-  final String email;
-  final String address;
-  final String image;
+  final String? name;
+  final String? email;
+  final String? address;
+  final String? image;
   final String? visa;
 
   ProfileData({
-    required this.name,
-    required this.email,
-    required this.address,
-    required this.image,
+    this.name,
+    this.email,
+    this.address,
+    this.image,
     this.visa,
   });
 
   factory ProfileData.fromJson(Map<String, dynamic> json) {
     return ProfileData(
-      name: json['name'],
-      email: json['email'],
-      address: json['address'],
-      image: json['image'],
-      visa: json['Visa'],
+      name: json['name'] ?? '',
+      email: json['email'] ?? '',
+      address: json['address'] ?? '',
+      image: json['image'] ?? '',
+      visa: json['Visa'] ?? '',
     );
   }
 }

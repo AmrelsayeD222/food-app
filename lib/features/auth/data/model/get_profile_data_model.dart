@@ -1,13 +1,13 @@
 class GetProfileDataModel {
-  final String name;
-  final String email;
+  final String? name;
+  final String? email;
   final String? image;
   final String? address;
   final String? visa;
 
   GetProfileDataModel({
-    required this.name,
-    required this.email,
+    this.name,
+    this.email,
     this.image,
     this.address,
     this.visa,
@@ -17,9 +17,9 @@ class GetProfileDataModel {
     return GetProfileDataModel(
       name: json['name'] ?? '',
       email: json['email'] ?? '',
-      image: json['image'],
-      address: json['address'],
-      visa: json['Visa'],
+      image: json['image'] ?? '',
+      address: json['address'] ?? '',
+      visa: json['Visa'] ?? '',
     );
   }
 

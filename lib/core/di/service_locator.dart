@@ -1,4 +1,6 @@
 import 'package:dio/dio.dart';
+import 'package:foods_app/features/auth/data/repo/repo.dart';
+import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:get_it/get_it.dart';
 
@@ -33,7 +35,7 @@ void setupServiceLocator() {
   );
 
   /// 🔹 Repositories
-  getIt.registerLazySingleton<RepoImpl>(
+  getIt.registerLazySingleton<Repo>(
     () => RepoImpl(
       getIt<ApiServices>(),
       getIt<SharedPrefsService>(),
@@ -54,14 +56,12 @@ void setupServiceLocator() {
 
   /// 🔹 Cubits
   getIt.registerFactory<LoginCubit>(
-    () => LoginCubit(getIt<RepoImpl>()),
+    () => LoginCubit(getIt<Repo>()),
   );
 
   getIt.registerFactory<SignUpCubit>(
-    () => SignUpCubit(getIt<RepoImpl>()),
+    () => SignUpCubit(getIt<Repo>()),
   );
-
-  /// Home → Singleton (عشان ميتعادش تحميل الداتا)
   getIt.registerLazySingleton<HomeProductCubit>(
     () => HomeProductCubit(getIt<HomeRepoImpl>())..fetchProduct(),
   );
@@ -74,6 +74,9 @@ void setupServiceLocator() {
     () => OrderRequestCubit(getIt<ProductDetalisRepoimpl>()),
   );
   getIt.registerLazySingleton<GetProfileDataCubit>(
-    () => GetProfileDataCubit(getIt<RepoImpl>()),
+    () => GetProfileDataCubit(getIt<Repo>()),
+  );
+  getIt.registerFactory<PostProfileDataCubit>(
+    () => PostProfileDataCubit(getIt<Repo>()),
   );
 }

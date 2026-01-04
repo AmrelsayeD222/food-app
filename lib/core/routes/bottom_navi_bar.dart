@@ -5,6 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
+import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/views/profile_view.dart';
 
@@ -51,8 +52,17 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         value: getIt<CartCubitCubit>()..getCart(token: token ?? ''),
         child: const CartView(),
       ),
-      BlocProvider.value(
-        value: getIt<GetProfileDataCubit>()..getProfileData(token: token ?? ''),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider(
+            // ✅ استخدم BlocProvider عادي مش value
+            create: (_) => getIt<GetProfileDataCubit>()
+              ..getProfileData(token: token ?? ''),
+          ),
+          BlocProvider(
+            create: (_) => getIt<PostProfileDataCubit>(),
+          ),
+        ],
         child: const ProfileView(),
       ),
     ];

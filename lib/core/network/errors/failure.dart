@@ -55,6 +55,9 @@ class ServerFailure extends Failure {
       return ServerFailure(_extractErrorMessage(response));
     } else if (statusCode == 404) {
       return ServerFailure('Your request not found, Please try later!');
+    } else if (statusCode == 429) {
+      return ServerFailure(
+          'Too many requests. Please wait a moment and try again.');
     } else if (statusCode == 500) {
       return ServerFailure('Internal Server error, Please try later');
     } else if (statusCode == 302) {

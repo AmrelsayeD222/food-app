@@ -11,10 +11,7 @@ class PostProfileDataCubit extends Cubit<PostProfileDataState> {
 
   Future<void> postProfileData({
     required String token,
-    required String email,
     String? name,
-    String? address,
-    String? phone,
     String? imagePath,
   }) async {
     if (isClosed) return;
@@ -23,10 +20,7 @@ class PostProfileDataCubit extends Cubit<PostProfileDataState> {
 
     final result = await repo.postProfileData(
       token: token,
-      email: email,
       name: name,
-      address: address,
-      phone: phone,
       imagePath: imagePath,
     );
 

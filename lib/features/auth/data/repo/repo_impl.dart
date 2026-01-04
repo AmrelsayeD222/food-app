@@ -112,18 +112,12 @@ class RepoImpl implements Repo {
   @override
   Future<Either<Failure, PostProfileResponse>> postProfileData({
     required String token,
-    required String email,
     String? name,
-    String? address,
-    String? phone,
     String? imagePath,
   }) async {
     try {
       final formData = FormData.fromMap({
-        'email': email,
         if (name != null) 'name': name,
-        if (address != null) 'address': address,
-        if (phone != null) 'phone': phone,
         if (imagePath != null)
           'image': await MultipartFile.fromFile(
             imagePath,

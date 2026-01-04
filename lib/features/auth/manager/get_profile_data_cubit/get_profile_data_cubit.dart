@@ -25,6 +25,26 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
     );
   }
 
+  /// 🔹 Update profile from upload response (without API call)
+  void updateProfileFromUpload({
+    required String name,
+    required String email,
+    required String address,
+    required String image,
+    String? visa,
+  }) {
+    if (!isClosed) {
+      final updatedProfile = GetProfileDataModel(
+        name: name,
+        email: email,
+        address: address,
+        image: image,
+        visa: visa,
+      );
+      emit(GetProfileDataSuccess(profileData: updatedProfile));
+    }
+  }
+
   /// 🔹 Clear profile state on logout
   void logout() {
     if (!isClosed) {

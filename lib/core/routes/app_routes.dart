@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/di/service_locator.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 
 import '../../features/auth/views/login_view.dart';
 import '../../features/auth/views/sign_up_view.dart';
@@ -29,20 +30,33 @@ class AppRoutes {
     switch (settings.name) {
       case login:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<LoginCubit>(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => getIt<LoginCubit>(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<GetProfileDataCubit>(),
+              ),
+            ],
             child: const LoginView(),
           ),
         );
 
       case signUp:
         return MaterialPageRoute(
-          builder: (_) => BlocProvider(
-            create: (_) => getIt<SignUpCubit>(),
+          builder: (_) => MultiBlocProvider(
+            providers: [
+              BlocProvider(
+                create: (_) => getIt<SignUpCubit>(),
+              ),
+              BlocProvider(
+                create: (_) => getIt<GetProfileDataCubit>(),
+              ),
+            ],
             child: const SignUpView(),
           ),
         );
-
       case bottomNaviBar:
         return MaterialPageRoute(
           builder: (_) => const BottomNaviBar(),

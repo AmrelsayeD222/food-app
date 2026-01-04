@@ -17,9 +17,18 @@ class CartRepoImpl implements CartRepo {
         endPoint: 'cart',
         token: token,
       );
+      if (response['data'] == null) {
+        return Left(ServerFailure('Cart is empty or not created yet'));
+      }
       final cartResponse = CartResponseModel.fromJson(response);
       return Right(cartResponse);
     } on DioException catch (e) {
+      if (e.response?.statusCode == 500) {
+        final errorMsg = e.response?.data?['message'] ?? '';
+        if (errorMsg.contains('property') || errorMsg.contains('null')) {
+          return Left(ServerFailure('Cart not found. Please add items first.'));
+        }
+      }
       return Left(ServerFailure.fromDioError(e));
     } catch (e) {
       return Left(ServerFailure(e.toString()));

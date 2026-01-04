@@ -17,10 +17,7 @@ abstract class Repo {
       {required String token});
   Future<Either<Failure, PostProfileResponse>> postProfileData({
     required String token,
-    required String email,
     String? name,
-    String? address,
-    String? phone,
     String? imagePath,
   });
 }
