@@ -2,8 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
+import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
@@ -32,8 +34,13 @@ class SignUpView extends StatelessWidget {
         } else if (state is SignUpSuccess) {
           final token = state.signUpModel.data?.token;
           if (token != null && token.isNotEmpty) {
-            final profileCubit = context.read<GetProfileDataCubit>();
-            profileCubit.getProfileData(token: token);
+            // Clear previous user's data
+            final cartCubit = getIt<CartCubitCubit>();
+            cartCubit.clearCart();
+
+            final profileCubit = getIt<GetProfileDataCubit>();
+            profileCubit.clearProfile(); // Clear previous profile data
+            profileCubit.getProfileData(token: token, forceRefresh: true);
 
             if (!context.mounted) return;
             context.pushReplacementNamed(AppRoutes.bottomNaviBar);

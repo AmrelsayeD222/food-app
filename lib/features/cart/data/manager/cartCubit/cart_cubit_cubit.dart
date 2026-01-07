@@ -48,4 +48,11 @@ class CartCubitCubit extends Cubit<CartCubitState> {
       },
     );
   }
+
+  /// 🔹 Clear cart state on logout or new user sign in
+  void clearCart() {
+    if (!isClosed) {
+      emit(CartCubitInitial());
+    }
+  }
 }

@@ -49,15 +49,15 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
 
       /// ✅ Cart (Factory – reload when needed)
       BlocProvider.value(
-        value: getIt<CartCubitCubit>()..getCart(token: token ?? ''),
+        value: getIt<CartCubitCubit>()
+          ..getCart(token: token ?? '', forceRefresh: true),
         child: const CartView(),
       ),
       MultiBlocProvider(
         providers: [
-          BlocProvider(
-            // ✅ استخدم BlocProvider عادي مش value
-            create: (_) => getIt<GetProfileDataCubit>()
-              ..getProfileData(token: token ?? ''),
+          BlocProvider.value(
+            value: getIt<GetProfileDataCubit>()
+              ..getProfileData(token: token ?? '', forceRefresh: true),
           ),
           BlocProvider(
             create: (_) => getIt<PostProfileDataCubit>(),

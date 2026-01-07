@@ -9,11 +9,16 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   GetProfileDataCubit(this.repo) : super(GetProfileDataInitial());
 
   /// 🔹 Fetch profile data safely
-  Future<void> getProfileData({required String token}) async {
+  Future<void> getProfileData(
+      {required String token, bool forceRefresh = false}) async {
     if (token.isEmpty) {
       emit(GetProfileDataEmpty(noTokenMessage: "You are not logged in!"));
       return;
     }
+
+    // Skip if already loaded and not forcing refresh
+    if (!forceRefresh && state is GetProfileDataSuccess) return;
+
     if (!isClosed) {
       emit(GetProfileDataLoading());
     }
@@ -49,6 +54,13 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   void logout() {
     if (!isClosed) {
       emit(GetProfileDataEmpty(noTokenMessage: "You are not logged in!"));
+    }
+  }
+
+  /// 🔹 Clear profile state on new user sign in
+  void clearProfile() {
+    if (!isClosed) {
+      emit(GetProfileDataInitial());
     }
   }
 }
