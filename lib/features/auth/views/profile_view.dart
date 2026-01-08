@@ -1,68 +1,29 @@
-import 'dart:developer';
+// ignore_for_file: use_build_context_synchronously
 
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:image_picker/image_picker.dart';
 
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/di/service_locator.dart';
-import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
+
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/core/helper/text_style.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
+import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
-import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 
 import 'package:foods_app/features/auth/widgets/custom_auth_button.dart';
 import 'package:foods_app/features/auth/widgets/custom_profile_image.dart';
 import 'package:foods_app/features/auth/widgets/profile_visa_tile.dart';
+import 'package:image_picker/image_picker.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
-  Future<String> _getToken() async {
+  Future<String> getToken() async {
     return await getIt<SharedPrefsService>().getToken() ?? '';
-  }
-
-  Future<void> _showLogoutDialog(BuildContext context) async {
-    final confirmed = await showDialog<bool>(
-      context: context,
-      barrierDismissible: true,
-      builder: (context) {
-        return AlertDialog(
-          backgroundColor: AppColors.white,
-          title: const Text("Logout"),
-          content: const Text("Are you sure you want to log out?"),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(false),
-              child: const Text("Cancel",
-                  style: TextStyle(color: AppColors.black)),
-            ),
-            ElevatedButton(
-              onPressed: () => Navigator.of(context).pop(true),
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.red,
-              ),
-              child: const Text(
-                "Logout",
-                style: TextStyle(color: AppColors.white),
-              ),
-            )
-          ],
-        );
-      },
-    );
-
-    if (confirmed != true) return;
-
-    await getIt<SharedPrefsService>().clearToken();
-    if (!context.mounted) return;
-
-    context.read<GetProfileDataCubit>().logout();
-    context.pushReplacementNamed(AppRoutes.signUp);
   }
 
   @override
@@ -74,7 +35,48 @@ class ProfileView extends StatelessWidget {
         backgroundColor: AppColors.white,
         actions: [
           IconButton(
-            onPressed: () => _showLogoutDialog(context),
+            onPressed: () {
+              showDialog(
+                context: context,
+                builder: (dialogContext) {
+                  return AlertDialog(
+                    backgroundColor: AppColors.white,
+                    title: const Text("Logout"),
+                    content: const Text("Are you sure you want to logout?"),
+                    actions: [
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.black,
+                          backgroundColor: AppColors.white,
+                        ),
+                        child: const Text("Cancel"),
+                        onPressed: () {
+                          Navigator.of(dialogContext).pop();
+                        },
+                      ),
+                      TextButton(
+                        style: TextButton.styleFrom(
+                          foregroundColor: AppColors.red,
+                          backgroundColor: AppColors.white,
+                        ),
+                        child: const Text("Logout"),
+                        onPressed: () async {
+                          await getIt<SharedPrefsService>().clearToken();
+                          context.read<GetProfileDataCubit>().logout();
+                          // غلق الـ Dialog
+                          Navigator.of(dialogContext).pop();
+                          Navigator.of(context, rootNavigator: true)
+                              .pushNamedAndRemoveUntil(
+                            AppRoutes.signUp,
+                            (route) => false,
+                          );
+                        },
+                      ),
+                    ],
+                  );
+                },
+              );
+            },
             icon: const Icon(Icons.logout, color: Colors.black),
           ),
           horizontalSpace(10),
@@ -103,19 +105,26 @@ class ProfileView extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Center(
-                    child: CustomProfileImage(
-                      imageUrl: profile.image,
+                    child:
+                        BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
+                      buildWhen: (previous, current) =>
+                          current is GetProfileDataSuccess,
+                      builder: (context, profileState) {
+                        if (profileState is GetProfileDataSuccess) {
+                          return CustomProfileImage(
+                              imageUrl: profileState.profileData.image);
+                        }
+                        return const CircleAvatar(radius: 40); // placeholder
+                      },
                     ),
                   ),
-
                   verticalSpace(20),
 
-                  /// 🔥 UPDATE IMAGE BUTTON
+                  // --- زر تحديث الصورة
                   BlocConsumer<PostProfileDataCubit, PostProfileDataState>(
                     listener: (context, uploadState) {
                       if (uploadState is PostProfileDataSuccess) {
                         final data = uploadState.response.data;
-
                         context
                             .read<GetProfileDataCubit>()
                             .updateProfileFromUpload(
@@ -125,10 +134,15 @@ class ProfileView extends StatelessWidget {
                               image: data.image ?? profile.image ?? '',
                               visa: data.visa ?? profile.visa ?? '',
                             );
+
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            content: Text('Image uploaded successfully'),
+                          ),
+                        );
                       }
 
                       if (uploadState is PostProfileDataFailure) {
-                        log(uploadState.errorMessage);
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(uploadState.errorMessage),
@@ -149,15 +163,12 @@ class ProfileView extends StatelessWidget {
                               : () async {
                                   final picker = ImagePicker();
                                   final picked = await picker.pickImage(
-                                    source: ImageSource.gallery,
-                                  );
+                                      source: ImageSource.gallery);
 
                                   if (picked == null) return;
 
-                                  final token = await _getToken();
-
+                                  final token = await getToken();
                                   if (token.isEmpty) {
-                                    // ignore: use_build_context_synchronously
                                     ScaffoldMessenger.of(context).showSnackBar(
                                       const SnackBar(
                                         content: Text("You are not logged in"),
@@ -166,13 +177,11 @@ class ProfileView extends StatelessWidget {
                                     return;
                                   }
 
-                                  // ignore: use_build_context_synchronously
                                   context
                                       .read<PostProfileDataCubit>()
                                       .postProfileData(
                                         token: token,
                                         imagePath: picked.path,
-                                        name: profile.name,
                                       );
                                 },
                           child: isLoading
@@ -191,6 +200,8 @@ class ProfileView extends StatelessWidget {
                   ),
 
                   verticalSpace(30),
+
+                  // --- بيانات البروفايل الثابتة
                   Text('Name : ${profile.name}', style: TextStyles.textStyle18),
                   verticalSpace(20),
                   Text('Email : ${profile.email}',
@@ -199,7 +210,6 @@ class ProfileView extends StatelessWidget {
                   Text('Address : ${profile.address}',
                       style: TextStyles.textStyle18),
                   verticalSpace(20),
-
                   ProfileVisaTile(visa: profile.visa),
                 ],
               );

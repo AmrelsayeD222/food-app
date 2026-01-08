@@ -43,21 +43,6 @@ class CartView extends StatelessWidget {
           return const SizedBox.shrink();
         },
       ),
-      // bottomSheet: BlocBuilder<CartCubitCubit, CartCubitState>(
-      //   builder: (context, state) {
-      //     if (state is CartCubitSuccess) {
-      //       return CustomBottomSheet(
-      //         onpressed: () {
-      //           context.pushNamed(AppRoutes.checkoutView);
-      //         },
-      //         bottomText: 'CheckOut',
-      //         sheetText: 'Total',
-      //         price: '\$${state.cartResponse.totalPrice}',
-      //       );
-      //     }
-      //     return const SizedBox.shrink();
-      //   },
-      // ),
     );
   }
 }

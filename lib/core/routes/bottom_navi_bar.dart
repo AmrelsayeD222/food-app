@@ -42,8 +42,16 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
 
     views = [
       /// ✅ Home (Singleton – no reload)
-      BlocProvider.value(
-        value: getIt<HomeProductCubit>(),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider.value(
+            value: getIt<HomeProductCubit>(),
+          ),
+          BlocProvider.value(
+            value: getIt<GetProfileDataCubit>()
+              ..getProfileData(token: token ?? '', forceRefresh: true),
+          ),
+        ],
         child: const HomeView(),
       ),
 

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
+import 'package:foods_app/features/checkout/views/checkout_view.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/text_style.dart';
 
@@ -30,6 +31,7 @@ class ItemDescription extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          // صورة واسم وسعر وكمية
           Row(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -39,7 +41,7 @@ class ItemDescription extends StatelessWidget {
                   item.image,
                   width: 100,
                   height: 100,
-                  fit: BoxFit.fill, // ✅ غيرت من fill لـ cover
+                  fit: BoxFit.cover,
                 ),
               ),
               const SizedBox(width: 12),
@@ -65,9 +67,7 @@ class ItemDescription extends StatelessWidget {
                     const SizedBox(height: 8),
                     Container(
                       padding: const EdgeInsets.symmetric(
-                        horizontal: 8,
-                        vertical: 4,
-                      ),
+                          horizontal: 8, vertical: 4),
                       decoration: BoxDecoration(
                         color: Colors.grey[100],
                         borderRadius: BorderRadius.circular(6),
@@ -82,6 +82,8 @@ class ItemDescription extends StatelessWidget {
               ),
             ],
           ),
+
+          // مستوى الحار
           if (item.spicy > 0) ...[
             const SizedBox(height: 12),
             const Divider(height: 1),
@@ -93,26 +95,26 @@ class ItemDescription extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   'Spicy Level:',
-                  style: TextStyles.textStyle14.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyles.textStyle14
+                      .copyWith(fontWeight: FontWeight.w600),
                 ),
                 const SizedBox(width: 8),
                 ...List.generate(
                   5,
                   (index) {
                     double spicyLevel = item.spicy * 5;
-
                     return Icon(
                       Icons.local_fire_department,
                       size: 24,
                       color: index < spicyLevel ? Colors.red : Colors.grey[300],
                     );
                   },
-                )
+                ),
               ],
             ),
           ],
+
+          // الإضافات Toppings
           if (item.toppings.isNotEmpty) ...[
             const SizedBox(height: 12),
             const Divider(height: 1),
@@ -123,9 +125,8 @@ class ItemDescription extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   'Toppings',
-                  style: TextStyles.textStyle14.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyles.textStyle14
+                      .copyWith(fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -133,11 +134,11 @@ class ItemDescription extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: item.toppings.map((topping) {
-                return _buildOptionChip(topping);
-              }).toList(),
+              children: item.toppings.map(_buildOptionChip).toList(),
             ),
           ],
+
+          // Side Options
           if (item.sideOptions.isNotEmpty) ...[
             const SizedBox(height: 12),
             const Divider(height: 1),
@@ -148,9 +149,8 @@ class ItemDescription extends StatelessWidget {
                 const SizedBox(width: 6),
                 Text(
                   'Side Options',
-                  style: TextStyles.textStyle14.copyWith(
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: TextStyles.textStyle14
+                      .copyWith(fontWeight: FontWeight.w600),
                 ),
               ],
             ),
@@ -158,11 +158,40 @@ class ItemDescription extends StatelessWidget {
             Wrap(
               spacing: 8,
               runSpacing: 8,
-              children: item.sideOptions.map((option) {
-                return _buildOptionChip(option);
-              }).toList(),
+              children: item.sideOptions.map(_buildOptionChip).toList(),
             ),
           ],
+
+          // ✅ زرار Checkout لكل كارد
+          const SizedBox(height: 12),
+          const Divider(height: 1),
+          const SizedBox(height: 12),
+          Center(
+            child: ElevatedButton(
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (_) => CheckoutView(item: item),
+                  ),
+                );
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: const Size(double.infinity, 50),
+                backgroundColor: AppColors.primary,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(10),
+                ),
+              ),
+              child: const Text(
+                'Checkout',
+                style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            ),
+          ),
         ],
       ),
     );
@@ -172,10 +201,10 @@ class ItemDescription extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
       decoration: BoxDecoration(
-        color: AppColors.black.withValues(alpha: .05),
+        color: AppColors.black.withValues(alpha: 0.05),
         borderRadius: BorderRadius.circular(20),
         border: Border.all(
-          color: AppColors.black.withValues(alpha: .1),
+          color: Colors.grey.withValues(alpha: .1),
           width: 1,
         ),
       ),
@@ -198,9 +227,7 @@ class ItemDescription extends StatelessWidget {
           if (option.image.isNotEmpty) const SizedBox(width: 6),
           Text(
             option.name,
-            style: TextStyles.textStyle14.copyWith(
-              color: AppColors.black,
-            ),
+            style: TextStyles.textStyle14.copyWith(color: AppColors.black),
           ),
         ],
       ),

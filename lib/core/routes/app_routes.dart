@@ -8,6 +8,7 @@ import '../../features/auth/views/sign_up_view.dart';
 import '../../features/auth/manager/login_cubit/loign_cubit.dart';
 import '../../features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 
+import '../../features/cart/data/model/cart_response_model.dart';
 import '../../features/productDetalis/view/product_detalis_view.dart';
 import '../../features/productDetalis/data/manager/cubit/order_request_cubit.dart';
 
@@ -76,8 +77,14 @@ class AppRoutes {
         );
 
       case checkoutView:
+        final item = settings.arguments;
+        if (item is! CartItem) {
+          return _undefinedRoute();
+        }
         return MaterialPageRoute(
-          builder: (_) => const CheckoutView(),
+          builder: (_) => CheckoutView(
+            item: item,
+          ),
         );
 
       case successDialog:
