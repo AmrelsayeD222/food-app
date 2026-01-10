@@ -7,8 +7,8 @@ final class GetProfileDataInitial extends GetProfileDataState {}
 final class GetProfileDataLoading extends GetProfileDataState {}
 
 final class GetProfileDataEmpty extends GetProfileDataState {
-  final String noTokenMessage;
-  GetProfileDataEmpty({required this.noTokenMessage});
+  final Widget? guest;
+  GetProfileDataEmpty({this.guest});
 }
 
 final class GetProfileDataSuccess extends GetProfileDataState {

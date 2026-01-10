@@ -13,17 +13,20 @@ import 'package:foods_app/features/checkout/widgets/custom_detalis_row.dart';
 import 'package:foods_app/features/checkout/widgets/custom_visa_list_tile.dart';
 
 class CheckoutView extends StatelessWidget {
-  const CheckoutView({super.key, required this.item});
-  final CartItem item;
+  const CheckoutView({super.key, required this.items});
+  final List<CartItem> items;
 
   final double tax = 10.0;
   final double deliveryFees = 0.2;
 
   @override
   Widget build(BuildContext context) {
-    double orderPrice = item.price * item.quantity;
+    final orderPrice = items.fold(
+      0.0,
+      (sum, item) => sum + (item.price * item.quantity),
+    );
 
-    double totalPrice = orderPrice + tax + deliveryFees;
+    final totalPrice = orderPrice + tax + deliveryFees;
 
     return ValueListenableBuilder(
       valueListenable: selectedPaymentNotifier,

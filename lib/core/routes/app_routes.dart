@@ -75,16 +75,13 @@ class AppRoutes {
             child: ProductDetalisView(product: product),
           ),
         );
-
       case checkoutView:
-        final item = settings.arguments;
-        if (item is! CartItem) {
+        final items = settings.arguments;
+        if (items is! List<CartItem>) {
           return _undefinedRoute();
         }
         return MaterialPageRoute(
-          builder: (_) => CheckoutView(
-            item: item,
-          ),
+          builder: (_) => CheckoutView(items: items),
         );
 
       case successDialog:

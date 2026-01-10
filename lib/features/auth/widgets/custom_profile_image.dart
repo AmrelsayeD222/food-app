@@ -10,17 +10,38 @@ class CustomProfileImage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(10),
+      child: imageUrl != null && imageUrl!.isNotEmpty
+          ? Image.network(
+              imageUrl!,
+              width: 150,
+              height: 150,
+              fit: BoxFit.cover,
+              errorBuilder: (context, error, stackTrace) {
+                return _placeholder();
+              },
+              loadingBuilder: (context, child, loadingProgress) {
+                if (loadingProgress == null) return child;
+                return const Center(
+                  child: CircularProgressIndicator(strokeWidth: 2),
+                );
+              },
+            )
+          : _placeholder(),
+    );
+  }
+
+  Widget _placeholder() {
     return Container(
-      height: 150,
       width: 150,
-      decoration: BoxDecoration(
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        image: DecorationImage(
-          image: imageUrl != null && imageUrl!.isNotEmpty
-              ? NetworkImage(imageUrl!)
-              : const AssetImage('assets/detalis/sonic_profile.png'),
-          fit: BoxFit.fill,
-        ),
+      height: 150,
+      color: Colors.grey.shade200,
+      alignment: Alignment.center,
+      child: const Icon(
+        Icons.person,
+        size: 40,
+        color: Colors.grey,
       ),
     );
   }

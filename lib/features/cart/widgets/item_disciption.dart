@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
-import 'package:foods_app/features/checkout/views/checkout_view.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/text_style.dart';
 
@@ -42,6 +41,34 @@ class ItemDescription extends StatelessWidget {
                   width: 100,
                   height: 100,
                   fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return Container(
+                      width: 100,
+                      height: 100,
+                      color: Colors.grey[200],
+                      child: const Icon(
+                        Icons.image_not_supported,
+                        size: 40,
+                        color: Colors.grey,
+                      ),
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return Container(
+                      width: 100,
+                      height: 100,
+                      color: Colors.grey[200],
+                      child: Center(
+                        child: CircularProgressIndicator(
+                          value: loadingProgress.expectedTotalBytes != null
+                              ? loadingProgress.cumulativeBytesLoaded /
+                                  loadingProgress.expectedTotalBytes!
+                              : null,
+                        ),
+                      ),
+                    );
+                  },
                 ),
               ),
               const SizedBox(width: 12),
@@ -161,37 +188,6 @@ class ItemDescription extends StatelessWidget {
               children: item.sideOptions.map(_buildOptionChip).toList(),
             ),
           ],
-
-          // ✅ زرار Checkout لكل كارد
-          const SizedBox(height: 12),
-          const Divider(height: 1),
-          const SizedBox(height: 12),
-          Center(
-            child: ElevatedButton(
-              onPressed: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (_) => CheckoutView(item: item),
-                  ),
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                'Checkout',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ),
-          ),
         ],
       ),
     );

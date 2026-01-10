@@ -16,6 +16,7 @@ import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profi
 
 import 'package:foods_app/features/auth/widgets/custom_auth_button.dart';
 import 'package:foods_app/features/auth/widgets/custom_profile_image.dart';
+import 'package:foods_app/features/auth/widgets/guest_profile.dart';
 import 'package:foods_app/features/auth/widgets/profile_visa_tile.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -28,60 +29,65 @@ class ProfileView extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final state = context.watch<GetProfileDataCubit>().state;
+
     return Scaffold(
       backgroundColor: AppColors.white,
-      appBar: AppBar(
-        automaticallyImplyLeading: false,
-        backgroundColor: AppColors.white,
-        actions: [
-          IconButton(
-            onPressed: () {
-              showDialog(
-                context: context,
-                builder: (dialogContext) {
-                  return AlertDialog(
-                    backgroundColor: AppColors.white,
-                    title: const Text("Logout"),
-                    content: const Text("Are you sure you want to logout?"),
-                    actions: [
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: AppColors.black,
+      appBar: state is GetProfileDataEmpty
+          ? null
+          : AppBar(
+              automaticallyImplyLeading: false,
+              backgroundColor: AppColors.white,
+              actions: [
+                IconButton(
+                  onPressed: () {
+                    showDialog(
+                      context: context,
+                      builder: (dialogContext) {
+                        return AlertDialog(
                           backgroundColor: AppColors.white,
-                        ),
-                        child: const Text("Cancel"),
-                        onPressed: () {
-                          Navigator.of(dialogContext).pop();
-                        },
-                      ),
-                      TextButton(
-                        style: TextButton.styleFrom(
-                          foregroundColor: AppColors.red,
-                          backgroundColor: AppColors.white,
-                        ),
-                        child: const Text("Logout"),
-                        onPressed: () async {
-                          await getIt<SharedPrefsService>().clearToken();
-                          context.read<GetProfileDataCubit>().logout();
-                          // غلق الـ Dialog
-                          Navigator.of(dialogContext).pop();
-                          Navigator.of(context, rootNavigator: true)
-                              .pushNamedAndRemoveUntil(
-                            AppRoutes.signUp,
-                            (route) => false,
-                          );
-                        },
-                      ),
-                    ],
-                  );
-                },
-              );
-            },
-            icon: const Icon(Icons.logout, color: Colors.black),
-          ),
-          horizontalSpace(10),
-        ],
-      ),
+                          title: const Text("Logout"),
+                          content:
+                              const Text("Are you sure you want to logout?"),
+                          actions: [
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.black,
+                                backgroundColor: AppColors.white,
+                              ),
+                              child: const Text("Cancel"),
+                              onPressed: () {
+                                Navigator.of(dialogContext).pop();
+                              },
+                            ),
+                            TextButton(
+                              style: TextButton.styleFrom(
+                                foregroundColor: AppColors.red,
+                                backgroundColor: AppColors.white,
+                              ),
+                              child: const Text("Logout"),
+                              onPressed: () async {
+                                await getIt<SharedPrefsService>().clearToken();
+                                context.read<GetProfileDataCubit>().logout();
+                                // غلق الـ Dialog
+                                Navigator.of(dialogContext).pop();
+                                Navigator.of(context, rootNavigator: true)
+                                    .pushNamedAndRemoveUntil(
+                                  AppRoutes.signUp,
+                                  (route) => false,
+                                );
+                              },
+                            ),
+                          ],
+                        );
+                      },
+                    );
+                  },
+                  icon: const Icon(Icons.logout, color: Colors.black),
+                ),
+                horizontalSpace(10),
+              ],
+            ),
       body: Padding(
         padding: const EdgeInsets.all(8.0),
         child: BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
@@ -95,7 +101,7 @@ class ProfileView extends StatelessWidget {
             }
 
             if (state is GetProfileDataEmpty) {
-              return Center(child: Text(state.noTokenMessage));
+              return const Center(child: GuestProfile());
             }
 
             if (state is GetProfileDataSuccess) {
@@ -130,9 +136,13 @@ class ProfileView extends StatelessWidget {
                             .updateProfileFromUpload(
                               name: data.name ?? profile.name ?? '',
                               email: data.email ?? profile.email ?? '',
-                              address: data.address ?? profile.address ?? '',
+                              address: data.address ??
+                                  profile.address ??
+                                  'No address provided',
                               image: data.image ?? profile.image ?? '',
-                              visa: data.visa ?? profile.visa ?? '',
+                              visa: data.visa ??
+                                  profile.visa ??
+                                  '**** **** **** ****',
                             );
 
                         ScaffoldMessenger.of(context).showSnackBar(
