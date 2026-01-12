@@ -2,6 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
 import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/addAndRemoveFav/cubit/add_and_remove_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/getFav/cubit/get_fav_cubit.dart';
+import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
+import 'package:foods_app/features/favourite/data/repo/fav_repo_impl.dart';
 import 'package:get_it/get_it.dart';
 
 import '../network/services/api_service.dart';
@@ -53,6 +57,9 @@ void setupServiceLocator() {
   getIt.registerLazySingleton<ProductDetalisRepoimpl>(
     () => ProductDetalisRepoimpl(getIt<ApiServices>()),
   );
+  getIt.registerLazySingleton<FavRepo>(
+    () => FavRepoImpl(apiServices: getIt<ApiServices>()),
+  );
 
   /// 🔹 Cubits
   getIt.registerFactory<LoginCubit>(
@@ -78,5 +85,12 @@ void setupServiceLocator() {
   );
   getIt.registerFactory<PostProfileDataCubit>(
     () => PostProfileDataCubit(getIt<Repo>()),
+  );
+  getIt.registerLazySingleton<GetFavCubit>(
+    () => GetFavCubit(getIt<FavRepo>()),
+  );
+
+  getIt.registerLazySingleton<AddAndRemoveFavCubit>(
+    () => AddAndRemoveFavCubit(getIt<FavRepo>()),
   );
 }

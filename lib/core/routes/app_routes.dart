@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/favourite/views/favourire_view.dart';
 
 import '../../features/auth/views/login_view.dart';
 import '../../features/auth/views/sign_up_view.dart';
@@ -26,6 +27,7 @@ class AppRoutes {
   static const checkoutView = '/checkoutView';
   static const successDialog = '/successDialog';
   static const cartView = '/CartView';
+  static const favView = '/favView';
 
   static Route<dynamic> generateRoute(RouteSettings settings) {
     switch (settings.name) {
@@ -92,6 +94,10 @@ class AppRoutes {
       case cartView:
         return MaterialPageRoute(
           builder: (_) => const CartView(),
+        );
+      case favView:
+        return MaterialPageRoute(
+          builder: (_) => const FavourireView(),
         );
 
       default:

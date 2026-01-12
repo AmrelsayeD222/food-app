@@ -40,7 +40,7 @@ class ItemDescription extends StatelessWidget {
                   item.image,
                   width: 100,
                   height: 100,
-                  fit: BoxFit.cover,
+                  fit: BoxFit.fill,
                   errorBuilder: (context, error, stackTrace) {
                     return Container(
                       width: 100,

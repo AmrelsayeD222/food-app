@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foods_app/core/helper/navigation_extentions.dart';
-import 'package:foods_app/core/routes/app_routes.dart';
+
 import 'package:foods_app/features/home/data/manager/cubit/home_product_cubit.dart';
 import 'package:foods_app/features/home/widgets/home_card.dart';
 
@@ -40,15 +39,7 @@ class HomeCardBuilder extends StatelessWidget {
               childCount: state.products.length,
               (context, index) {
                 final product = state.products[index];
-                return GestureDetector(
-                  onTap: () {
-                    context.pushNamed(
-                      AppRoutes.productDetalisView,
-                      arguments: product,
-                    );
-                  },
-                  child: HomeCard(product: product),
-                );
+                return HomeCard(product: product);
               },
             ),
           );
