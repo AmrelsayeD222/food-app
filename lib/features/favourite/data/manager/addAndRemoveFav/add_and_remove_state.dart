@@ -1,4 +1,4 @@
-import 'package:foods_app/features/favourite/data/model/addAndRemoveFav/add_and_remove_fav_model.dart';
+import 'package:foods_app/features/favourite/data/model/add_and_remove_fav_model.dart';
 
 sealed class AddAndRemoveFavState {}
 

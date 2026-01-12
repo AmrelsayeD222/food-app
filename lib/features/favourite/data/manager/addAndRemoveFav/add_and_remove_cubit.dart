@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:foods_app/features/favourite/data/manager/addAndRemoveFav/cubit/add_and_remove_state.dart';
+import 'package:foods_app/features/favourite/data/manager/addAndRemoveFav/add_and_remove_state.dart';
 import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
 
 class AddAndRemoveFavCubit extends Cubit<AddAndRemoveFavState> {
