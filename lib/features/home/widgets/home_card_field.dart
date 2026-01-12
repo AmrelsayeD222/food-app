@@ -39,7 +39,9 @@ class HomeCardBuilder extends StatelessWidget {
               childCount: state.products.length,
               (context, index) {
                 final product = state.products[index];
-                return HomeCard(product: product);
+                return HomeCard(
+                  product: product,
+                );
               },
             ),
           );

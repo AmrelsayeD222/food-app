@@ -1,5 +1,5 @@
 import 'package:bloc/bloc.dart';
-import 'package:foods_app/features/favourite/data/model/getFav/get_fav_model.dart';
+import 'package:foods_app/features/favourite/data/model/get_fav_model.dart';
 import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
 
 part 'get_fav_state.dart';
