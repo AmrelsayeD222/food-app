@@ -11,8 +11,6 @@ import 'package:foods_app/features/auth/views/profile_view.dart';
 
 import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
-import 'package:foods_app/features/favourite/data/manager/addAndRemoveFav/add_and_remove_cubit.dart';
-import 'package:foods_app/features/favourite/data/manager/getFav/get_fav_cubit.dart';
 import 'package:foods_app/features/favourite/views/favourire_view.dart';
 import 'package:foods_app/features/home/data/manager/cubit/home_product_cubit.dart';
 import 'package:foods_app/features/home/views/home_view.dart';
@@ -54,12 +52,6 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
             value: getIt<GetProfileDataCubit>()
               ..getProfileData(token: token ?? '', forceRefresh: true),
           ),
-          BlocProvider.value(
-            value: getIt<AddAndRemoveFavCubit>(),
-          ),
-          BlocProvider.value(
-            value: getIt<GetFavCubit>()..getFav(token: token ?? ''),
-          ),
         ],
         child: const HomeView(),
       ),
@@ -71,14 +63,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         child: const CartView(),
       ),
       MultiBlocProvider(
-        providers: [
-          BlocProvider.value(
-            value: getIt<GetFavCubit>()..getFav(token: token ?? ''),
-          ),
-          BlocProvider.value(
-            value: getIt<AddAndRemoveFavCubit>(),
-          ),
-        ],
+        providers: const [],
         child: const FavourireView(),
       ),
 
