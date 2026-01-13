@@ -193,6 +193,16 @@ class LoginView extends StatelessWidget {
                                           onpressed: isLoading
                                               ? null
                                               : () {
+                                                  // Clear previous user's data when going as guest
+                                                  final cartCubit =
+                                                      getIt<CartCubitCubit>();
+                                                  cartCubit.clearCart();
+
+                                                  final profileCubit = getIt<
+                                                      GetProfileDataCubit>();
+                                                  profileCubit
+                                                      .clearProfile(); // Clear previous profile data
+
                                                   context.pushReplacementNamed(
                                                       AppRoutes.bottomNaviBar);
                                                 },

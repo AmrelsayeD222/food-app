@@ -15,6 +15,8 @@ class HomeAppBar extends StatelessWidget {
       builder: (context, state) {
         final bool isSuccess = state is GetProfileDataSuccess;
 
+        final profile = isSuccess ? state.profileData : null;
+
         return Row(
           children: [
             Expanded(
@@ -31,9 +33,7 @@ class HomeAppBar extends StatelessWidget {
                   ),
                   const SizedBox(height: 4),
                   Text(
-                    isSuccess
-                        ? 'Hello, Mr ${state.profileData.name}'
-                        : 'Hello, Mr ...',
+                    isSuccess ? 'Hello, Mr ${profile!.name}' : 'Hello, Mr ...',
                     maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     style: TextStyles.textStyle16,
@@ -45,16 +45,27 @@ class HomeAppBar extends StatelessWidget {
             CircleAvatar(
               radius: 30,
               backgroundColor: Colors.grey.shade200,
-              backgroundImage: isSuccess &&
-                      state.profileData.image != null &&
-                      state.profileData.image!.isNotEmpty
-                  ? NetworkImage(state.profileData.image!)
-                  : null,
-              child: !(isSuccess &&
-                      state.profileData.image != null &&
-                      state.profileData.image!.isNotEmpty)
-                  ? const Icon(Icons.person, size: 40, color: Colors.grey)
-                  : null,
+              child: ClipOval(
+                child: Image.network(
+                  profile?.image ?? '',
+                  width: 60,
+                  height: 60,
+                  fit: BoxFit.cover,
+                  errorBuilder: (context, error, stackTrace) {
+                    return const Icon(
+                      Icons.person,
+                      size: 40,
+                      color: Colors.grey,
+                    );
+                  },
+                  loadingBuilder: (context, child, loadingProgress) {
+                    if (loadingProgress == null) return child;
+                    return const Center(
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    );
+                  },
+                ),
+              ),
             ),
           ],
         );

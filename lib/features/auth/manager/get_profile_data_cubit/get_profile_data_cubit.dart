@@ -1,6 +1,8 @@
 import 'package:bloc/bloc.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
+import 'package:foods_app/features/auth/widgets/guest_profile.dart';
 
 part 'get_profile_data_state.dart';
 
@@ -12,7 +14,7 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   Future<void> getProfileData(
       {required String token, bool forceRefresh = false}) async {
     if (token.isEmpty) {
-      emit(GetProfileDataEmpty(noTokenMessage: "You are not logged in!"));
+      emit(GetProfileDataEmpty(guest: const GuestProfile()));
       return;
     }
 
@@ -53,7 +55,7 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   /// 🔹 Clear profile state on logout
   void logout() {
     if (!isClosed) {
-      emit(GetProfileDataEmpty(noTokenMessage: "You are not logged in!"));
+      emit(GetProfileDataEmpty());
     }
   }
 
