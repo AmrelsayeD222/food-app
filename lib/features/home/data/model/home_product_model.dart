@@ -35,6 +35,7 @@ class Product {
   final String image;
   final String rating;
   final String price;
+  final bool isFavorite;
 
   Product({
     required this.id,
@@ -43,6 +44,7 @@ class Product {
     required this.image,
     required this.rating,
     required this.price,
+    this.isFavorite = false,
   });
 
   factory Product.fromJson(Map<String, dynamic> json) {
@@ -53,6 +55,7 @@ class Product {
       image: json['image'] as String,
       rating: json['rating'] as String,
       price: json['price'] as String,
+      isFavorite: json['is_favorite'] == true || json['is_favorite'] == 1,
     );
   }
 
@@ -64,10 +67,21 @@ class Product {
       'image': image,
       'rating': rating,
       'price': price,
+      'is_favorite': isFavorite,
     };
   }
 
-  // Helper methods for type conversion
   double get ratingAsDouble => double.tryParse(rating) ?? 0.0;
   double get priceAsDouble => double.tryParse(price) ?? 0.0;
+  Product copyWith({bool? isFavorite}) {
+    return Product(
+      id: id,
+      name: name,
+      description: description,
+      image: image,
+      rating: rating,
+      price: price,
+      isFavorite: isFavorite ?? this.isFavorite,
+    );
+  }
 }

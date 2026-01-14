@@ -9,10 +9,12 @@ import '../../../../core/helper/text_style.dart';
 
 class HomeCard extends StatelessWidget {
   final Product product;
+  final String token;
 
   const HomeCard({
     super.key,
     required this.product,
+    required this.token,
   });
 
   @override
@@ -27,7 +29,10 @@ class HomeCard extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              const FavIcon(),
+              FavIcon(
+                productId: product.id,
+                token: token,
+              ),
               GestureDetector(
                 onTap: () {
                   context.pushNamed(
