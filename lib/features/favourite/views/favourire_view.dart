@@ -2,8 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/spacing.dart';
-import 'package:foods_app/features/favourite/data/manager/AddAndRemove/add_and_remove_cubit.dart';
-import 'package:foods_app/features/favourite/data/manager/Get/get_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
 
 class FavourireView extends StatefulWidget {
   const FavourireView({super.key});
@@ -17,9 +16,9 @@ class _FavourireViewState extends State<FavourireView> {
   void initState() {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
-      final currentState = context.read<GetFavCubit>().state;
-      if (currentState is GetFavInitial) {
-        context.read<GetFavCubit>().getFavorites();
+      final currentState = context.read<FavCubit>().state;
+      if (currentState is FavInitial) {
+        context.read<FavCubit>().loadFavorites();
       }
     });
   }
@@ -28,54 +27,20 @@ class _FavourireViewState extends State<FavourireView> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: const _FavAppBar(),
-      body: MultiBlocListener(
-        listeners: [
-          BlocListener<AddCubit, AddState>(
-            listener: (context, state) {
-              if (state is AddSuccess) {
-                context.read<GetFavCubit>().getFavorites(isLoading: false);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Item added to Favourites"),
-                    backgroundColor: Colors.green,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              } else if (state is AddFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.error),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
-            },
-          ),
-          BlocListener<RemoveCubit, RemoveState>(
-            listener: (context, state) {
-              if (state is RemoveSuccess) {
-                context.read<GetFavCubit>().getFavorites(isLoading: false);
-                ScaffoldMessenger.of(context).showSnackBar(
-                  const SnackBar(
-                    content: Text("Item removed from Favourites"),
-                    backgroundColor: Colors.red,
-                    duration: Duration(seconds: 2),
-                  ),
-                );
-              } else if (state is RemoveFailure) {
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text(state.error),
-                    backgroundColor: Colors.red,
-                  ),
-                );
-              }
-            },
-          ),
-        ],
-        child: BlocBuilder<GetFavCubit, GetFavState>(
+      body: BlocListener<FavCubit, FavState>(
+        listener: (context, state) {
+          if (state is FavError) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              SnackBar(
+                content: Text(state.message),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+        },
+        child: BlocBuilder<FavCubit, FavState>(
           builder: (context, state) {
-            if (state is GetFavLoading) {
+            if (state is FavLoading) {
               return const Center(
                 child: CircularProgressIndicator(
                   color: AppColors.primary,
@@ -83,7 +48,7 @@ class _FavourireViewState extends State<FavourireView> {
               );
             }
 
-            if (state is GetFavFailure) {
+            if (state is FavError) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -104,7 +69,7 @@ class _FavourireViewState extends State<FavourireView> {
                     ),
                     verticalSpace(10),
                     Text(
-                      state.error,
+                      state.message,
                       style: TextStyle(
                         fontSize: 14,
                         color: Colors.grey.shade600,
@@ -114,7 +79,7 @@ class _FavourireViewState extends State<FavourireView> {
                     verticalSpace(20),
                     ElevatedButton.icon(
                       onPressed: () {
-                        context.read<GetFavCubit>().getFavorites();
+                        context.read<FavCubit>().loadFavorites();
                       },
                       icon: const Icon(Icons.refresh),
                       label: const Text('Retry'),
@@ -132,7 +97,7 @@ class _FavourireViewState extends State<FavourireView> {
               );
             }
 
-            if (state is GetFavEmpty) {
+            if (state is FavEmpty) {
               return Center(
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -164,12 +129,12 @@ class _FavourireViewState extends State<FavourireView> {
               );
             }
 
-            if (state is GetFavSuccess) {
-              final favorites = state.response.data;
+            if (state is FavSuccess && state.favoriteProducts != null) {
+              final favorites = state.favoriteProducts!;
 
               return RefreshIndicator(
                 onRefresh: () async {
-                  context.read<GetFavCubit>().getFavorites();
+                  context.read<FavCubit>().loadFavorites();
                 },
                 color: AppColors.primary,
                 child: ListView.builder(
@@ -293,19 +258,19 @@ class _FavourireViewState extends State<FavourireView> {
                             ),
 
                             // Remove Button
-                            BlocBuilder<RemoveCubit, RemoveState>(
-                              builder: (context, removeState) {
-                                final isRemoving = removeState is RemoveLoading;
-
+                            BlocSelector<FavCubit, FavState, bool>(
+                              selector: (state) =>
+                                  state.togglingProductIds.contains(product.id),
+                              builder: (context, isToggling) {
                                 return IconButton(
-                                  onPressed: isRemoving
+                                  onPressed: isToggling
                                       ? null
                                       : () {
-                                          context.read<RemoveCubit>().removeFav(
-                                                productId: product.id,
-                                              );
+                                          context
+                                              .read<FavCubit>()
+                                              .toggleFavorite(product.id);
                                         },
-                                  icon: isRemoving
+                                  icon: isToggling
                                       ? const SizedBox(
                                           width: 20,
                                           height: 20,

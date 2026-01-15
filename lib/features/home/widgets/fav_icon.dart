@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foods_app/features/favourite/data/manager/AddAndRemove/add_and_remove_cubit.dart';
-import 'package:foods_app/features/favourite/data/manager/Get/get_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
 
-class FavIcon extends StatefulWidget {
+class FavIcon extends StatelessWidget {
   final int productId;
 
   const FavIcon({
@@ -12,78 +11,39 @@ class FavIcon extends StatefulWidget {
   });
 
   @override
-  State<FavIcon> createState() => _FavIconState();
-}
-
-class _FavIconState extends State<FavIcon> {
-  bool _isLoading = false;
-
-  @override
   Widget build(BuildContext context) {
-    return BlocListener<AddCubit, AddState>(
-      listener: (context, addState) {
-        if (addState is AddSuccess || addState is AddFailure) {
-          if (mounted) {
-            setState(() {
-              _isLoading = false;
-            });
-          }
-        }
-      },
-      child: BlocListener<RemoveCubit, RemoveState>(
-        listener: (context, removeState) {
-          if (removeState is RemoveSuccess || removeState is RemoveFailure) {
-            if (mounted) {
-              setState(() {
-                _isLoading = false;
-              });
-            }
-          }
-        },
-        child: BlocBuilder<GetFavCubit, GetFavState>(
-          builder: (context, getFavState) {
-            final isFav = getFavState is GetFavSuccess &&
-                getFavState.response.data.any((e) => e.id == widget.productId);
-
-            return GestureDetector(
-              onTap: _isLoading
-                  ? null
-                  : () {
-                      setState(() {
-                        _isLoading = true;
-                      });
-
-                      if (isFav) {
-                        context.read<RemoveCubit>().removeFav(
-                              productId: widget.productId,
-                            );
-                      } else {
-                        context.read<AddCubit>().addFav(
-                              productId: widget.productId,
-                            );
-                      }
-                    },
-              child: Align(
-                alignment: Alignment.topRight,
-                child: _isLoading
-                    ? const SizedBox(
-                        width: 22,
-                        height: 22,
-                        child: CircularProgressIndicator(
-                          strokeWidth: 2,
-                          color: Colors.red,
-                        ),
-                      )
-                    : Icon(
-                        isFav ? Icons.favorite : Icons.favorite_border,
-                        color: isFav ? Colors.red : Colors.grey,
-                        size: 22,
-                      ),
-              ),
-            );
-          },
-        ),
+    return BlocSelector<FavCubit, FavState,
+        ({bool isFavorite, bool isToggling})>(
+      selector: (state) => (
+        isFavorite: state.favoriteIds.contains(productId),
+        isToggling: state.togglingProductIds.contains(productId),
       ),
+      builder: (context, data) {
+        return GestureDetector(
+          onTap: data.isToggling
+              ? null
+              : () {
+                  context.read<FavCubit>().toggleFavorite(productId);
+                },
+          child: Align(
+            alignment: Alignment.topRight,
+            child: data.isToggling
+                ? const SizedBox(
+                    width: 22,
+                    height: 22,
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.red,
+                    ),
+                  )
+                : Icon(
+                    data.isFavorite ? Icons.favorite : Icons.favorite_border,
+                    color: data.isFavorite ? Colors.red : Colors.grey,
+                    size: 22,
+                  ),
+          ),
+        );
+      },
     );
   }
 }
