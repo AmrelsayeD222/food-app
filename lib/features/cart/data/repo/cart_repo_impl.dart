@@ -10,12 +10,10 @@ class CartRepoImpl implements CartRepo {
   CartRepoImpl({required this.apiServices});
 
   @override
-  Future<Either<Failure, CartResponseModel>> getCart(
-      {required String token}) async {
+  Future<Either<Failure, CartResponseModel>> getCart() async {
     try {
       final response = await apiServices.get(
         endPoint: 'cart',
-        token: token,
       );
       if (response['data'] == null) {
         return Left(ServerFailure('Cart is empty or not created yet'));

@@ -5,12 +5,10 @@ import 'package:foods_app/features/favourite/data/manager/Get/get_cubit.dart';
 
 class FavIcon extends StatefulWidget {
   final int productId;
-  final String token;
 
   const FavIcon({
     super.key,
     required this.productId,
-    required this.token,
   });
 
   @override
@@ -57,12 +55,10 @@ class _FavIconState extends State<FavIcon> {
 
                       if (isFav) {
                         context.read<RemoveCubit>().removeFav(
-                              token: widget.token,
                               productId: widget.productId,
                             );
                       } else {
                         context.read<AddCubit>().addFav(
-                              token: widget.token,
                               productId: widget.productId,
                             );
                       }

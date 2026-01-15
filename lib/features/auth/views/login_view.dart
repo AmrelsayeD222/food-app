@@ -41,7 +41,7 @@ class LoginView extends StatelessWidget {
 
             final profileCubit = getIt<GetProfileDataCubit>();
             profileCubit.clearProfile(); // Clear previous profile data
-            profileCubit.getProfileData(token: token, forceRefresh: true);
+            profileCubit.getProfileData(forceRefresh: true);
 
             if (!context.mounted) return;
             context.pushReplacementNamed(AppRoutes.bottomNaviBar);

@@ -1,5 +1,6 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
 import 'package:foods_app/features/auth/widgets/guest_profile.dart';
@@ -8,12 +9,13 @@ part 'get_profile_data_state.dart';
 
 class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   final Repo repo;
-  GetProfileDataCubit(this.repo) : super(GetProfileDataInitial());
+  final SharedPrefsService _sharedPrefsService;
+  GetProfileDataCubit(this.repo, this._sharedPrefsService) : super(GetProfileDataInitial());
 
   /// 🔹 Fetch profile data safely
-  Future<void> getProfileData(
-      {required String token, bool forceRefresh = false}) async {
-    if (token.isEmpty) {
+  Future<void> getProfileData({bool forceRefresh = false}) async {
+    final token = await _sharedPrefsService.getToken();
+    if (token == null || token.isEmpty) {
       emit(GetProfileDataEmpty(guest: const GuestProfile()));
       return;
     }
@@ -24,7 +26,7 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
     if (!isClosed) {
       emit(GetProfileDataLoading());
     }
-    final result = await repo.getProfileData(token: token);
+    final result = await repo.getProfileData();
     if (isClosed) return;
     result.fold(
       (failure) => emit(GetProfileDataFailure(error: failure.errMessage)),

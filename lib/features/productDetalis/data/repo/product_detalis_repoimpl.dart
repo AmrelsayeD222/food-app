@@ -13,14 +13,12 @@ class ProductDetalisRepoimpl implements ProductDetalisRepo {
 
   @override
   Future<Either<Failure, OrderResponse>> createOrder({
-    required String token,
     required OrderRequest orderRequest,
   }) async {
     try {
       final response = await apiServices.post(
         endPoint: 'cart/add',
         data: orderRequest.toJson(),
-        token: token,
       );
 
       final orderResponse = OrderResponse.fromJson(response, null);

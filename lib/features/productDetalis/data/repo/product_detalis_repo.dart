@@ -6,6 +6,5 @@ import 'package:foods_app/features/productDetalis/data/model/oreder_request_mode
 abstract class ProductDetalisRepo {
   Future<Either<Failure, OrderResponse>> createOrder({
     required OrderRequest orderRequest,
-    required String token,
   });
 }

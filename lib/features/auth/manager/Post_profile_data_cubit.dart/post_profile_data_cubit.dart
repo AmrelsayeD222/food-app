@@ -10,7 +10,6 @@ class PostProfileDataCubit extends Cubit<PostProfileDataState> {
   PostProfileDataCubit(this.repo) : super(PostProfileDataInitial());
 
   Future<void> postProfileData({
-    required String token,
     String? name,
     String? imagePath,
   }) async {
@@ -19,7 +18,6 @@ class PostProfileDataCubit extends Cubit<PostProfileDataState> {
     emit(PostProfileDataLoading());
 
     final result = await repo.postProfileData(
-      token: token,
       name: name,
       imagePath: imagePath,
     );

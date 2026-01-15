@@ -10,9 +10,7 @@ import '../widgets/home_categoy_list.dart';
 import '../widgets/search_field.dart';
 
 class HomeView extends StatelessWidget {
-  final String token;
-
-  const HomeView({super.key, required this.token});
+  const HomeView({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +39,7 @@ class HomeView extends StatelessWidget {
                     if (state is AddSuccess) {
                       context
                           .read<GetFavCubit>()
-                          .getFavorites(token, isLoading: false);
+                          .getFavorites(isLoading: false);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Item added to Favourits"),
@@ -60,7 +58,7 @@ class HomeView extends StatelessWidget {
                     if (state is RemoveSuccess) {
                       context
                           .read<GetFavCubit>()
-                          .getFavorites(token, isLoading: false);
+                          .getFavorites(isLoading: false);
                       ScaffoldMessenger.of(context).showSnackBar(
                         const SnackBar(
                           content: Text("Item removed from Favourits"),
@@ -84,7 +82,7 @@ class HomeView extends StatelessWidget {
                   },
                 ),
               ],
-              child: HomeCardBuilder(token: token),
+              child: const HomeCardBuilder(),
             ),
           ],
         ),

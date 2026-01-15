@@ -10,7 +10,6 @@ import 'package:foods_app/features/home/data/model/home_product_model.dart';
 import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
 import 'package:foods_app/features/productDetalis/data/model/oreder_request_model.dart';
 import 'package:foods_app/features/productDetalis/widgets/item_count.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../core/helper/text_style.dart';
 import '../widgets/custom_slider.dart';
@@ -64,11 +63,7 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
               .showSnackBar(SnackBar(content: Text(state.successMessage)));
 
           // 🔥 تحديث CartCubit بعد إضافة الطلب
-          final prefs = await SharedPreferences.getInstance();
-          final token = prefs.getString('token');
-          if (token != null && token.isNotEmpty) {
-            getIt<CartCubitCubit>().getCart(token: token, forceRefresh: true);
-          }
+          getIt<CartCubitCubit>().getCart(forceRefresh: true);
 
           // الانتقال للكارت مباشرة
           Navigator.pushAndRemoveUntil(
@@ -105,17 +100,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
           onpressed: () async {
             if (!mounted) return;
 
-            final prefs = await SharedPreferences.getInstance();
-            final token = prefs.getString('token');
-
-            if (token == null || token.isEmpty) {
-              // ignore: use_build_context_synchronously
-              ScaffoldMessenger.of(context).showSnackBar(
-                const SnackBar(content: Text('Please login first')),
-              );
-              return;
-            }
-
             final orderItem = OrderItem(
               productId: widget.product.id,
               quantity: quantity,
@@ -128,7 +112,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
 
             // ignore: use_build_context_synchronously
             context.read<OrderRequestCubit>().createOrder(
-                  token: token,
                   request: orderRequest,
                 );
           },

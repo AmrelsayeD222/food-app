@@ -8,9 +8,9 @@ class GetFavCubit extends Cubit<GetFavState> {
   final FavRepo favRepo;
   GetFavCubit(this.favRepo) : super(GetFavInitial());
 
-  Future<void> getFavorites(String token, {bool isLoading = true}) async {
+  Future<void> getFavorites({bool isLoading = true}) async {
     if (isLoading) emit(GetFavLoading());
-    final result = await favRepo.getFavorites(token: token);
+    final result = await favRepo.getFavorites();
     result.fold(
       (failure) => emit(GetFavFailure(error: failure.errMessage)),
       (success) => success.data.isEmpty

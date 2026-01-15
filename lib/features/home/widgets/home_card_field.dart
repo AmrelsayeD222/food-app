@@ -5,10 +5,8 @@ import 'package:foods_app/features/home/data/manager/cubit/home_product_cubit.da
 import 'package:foods_app/features/home/widgets/home_card.dart';
 
 class HomeCardBuilder extends StatelessWidget {
-  final String token;
   const HomeCardBuilder({
     super.key,
-    required this.token,
   });
 
   @override
@@ -45,7 +43,6 @@ class HomeCardBuilder extends StatelessWidget {
                 final product = state.products[index];
                 return HomeCard(
                   product: product,
-                  token: token,
                 );
               },
             ),

@@ -13,10 +13,8 @@ abstract class Repo {
   Future<Either<Failure, SignUpModel>> signUp(
       {required String name, required String email, required String password});
 
-  Future<Either<Failure, GetProfileDataModel>> getProfileData(
-      {required String token});
+  Future<Either<Failure, GetProfileDataModel>> getProfileData();
   Future<Either<Failure, PostProfileResponse>> postProfileData({
-    required String token,
     String? name,
     String? imagePath,
   });

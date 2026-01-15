@@ -1,4 +1,5 @@
 import 'package:bloc/bloc.dart';
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
 import 'package:foods_app/features/cart/data/repo/cart_repo.dart';
 
@@ -6,15 +7,16 @@ part 'cart_cubit_state.dart';
 
 class CartCubitCubit extends Cubit<CartCubitState> {
   final CartRepo repo;
+  final SharedPrefsService _sharedPrefsService;
 
-  CartCubitCubit(this.repo) : super(CartCubitInitial());
+  CartCubitCubit(this.repo, this._sharedPrefsService) : super(CartCubitInitial());
 
   Future<void> getCart({
-    required String? token,
     bool forceRefresh = false,
   }) async {
     if (isClosed) return;
 
+    final token = await _sharedPrefsService.getToken();
     if (token == null || token.isEmpty) {
       emit(CartCubitEmpty(message: "please login to continue shopping!"));
       return;
@@ -24,7 +26,7 @@ class CartCubitCubit extends Cubit<CartCubitState> {
 
     emit(CartCubitLoading());
 
-    final result = await repo.getCart(token: token);
+    final result = await repo.getCart();
 
     if (isClosed) return;
 

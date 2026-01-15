@@ -87,12 +87,10 @@ class RepoImpl implements Repo {
   }
 
   @override
-  Future<Either<Failure, GetProfileDataModel>> getProfileData(
-      {required String token}) async {
+  Future<Either<Failure, GetProfileDataModel>> getProfileData() async {
     try {
       var response = await apiServices.get(
         endPoint: 'profile',
-        token: token,
       );
       final profileData = response['data'] ?? {};
       return Right(GetProfileDataModel.fromJson(profileData));
@@ -111,7 +109,6 @@ class RepoImpl implements Repo {
 
   @override
   Future<Either<Failure, PostProfileResponse>> postProfileData({
-    required String token,
     String? name,
     String? imagePath,
   }) async {
@@ -128,7 +125,6 @@ class RepoImpl implements Repo {
       final response = await apiServices.postFormData(
         endPoint: 'update-profile',
         data: formData,
-        token: token,
       );
 
       return Right(PostProfileResponse.fromJson(response));

@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
-import 'package:foods_app/core/di/service_locator.dart';
-import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/features/favourite/data/manager/AddAndRemove/add_and_remove_cubit.dart';
 import 'package:foods_app/features/favourite/data/manager/Get/get_cubit.dart';
@@ -15,71 +13,19 @@ class FavourireView extends StatefulWidget {
 }
 
 class _FavourireViewState extends State<FavourireView> {
-  String? token;
-  bool isLoadingToken = true;
-
   @override
   void initState() {
     super.initState();
-    _loadToken();
-  }
-
-  Future<void> _loadToken() async {
-    token = await getIt<SharedPrefsService>().getToken();
-    setState(() {
-      isLoadingToken = false;
-    });
-
-    if (token != null && mounted) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
       final currentState = context.read<GetFavCubit>().state;
-
       if (currentState is GetFavInitial) {
-        context.read<GetFavCubit>().getFavorites(token!);
+        context.read<GetFavCubit>().getFavorites();
       }
-    }
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-    // لو لسه بنجيب الـ token
-    if (isLoadingToken) {
-      return const Scaffold(
-        appBar: _FavAppBar(),
-        body: Center(
-          child: CircularProgressIndicator(
-            color: AppColors.primary,
-          ),
-        ),
-      );
-    }
-
-    // لو مفيش token
-    if (token == null) {
-      return Scaffold(
-        appBar: const _FavAppBar(),
-        body: Center(
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Icon(
-                Icons.error_outline,
-                size: 80,
-                color: Colors.red.shade300,
-              ),
-              verticalSpace(20),
-              const Text(
-                'Authentication Error',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
-          ),
-        ),
-      );
-    }
-
     return Scaffold(
       appBar: const _FavAppBar(),
       body: MultiBlocListener(
@@ -87,9 +33,7 @@ class _FavourireViewState extends State<FavourireView> {
           BlocListener<AddCubit, AddState>(
             listener: (context, state) {
               if (state is AddSuccess) {
-                context
-                    .read<GetFavCubit>()
-                    .getFavorites(token!, isLoading: false);
+                context.read<GetFavCubit>().getFavorites(isLoading: false);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Item added to Favourites"),
@@ -110,9 +54,7 @@ class _FavourireViewState extends State<FavourireView> {
           BlocListener<RemoveCubit, RemoveState>(
             listener: (context, state) {
               if (state is RemoveSuccess) {
-                context
-                    .read<GetFavCubit>()
-                    .getFavorites(token!, isLoading: false);
+                context.read<GetFavCubit>().getFavorites(isLoading: false);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
                     content: Text("Item removed from Favourites"),
@@ -172,7 +114,7 @@ class _FavourireViewState extends State<FavourireView> {
                     verticalSpace(20),
                     ElevatedButton.icon(
                       onPressed: () {
-                        context.read<GetFavCubit>().getFavorites(token!);
+                        context.read<GetFavCubit>().getFavorites();
                       },
                       icon: const Icon(Icons.refresh),
                       label: const Text('Retry'),
@@ -227,7 +169,7 @@ class _FavourireViewState extends State<FavourireView> {
 
               return RefreshIndicator(
                 onRefresh: () async {
-                  context.read<GetFavCubit>().getFavorites(token!);
+                  context.read<GetFavCubit>().getFavorites();
                 },
                 color: AppColors.primary,
                 child: ListView.builder(
@@ -360,7 +302,6 @@ class _FavourireViewState extends State<FavourireView> {
                                       ? null
                                       : () {
                                           context.read<RemoveCubit>().removeFav(
-                                                token: token!,
                                                 productId: product.id,
                                               );
                                         },

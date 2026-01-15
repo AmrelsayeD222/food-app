@@ -9,9 +9,9 @@ class AddCubit extends Cubit<AddState> {
 
   AddCubit(this.favRepo) : super(AddInitial());
 
-  Future<void> addFav({required String token, required int productId}) async {
+  Future<void> addFav({required int productId}) async {
     emit(AddLoading());
-    final result = await favRepo.addFav(token: token, productId: productId);
+    final result = await favRepo.addFav(productId: productId);
     result.fold(
       (failure) {
         emit(AddFailure(error: failure.errMessage));
@@ -28,10 +28,9 @@ class RemoveCubit extends Cubit<RemoveState> {
 
   RemoveCubit(this.favRepo) : super(RemoveInitial());
 
-  Future<void> removeFav(
-      {required String token, required int productId}) async {
+  Future<void> removeFav({required int productId}) async {
     emit(RemoveLoading());
-    final result = await favRepo.removeFav(token: token, productId: productId);
+    final result = await favRepo.removeFav(productId: productId);
     result.fold(
       (failure) {
         emit(RemoveFailure(error: failure.errMessage));

@@ -12,14 +12,13 @@ class OrderRequestCubit extends Cubit<OrderRequestState> {
   /// ينشئ أمر جديد
   /// [forceRefreshCart] هنا غير موجود، لأنه مسؤولية CartCubit تحديث نفسه بعد Success
   Future<void> createOrder({
-    required String token,
     required OrderRequest request,
   }) async {
     if (isClosed) return;
 
     emit(OrderRequestLoading());
 
-    final result = await repo.createOrder(token: token, orderRequest: request);
+    final result = await repo.createOrder(orderRequest: request);
 
     if (isClosed) return;
 

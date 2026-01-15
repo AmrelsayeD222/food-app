@@ -5,15 +5,11 @@ import 'package:foods_app/features/favourite/data/model/getFav/get_fav_response.
 
 abstract class FavRepo {
   Future<Either<Failure, AddAndRemoveModel>> addFav({
-    required String token,
     required int productId,
   });
   Future<Either<Failure, AddAndRemoveModel>> removeFav({
-    required String token,
     required int productId,
   });
 
-  Future<Either<Failure, GetFavResponseModel>> getFavorites({
-    required String token,
-  });
+  Future<Either<Failure, GetFavResponseModel>> getFavorites();
 }

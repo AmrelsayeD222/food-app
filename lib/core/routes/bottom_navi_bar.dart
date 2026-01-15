@@ -1,14 +1,11 @@
 // bottom_navi_bar.dart
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/di/service_locator.dart';
-import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/views/profile_view.dart';
-
 import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
 import 'package:foods_app/features/favourite/data/manager/AddAndRemove/add_and_remove_cubit.dart';
@@ -30,19 +27,16 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
   late PageController _viewController;
 
   List<Widget>? views;
-  String? token;
 
   @override
   void initState() {
     super.initState();
     _selectedIndex = widget.initialIndex;
     _viewController = PageController(initialPage: _selectedIndex);
-    _loadTokenAndInitViews();
+    _initViews();
   }
 
-  Future<void> _loadTokenAndInitViews() async {
-    token = await getIt<SharedPrefsService>().getToken();
-
+  void _initViews() {
     views = [
       MultiBlocProvider(
         providers: [
@@ -51,10 +45,10 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
           ),
           BlocProvider.value(
             value: getIt<GetProfileDataCubit>()
-              ..getProfileData(token: token ?? '', forceRefresh: true),
+              ..getProfileData(forceRefresh: true),
           ),
           BlocProvider.value(
-            value: getIt<GetFavCubit>()..getFavorites(token ?? ''),
+            value: getIt<GetFavCubit>()..getFavorites(),
           ),
           BlocProvider.value(
             value: getIt<AddCubit>(),
@@ -63,14 +57,11 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
             value: getIt<RemoveCubit>(),
           ),
         ],
-        child: HomeView(
-          token: token ?? '',
-        ),
+        child: const HomeView(),
       ),
 
       BlocProvider.value(
-        value: getIt<CartCubitCubit>()
-          ..getCart(token: token ?? '', forceRefresh: true),
+        value: getIt<CartCubitCubit>()..getCart(forceRefresh: true),
         child: const CartView(),
       ),
 
@@ -94,7 +85,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         providers: [
           BlocProvider.value(
             value: getIt<GetProfileDataCubit>()
-              ..getProfileData(token: token ?? '', forceRefresh: true),
+              ..getProfileData(forceRefresh: true),
           ),
           BlocProvider(
             create: (_) => getIt<PostProfileDataCubit>(),

@@ -11,14 +11,12 @@ class FavRepoImpl implements FavRepo {
   FavRepoImpl({required this.apiServices});
   @override
   Future<Either<Failure, AddAndRemoveModel>> addFav({
-    required String token,
     required int productId,
   }) async {
     try {
       final response = await apiServices.post(
         endPoint: 'toggle-favorite',
         data: {'product_id': productId},
-        token: token,
       );
       return Right(AddAndRemoveModel.fromJson(response));
     } catch (e) {
@@ -30,12 +28,10 @@ class FavRepoImpl implements FavRepo {
   }
 
   @override
-  Future<Either<Failure, GetFavResponseModel>> getFavorites(
-      {required String token}) async {
+  Future<Either<Failure, GetFavResponseModel>> getFavorites() async {
     try {
       final response = await apiServices.get(
         endPoint: 'favorites',
-        token: token,
       );
       return Right(GetFavResponseModel.fromJson(response));
     } catch (e) {
@@ -48,13 +44,13 @@ class FavRepoImpl implements FavRepo {
   }
 
   @override
-  Future<Either<Failure, AddAndRemoveModel>> removeFav(
-      {required String token, required int productId}) async {
+  Future<Either<Failure, AddAndRemoveModel>> removeFav({
+    required int productId,
+  }) async {
     try {
       final response = await apiServices.post(
         endPoint: 'toggle-favorite',
         data: {'product_id': productId},
-        token: token,
       );
       return Right(AddAndRemoveModel.fromJson(response));
     } catch (e) {

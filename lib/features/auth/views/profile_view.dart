@@ -23,9 +23,6 @@ import 'package:image_picker/image_picker.dart';
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
 
-  Future<String> getToken() async {
-    return await getIt<SharedPrefsService>().getToken() ?? '';
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,20 +174,9 @@ class ProfileView extends StatelessWidget {
 
                                   if (picked == null) return;
 
-                                  final token = await getToken();
-                                  if (token.isEmpty) {
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      const SnackBar(
-                                        content: Text("You are not logged in"),
-                                      ),
-                                    );
-                                    return;
-                                  }
-
                                   context
                                       .read<PostProfileDataCubit>()
                                       .postProfileData(
-                                        token: token,
                                         imagePath: picked.path,
                                       );
                                 },
