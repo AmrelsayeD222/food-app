@@ -100,6 +100,6 @@ void setupServiceLocator() {
   );
 
   getIt.registerLazySingleton<FavCubit>(
-    () => FavCubit(getIt<FavRepo>())..loadFavorites(),
+    () => FavCubit(getIt<FavRepo>())..getFavorites(),
   );
 }

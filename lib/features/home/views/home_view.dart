@@ -33,11 +33,42 @@ class HomeView extends StatelessWidget {
             ),
             BlocListener<FavCubit, FavState>(
               listener: (context, state) {
-                if (state is FavSuccess) {
-                } else if (state is FavError) {
+                if (state is AddSuccess) {
+                  context.read<FavCubit>().getFavorites(isLoading: false);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Item added to Favourites"),
+                      backgroundColor: Colors.green,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else if (state is AddFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
-                      content: Text(state.message),
+                      content: Text(state.error),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (state is RemoveSuccess) {
+                  context.read<FavCubit>().getFavorites(isLoading: false);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    const SnackBar(
+                      content: Text("Item removed from Favourites"),
+                      backgroundColor: Colors.red,
+                      duration: Duration(seconds: 2),
+                    ),
+                  );
+                } else if (state is RemoveFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.error),
+                      backgroundColor: Colors.red,
+                    ),
+                  );
+                } else if (state is GetFavFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(state.error),
                       backgroundColor: Colors.red,
                     ),
                   );

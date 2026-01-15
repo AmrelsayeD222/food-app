@@ -4,10 +4,7 @@ import 'package:foods_app/features/favourite/data/model/addAndRemoveFav/add_and_
 import 'package:foods_app/features/favourite/data/model/getFav/get_fav_response.dart';
 
 abstract class FavRepo {
-  Future<Either<Failure, AddAndRemoveModel>> addFav({
-    required int productId,
-  });
-  Future<Either<Failure, AddAndRemoveModel>> removeFav({
+  Future<Either<Failure, AddAndRemoveModel>> toggleFav({
     required int productId,
   });
 

@@ -9,8 +9,9 @@ import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
 class FavRepoImpl implements FavRepo {
   final ApiServices apiServices;
   FavRepoImpl({required this.apiServices});
+
   @override
-  Future<Either<Failure, AddAndRemoveModel>> addFav({
+  Future<Either<Failure, AddAndRemoveModel>> toggleFav({
     required int productId,
   }) async {
     try {
@@ -40,24 +41,6 @@ class FavRepoImpl implements FavRepo {
       } else {
         return Left(ServerFailure(e.toString()));
       }
-    }
-  }
-
-  @override
-  Future<Either<Failure, AddAndRemoveModel>> removeFav({
-    required int productId,
-  }) async {
-    try {
-      final response = await apiServices.post(
-        endPoint: 'toggle-favorite',
-        data: {'product_id': productId},
-      );
-      return Right(AddAndRemoveModel.fromJson(response));
-    } catch (e) {
-      if (e is DioException) {
-        return Left(ServerFailure.fromDioError(e));
-      }
-      return Left(ServerFailure(e.toString()));
     }
   }
 }
