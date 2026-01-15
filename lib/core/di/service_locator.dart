@@ -58,6 +58,10 @@ void setupServiceLocator() {
     () => ProductDetalisRepoimpl(getIt<ApiServices>()),
   );
 
+  getIt.registerLazySingleton<FavRepo>(
+    () => FavRepoImpl(apiServices: getIt<ApiServices>()),
+  );
+
   /// 🔹 Cubits
   getIt.registerFactory<LoginCubit>(
     () => LoginCubit(getIt<Repo>()),
@@ -83,10 +87,8 @@ void setupServiceLocator() {
   getIt.registerFactory<PostProfileDataCubit>(
     () => PostProfileDataCubit(getIt<Repo>()),
   );
-  getIt.registerLazySingleton<FavRepo>(
-    () => FavRepoImpl(apiServices: getIt<ApiServices>()),
-  );
-  getIt.registerFactory<GetFavCubit>(
+
+  getIt.registerLazySingleton<GetFavCubit>(
     () => GetFavCubit(getIt<FavRepo>()),
   );
 

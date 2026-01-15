@@ -39,8 +39,6 @@ class HomeView extends StatelessWidget {
                 BlocListener<AddCubit, AddState>(
                   listener: (context, state) {
                     if (state is AddSuccess) {
-                      print(
-                          '✨ LOG: HomeView received AddSuccess. Refreshing GetFavCubit...');
                       context
                           .read<GetFavCubit>()
                           .getFavorites(token, isLoading: false);
@@ -51,8 +49,6 @@ class HomeView extends StatelessWidget {
                         ),
                       );
                     } else if (state is AddFailure) {
-                      print(
-                          '⚠️ LOG: HomeView received AddFailure: ${state.error}');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.error)),
                       );
@@ -62,8 +58,6 @@ class HomeView extends StatelessWidget {
                 BlocListener<RemoveCubit, RemoveState>(
                   listener: (context, state) {
                     if (state is RemoveSuccess) {
-                      print(
-                          '🗑️ LOG: HomeView received RemoveSuccess. Refreshing GetFavCubit...');
                       context
                           .read<GetFavCubit>()
                           .getFavorites(token, isLoading: false);
@@ -74,8 +68,6 @@ class HomeView extends StatelessWidget {
                         ),
                       );
                     } else if (state is RemoveFailure) {
-                      print(
-                          '⚠️ LOG: HomeView received RemoveFailure: ${state.error}');
                       ScaffoldMessenger.of(context).showSnackBar(
                         SnackBar(content: Text(state.error)),
                       );

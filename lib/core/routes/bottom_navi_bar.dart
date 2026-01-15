@@ -44,7 +44,6 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     token = await getIt<SharedPrefsService>().getToken();
 
     views = [
-      /// ✅ Home (Singleton – no reload)
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
@@ -69,16 +68,16 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         ),
       ),
 
-      /// ✅ Cart (Factory – reload when needed)
       BlocProvider.value(
         value: getIt<CartCubitCubit>()
           ..getCart(token: token ?? '', forceRefresh: true),
         child: const CartView(),
       ),
+
       MultiBlocProvider(
         providers: [
-          BlocProvider(
-            create: (_) => getIt<GetFavCubit>()..getFavorites(token ?? ''),
+          BlocProvider.value(
+            value: getIt<GetFavCubit>(),
           ),
           BlocProvider.value(
             value: getIt<AddCubit>(),
@@ -90,7 +89,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         child: const FavourireView(),
       ),
 
-      /// ✅ Profile (Singleton – no reload)
+      /// ✅ Profile Tab
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
@@ -105,7 +104,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
       ),
     ];
 
-    setState(() {}); // مهم
+    setState(() {});
   }
 
   @override

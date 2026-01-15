@@ -18,38 +18,76 @@ class FavIcon extends StatefulWidget {
 }
 
 class _FavIconState extends State<FavIcon> {
+  bool _isLoading = false;
+
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<GetFavCubit, GetFavState>(builder: (context, state) {
-      final isFav = state is GetFavSuccess &&
-          state.response.data.any((e) => e.id == widget.productId);
-
-      return GestureDetector(
-        onTap: () async {
-          if (isFav) {
-            print(
-                '🔴 LOG: Tapped Remove Fav for Product ID: ${widget.productId}');
-            context.read<RemoveCubit>().removeFav(
-                  token: widget.token,
-                  productId: widget.productId,
-                );
-          } else {
-            print('🟢 LOG: Tapped Add Fav for Product ID: ${widget.productId}');
-            context.read<AddCubit>().addFav(
-                  token: widget.token,
-                  productId: widget.productId,
-                );
+    return BlocListener<AddCubit, AddState>(
+      listener: (context, addState) {
+        if (addState is AddSuccess || addState is AddFailure) {
+          if (mounted) {
+            setState(() {
+              _isLoading = false;
+            });
+          }
+        }
+      },
+      child: BlocListener<RemoveCubit, RemoveState>(
+        listener: (context, removeState) {
+          if (removeState is RemoveSuccess || removeState is RemoveFailure) {
+            if (mounted) {
+              setState(() {
+                _isLoading = false;
+              });
+            }
           }
         },
-        child: Align(
-          alignment: Alignment.topRight,
-          child: Icon(
-            isFav ? Icons.favorite : Icons.favorite_border,
-            color: isFav ? Colors.red : Colors.grey,
-            size: 22,
-          ),
+        child: BlocBuilder<GetFavCubit, GetFavState>(
+          builder: (context, getFavState) {
+            final isFav = getFavState is GetFavSuccess &&
+                getFavState.response.data.any((e) => e.id == widget.productId);
+
+            return GestureDetector(
+              onTap: _isLoading
+                  ? null
+                  : () {
+                      setState(() {
+                        _isLoading = true;
+                      });
+
+                      if (isFav) {
+                        context.read<RemoveCubit>().removeFav(
+                              token: widget.token,
+                              productId: widget.productId,
+                            );
+                      } else {
+                        context.read<AddCubit>().addFav(
+                              token: widget.token,
+                              productId: widget.productId,
+                            );
+                      }
+                    },
+              child: Align(
+                alignment: Alignment.topRight,
+                child: _isLoading
+                    ? const SizedBox(
+                        width: 22,
+                        height: 22,
+                        child: CircularProgressIndicator(
+                          strokeWidth: 2,
+                          color: Colors.red,
+                        ),
+                      )
+                    : Icon(
+                        isFav ? Icons.favorite : Icons.favorite_border,
+                        color: isFav ? Colors.red : Colors.grey,
+                        size: 22,
+                      ),
+              ),
+            );
+          },
         ),
-      );
-    });
+      ),
+    );
   }
 }
