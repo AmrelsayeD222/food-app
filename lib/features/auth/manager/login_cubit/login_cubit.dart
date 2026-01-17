@@ -1,7 +1,10 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:foods_app/core/di/service_locator.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 import '../../data/repo/repo.dart';
-import 'loign_state.dart';
+import 'login_state.dart';
 
 class LoginCubit extends Cubit<LoginState> {
   final Repo loginRepo;
@@ -47,5 +50,31 @@ class LoginCubit extends Cubit<LoginState> {
     loginIsObscure = true;
     loginFormKey.currentState?.reset();
     emit(LoginInitial());
+  }
+
+  void clearPreviousData() {
+    try {
+      getIt<CartCubitCubit>().clearCart();
+      getIt<GetProfileDataCubit>().clearProfile();
+    } catch (e) {
+      debugPrint('Error clearing data on login: $e');
+    }
+  }
+
+  void loginAsGuest() {
+    try {
+      getIt<CartCubitCubit>().clearCart();
+      getIt<GetProfileDataCubit>().clearProfile();
+      emit(GuestModeSuccess());
+    } catch (e) {
+      emit(LoginFailure('Failed to enter guest mode'));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    loginEmailController.dispose();
+    loginPasswordController.dispose();
+    return super.close();
   }
 }

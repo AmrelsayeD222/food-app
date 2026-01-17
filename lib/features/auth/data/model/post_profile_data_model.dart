@@ -37,9 +37,18 @@ class ProfileData {
     return ProfileData(
       name: json['name'] ?? '',
       email: json['email'] ?? '',
-      address: json['address'] ?? '',
+      address: json['address'] ?? 'No address provided',
       image: json['image'] ?? '',
-      visa: json['Visa'] ?? '',
+      visa: json['Visa'] ?? '**** **** **** ****',
     );
+  }
+  Map<String, dynamic> toJson() {
+    return {
+      'name': name,
+      'email': email,
+      'address': address,
+      'image': image,
+      'Visa': visa,
+    };
   }
 }

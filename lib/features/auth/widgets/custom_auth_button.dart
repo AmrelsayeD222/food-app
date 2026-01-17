@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/app_colors.dart';
 
@@ -25,8 +26,8 @@ class CustomAuthButton extends StatelessWidget {
           backgroundColor: backGroundColor ?? AppColors.white,
           foregroundColor: foreGroundColor ?? AppColors.primary,
           shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-          minimumSize: Size(width ?? 0, height ?? 50),
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(10.r)),
+          minimumSize: Size(width ?? 0, height ?? 50.h),
         ),
         onPressed: onpressed,
         child: child);

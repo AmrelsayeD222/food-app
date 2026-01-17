@@ -10,7 +10,7 @@ import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
 import '../../features/auth/data/repo/repo_impl.dart';
-import '../../features/auth/manager/login_cubit/loign_cubit.dart';
+import '../../features/auth/manager/login_cubit/login_cubit.dart';
 import '../../features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 import '../../features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 import '../../features/cart/data/repo/cart_repo_impl.dart';

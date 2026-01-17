@@ -2,6 +2,7 @@ import 'dart:developer';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
@@ -25,11 +26,18 @@ class HungryApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      theme: ThemeData(scaffoldBackgroundColor: Colors.white),
-      debugShowCheckedModeBanner: false,
-      initialRoute: initialRoute,
-      onGenerateRoute: AppRoutes.generateRoute,
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      minTextAdapt: true,
+      splitScreenMode: true,
+      builder: (context, child) {
+        return MaterialApp(
+          theme: ThemeData(scaffoldBackgroundColor: Colors.white),
+          debugShowCheckedModeBanner: false,
+          initialRoute: initialRoute,
+          onGenerateRoute: AppRoutes.generateRoute,
+        );
+      },
     );
   }
 }

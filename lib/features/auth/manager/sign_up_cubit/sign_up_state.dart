@@ -18,3 +18,5 @@ final class SignUpFailure extends SignUpState {
 }
 
 final class SignUpPasswordVisibilityChanged extends SignUpState {}
+
+final class SignUpGuestModeSuccess extends SignUpState {}

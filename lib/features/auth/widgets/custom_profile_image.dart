@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CustomProfileImage extends StatelessWidget {
   final String? imageUrl;
@@ -11,20 +12,20 @@ class CustomProfileImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(10),
+      borderRadius: BorderRadius.circular(10.r),
       child: imageUrl != null && imageUrl!.isNotEmpty
           ? Image.network(
               imageUrl!,
-              width: 150,
-              height: 150,
+              width: 150.w,
+              height: 150.h,
               fit: BoxFit.cover,
               errorBuilder: (context, error, stackTrace) {
                 return _placeholder();
               },
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
-                return const Center(
-                  child: CircularProgressIndicator(strokeWidth: 2),
+                return Center(
+                  child: CircularProgressIndicator(strokeWidth: 2.w),
                 );
               },
             )
@@ -34,13 +35,13 @@ class CustomProfileImage extends StatelessWidget {
 
   Widget _placeholder() {
     return Container(
-      width: 150,
-      height: 150,
+      width: 150.w,
+      height: 150.h,
       color: Colors.grey.shade200,
       alignment: Alignment.center,
-      child: const Icon(
+      child: Icon(
         Icons.person,
-        size: 40,
+        size: 40.sp,
         color: Colors.grey,
       ),
     );

@@ -19,3 +19,5 @@ class LoginFailure extends LoginState {
 }
 
 class LoginPasswordVisibilityChanged extends LoginState {}
+
+class GuestModeSuccess extends LoginState {}

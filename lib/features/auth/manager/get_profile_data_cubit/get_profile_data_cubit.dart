@@ -1,63 +1,78 @@
 import 'package:bloc/bloc.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
+import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
-import 'package:foods_app/features/auth/widgets/guest_profile.dart';
+import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 
 part 'get_profile_data_state.dart';
 
 class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   final Repo repo;
   final SharedPrefsService _sharedPrefsService;
-  GetProfileDataCubit(this.repo, this._sharedPrefsService) : super(GetProfileDataInitial());
+
+  GetProfileDataCubit(this.repo, this._sharedPrefsService)
+      : super(GetProfileDataInitial());
 
   /// 🔹 Fetch profile data safely
   Future<void> getProfileData({bool forceRefresh = false}) async {
-    final token = await _sharedPrefsService.getToken();
-    if (token == null || token.isEmpty) {
-      emit(GetProfileDataEmpty(guest: const GuestProfile()));
-      return;
-    }
+    try {
+      final token = await _sharedPrefsService.getToken();
+      if (token == null || token.isEmpty) {
+        if (!isClosed) {
+          emit(GetProfileDataEmpty());
+        }
+        return;
+      }
 
-    // Skip if already loaded and not forcing refresh
-    if (!forceRefresh && state is GetProfileDataSuccess) return;
+      // Skip if already loaded and not forcing refresh
+      if (!forceRefresh && state is GetProfileDataSuccess) return;
 
-    if (!isClosed) {
-      emit(GetProfileDataLoading());
+      if (!isClosed) {
+        emit(GetProfileDataLoading());
+      }
+
+      final result = await repo.getProfileData();
+
+      if (isClosed) return;
+
+      result.fold(
+        (failure) => emit(GetProfileDataFailure(error: failure.errMessage)),
+        (profileData) => emit(GetProfileDataSuccess(profileData: profileData)),
+      );
+    } catch (e) {
+      if (!isClosed) {
+        emit(GetProfileDataFailure(error: 'Failed to load profile: $e'));
+      }
+      debugPrint('Error in getProfileData: $e');
     }
-    final result = await repo.getProfileData();
-    if (isClosed) return;
-    result.fold(
-      (failure) => emit(GetProfileDataFailure(error: failure.errMessage)),
-      (profileData) => emit(GetProfileDataSuccess(profileData: profileData)),
-    );
   }
 
   /// 🔹 Update profile from upload response (without API call)
-  void updateProfileFromUpload({
-    required String name,
-    required String email,
-    required String address,
-    required String image,
-    String? visa,
-  }) {
+  void updateProfileFromUpload(GetProfileDataModel updatedProfile) {
     if (!isClosed) {
-      final updatedProfile = GetProfileDataModel(
-        name: name,
-        email: email,
-        address: address,
-        image: image,
-        visa: visa,
-      );
       emit(GetProfileDataSuccess(profileData: updatedProfile));
     }
   }
 
-  /// 🔹 Clear profile state on logout
-  void logout() {
-    if (!isClosed) {
-      emit(GetProfileDataEmpty());
+  /// 🔹 Clear profile state and cart on logout
+  Future<void> logout() async {
+    try {
+      // Clear cart data
+      getIt<CartCubitCubit>().clearCart();
+
+      // Clear token
+      await _sharedPrefsService.clearToken();
+
+      if (!isClosed) {
+        emit(GetProfileDataEmpty());
+      }
+    } catch (e) {
+      debugPrint('Error during logout: $e');
+      if (!isClosed) {
+        emit(GetProfileDataFailure(error: 'Logout failed'));
+      }
     }
   }
 

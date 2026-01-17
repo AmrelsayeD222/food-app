@@ -1,6 +1,9 @@
 import 'package:bloc/bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
+import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
 
 import '../../data/repo/repo.dart';
 
@@ -51,5 +54,32 @@ class SignUpCubit extends Cubit<SignUpState> {
     signUpIsObscure = true;
     signUpFormKey.currentState?.reset();
     emit(SignUpInitial());
+  }
+
+  void clearPreviousData() {
+    try {
+      getIt<CartCubitCubit>().clearCart();
+      getIt<GetProfileDataCubit>().clearProfile();
+    } catch (e) {
+      debugPrint('Error clearing data on Sign Up: $e');
+    }
+  }
+
+  void signUpAsGuest() {
+    try {
+      getIt<CartCubitCubit>().clearCart();
+      getIt<GetProfileDataCubit>().clearProfile();
+      emit(SignUpGuestModeSuccess());
+    } catch (e) {
+      emit(SignUpFailure('Failed to enter guest mode'));
+    }
+  }
+
+  @override
+  Future<void> close() {
+    signUpEmailController.dispose();
+    signUpPasswordController.dispose();
+    nameController.dispose();
+    return super.close();
   }
 }

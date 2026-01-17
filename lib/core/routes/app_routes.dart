@@ -6,7 +6,7 @@ import 'package:foods_app/features/favourite/views/favourire_view.dart';
 
 import '../../features/auth/views/login_view.dart';
 import '../../features/auth/views/sign_up_view.dart';
-import '../../features/auth/manager/login_cubit/loign_cubit.dart';
+import '../../features/auth/manager/login_cubit/login_cubit.dart';
 import '../../features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 
 import '../../features/cart/data/model/cart_response_model.dart';

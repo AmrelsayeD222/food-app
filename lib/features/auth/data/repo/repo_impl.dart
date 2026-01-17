@@ -111,6 +111,8 @@ class RepoImpl implements Repo {
   Future<Either<Failure, PostProfileResponse>> postProfileData({
     String? name,
     String? imagePath,
+    String? visa,
+    String? address,
   }) async {
     try {
       final formData = FormData.fromMap({
@@ -120,6 +122,8 @@ class RepoImpl implements Repo {
             imagePath,
             filename: imagePath.split('/').last,
           ),
+        if (visa != null) 'Visa': visa,
+        if (address != null) 'address': address,
       });
 
       final response = await apiServices.postFormData(

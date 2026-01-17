@@ -1,22 +1,25 @@
 part of 'get_profile_data_cubit.dart';
 
-sealed class GetProfileDataState {}
+abstract class GetProfileDataState {}
 
-final class GetProfileDataInitial extends GetProfileDataState {}
+class GetProfileDataInitial extends GetProfileDataState {}
 
-final class GetProfileDataLoading extends GetProfileDataState {}
+class GetProfileDataLoading extends GetProfileDataState {}
 
-final class GetProfileDataEmpty extends GetProfileDataState {
-  final Widget? guest;
-  GetProfileDataEmpty({this.guest});
-}
-
-final class GetProfileDataSuccess extends GetProfileDataState {
+class GetProfileDataSuccess extends GetProfileDataState {
   final GetProfileDataModel profileData;
+
   GetProfileDataSuccess({required this.profileData});
 }
 
-final class GetProfileDataFailure extends GetProfileDataState {
+class GetProfileDataFailure extends GetProfileDataState {
   final String error;
+
   GetProfileDataFailure({required this.error});
 }
+
+class GetProfileDataEmpty extends GetProfileDataState {}
+
+class LogoutLoading extends GetProfileDataState {}
+
+class LogoutSuccess extends GetProfileDataState {}

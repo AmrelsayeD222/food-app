@@ -12,6 +12,8 @@ class PostProfileDataCubit extends Cubit<PostProfileDataState> {
   Future<void> postProfileData({
     String? name,
     String? imagePath,
+    String? visa,
+    String? address,
   }) async {
     if (isClosed) return;
 
@@ -20,6 +22,8 @@ class PostProfileDataCubit extends Cubit<PostProfileDataState> {
     final result = await repo.postProfileData(
       name: name,
       imagePath: imagePath,
+      visa: visa,
+      address: address,
     );
 
     if (isClosed) return;

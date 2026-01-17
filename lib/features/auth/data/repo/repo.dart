@@ -17,5 +17,7 @@ abstract class Repo {
   Future<Either<Failure, PostProfileResponse>> postProfileData({
     String? name,
     String? imagePath,
+    String? visa,
+    String? address,
   });
 }

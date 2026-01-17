@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
@@ -23,13 +24,13 @@ class CustomProfileBottom extends StatelessWidget {
     return ElevatedButton(
       onPressed: onpressed,
       style: ElevatedButton.styleFrom(
-        padding: const EdgeInsets.all(5),
+        padding: EdgeInsets.all(5.w),
         backgroundColor: backColor,
         foregroundColor: foreColor,
-        minimumSize: const Size(190, 60),
+        minimumSize: Size(190.w, 60.h),
         shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-          side: const BorderSide(color: AppColors.primary, width: 2),
+          borderRadius: BorderRadius.circular(12.r),
+          side: BorderSide(color: AppColors.primary, width: 2.w),
         ),
       ),
       child: Row(
