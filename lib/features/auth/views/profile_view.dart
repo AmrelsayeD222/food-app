@@ -10,6 +10,7 @@ import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profi
 import 'package:foods_app/features/auth/widgets/custom_profile_image.dart';
 import 'package:foods_app/features/auth/widgets/guest_profile.dart';
 import 'package:foods_app/features/auth/widgets/profile_dialog.dart';
+import 'package:foods_app/features/auth/widgets/profile_skeleton.dart';
 import 'package:foods_app/features/auth/widgets/profile_visa_tile.dart';
 import 'package:foods_app/features/auth/widgets/update_profile_image_bottom.dart';
 
@@ -69,7 +70,7 @@ class ProfileView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, GetProfileDataState state) {
     if (state is GetProfileDataLoading || state is LogoutLoading) {
-      return const Center(child: CircularProgressIndicator());
+      return const ProfileSkeleton();
     }
 
     if (state is GetProfileDataFailure) {
@@ -80,6 +81,10 @@ class ProfileView extends StatelessWidget {
             Text(state.error),
             verticalSpace(20),
             ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                backgroundColor: AppColors.primary,
+                foregroundColor: AppColors.white,
+              ),
               onPressed: () {
                 context.read<GetProfileDataCubit>().getProfileData(
                       forceRefresh: true,

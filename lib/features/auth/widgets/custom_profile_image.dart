@@ -24,9 +24,11 @@ class CustomProfileImage extends StatelessWidget {
               },
               loadingBuilder: (context, child, loadingProgress) {
                 if (loadingProgress == null) return child;
-                return Center(
-                  child: CircularProgressIndicator(strokeWidth: 2.w),
-                );
+                return SizedBox(
+                    width: 150.w,
+                    height: 150.h,
+                    child: Center(
+                        child: CircularProgressIndicator(strokeWidth: 2.w)));
               },
             )
           : _placeholder(),
