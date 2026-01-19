@@ -4,7 +4,7 @@ import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
-import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 
 part 'get_profile_data_state.dart';
 

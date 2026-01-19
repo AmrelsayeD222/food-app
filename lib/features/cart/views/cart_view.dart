@@ -1,24 +1,54 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
 import 'package:foods_app/core/constants/app_colors.dart';
-import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/spacing.dart';
-import 'package:foods_app/core/helper/text_style.dart';
-import 'package:foods_app/core/routes/app_routes.dart';
-import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
+
+import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
 import 'package:foods_app/features/cart/widgets/cart_card_item_builder.dart';
+import 'package:foods_app/features/cart/widgets/check_out_bottom.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class CartView extends StatelessWidget {
   const CartView({super.key});
+
+  List<CartItem> _getDummyItems() {
+    return List.generate(
+      5,
+      (index) => CartItem(
+        itemId: index,
+        productId: index,
+        name: 'Dataset Name',
+        image: 'https://via.placeholder.com/150',
+        quantity: 1,
+        price: 100.0,
+        spicy: 0,
+        toppings: [],
+        sideOptions: [],
+      ),
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<CartCubitCubit, CartCubitState>(
       builder: (context, state) {
         if (state is CartCubitLoading) {
-          return const Scaffold(
-            body: Center(child: CircularProgressIndicator()),
+          return Scaffold(
+            body: Skeletonizer(
+              enabled: true,
+              child: Column(
+                children: [
+                  verticalSpace(30),
+                  Expanded(
+                    child: CartCardItemBuilder(
+                      items: _getDummyItems(),
+                    ),
+                  ),
+                ],
+              ),
+            ),
           );
         }
 
@@ -47,79 +77,24 @@ class CartView extends StatelessWidget {
               children: [
                 verticalSpace(30),
                 Expanded(
-                  child: CartCardItemBuilder(items: items),
+                  child: RefreshIndicator(
+                    onRefresh: () async {
+                      await context
+                          .read<CartCubitCubit>()
+                          .getCart(forceRefresh: true);
+                    },
+                    color: AppColors.primary,
+                    child: CartCardItemBuilder(items: items),
+                  ),
                 ),
               ],
             ),
-            bottomNavigationBar: _buildCheckoutBottomSheet(context, items),
+            bottomNavigationBar: checkoutBottomSheet(context, items),
           );
         }
 
         return const SizedBox.shrink();
       },
-    );
-  }
-
-  Widget _buildCheckoutBottomSheet(BuildContext context, List<CartItem> items) {
-    final totalPrice = items.fold(
-      0.0,
-      (sum, item) => sum + (item.price * item.quantity),
-    );
-
-    return SafeArea(
-      child: Container(
-        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
-        color: AppColors.white,
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  'Total:',
-                  style: TextStyles.textStyle20.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  '\$${totalPrice.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle20.copyWith(
-                    fontWeight: FontWeight.bold,
-                    color: AppColors.primary,
-                  ),
-                ),
-              ],
-            ),
-            const SizedBox(height: 12),
-            ElevatedButton(
-              onPressed: items.isEmpty
-                  ? null
-                  : () {
-                      context.pushNamed(
-                        AppRoutes.checkoutView,
-                        arguments: items,
-                      );
-                    },
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(double.infinity, 50),
-                backgroundColor: AppColors.primary,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(10),
-                ),
-              ),
-              child: const Text(
-                'Checkout',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.bold,
-                  fontSize: 16,
-                ),
-              ),
-            ),
-          ],
-        ),
-      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
 import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/removeCart/remove_cubit.dart';
 import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
 import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
 import 'package:foods_app/features/favourite/data/repo/fav_repo_impl.dart';
@@ -12,7 +13,7 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import '../../features/auth/data/repo/repo_impl.dart';
 import '../../features/auth/manager/login_cubit/login_cubit.dart';
 import '../../features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
-import '../../features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
+import '../../features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 import '../../features/cart/data/repo/cart_repo_impl.dart';
 import '../../features/home/data/manager/cubit/home_product_cubit.dart';
 import '../../features/home/data/repo/home_repo_impl.dart';
@@ -87,6 +88,10 @@ void setupServiceLocator() {
 
   getIt.registerLazySingleton<CartCubitCubit>(
     () => CartCubitCubit(getIt<CartRepoImpl>(), getIt<SharedPrefsService>()),
+  );
+
+  getIt.registerLazySingleton<RemoveCubit>(
+    () => RemoveCubit(getIt<CartRepoImpl>()),
   );
 
   getIt.registerFactory<OrderRequestCubit>(

@@ -6,7 +6,8 @@ import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/views/profile_view.dart';
-import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/removeCart/remove_cubit.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
 import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
 import 'package:foods_app/features/favourite/views/favourire_view.dart';
@@ -53,8 +54,15 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         child: const HomeView(),
       ),
 
-      BlocProvider.value(
-        value: getIt<CartCubitCubit>()..getCart(forceRefresh: true),
+      MultiBlocProvider(
+        providers: [
+          BlocProvider.value(
+            value: getIt<CartCubitCubit>()..getCart(forceRefresh: true),
+          ),
+          BlocProvider.value(
+            value: getIt<RemoveCubit>(),
+          ),
+        ],
         child: const CartView(),
       ),
 

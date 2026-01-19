@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
-import 'package:foods_app/features/cart/data/manager/cartCubit/cart_cubit_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 
 import '../../data/repo/repo.dart';
 

@@ -9,7 +9,8 @@ class CartCubitCubit extends Cubit<CartCubitState> {
   final CartRepo repo;
   final SharedPrefsService _sharedPrefsService;
 
-  CartCubitCubit(this.repo, this._sharedPrefsService) : super(CartCubitInitial());
+  CartCubitCubit(this.repo, this._sharedPrefsService)
+      : super(CartCubitInitial());
 
   Future<void> getCart({
     bool forceRefresh = false,
