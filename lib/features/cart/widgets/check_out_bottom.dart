@@ -4,6 +4,7 @@ import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/text_style.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 Widget checkoutBottomSheet(BuildContext context, List<CartItem> items) {
   final totalPrice = items.fold(
@@ -13,7 +14,7 @@ Widget checkoutBottomSheet(BuildContext context, List<CartItem> items) {
 
   return SafeArea(
     child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
       color: AppColors.white,
       child: Column(
         mainAxisSize: MainAxisSize.min,
@@ -36,7 +37,7 @@ Widget checkoutBottomSheet(BuildContext context, List<CartItem> items) {
               ),
             ],
           ),
-          const SizedBox(height: 12),
+          SizedBox(height: 12.h),
           ElevatedButton(
             onPressed: items.isEmpty
                 ? null
@@ -47,18 +48,18 @@ Widget checkoutBottomSheet(BuildContext context, List<CartItem> items) {
                     );
                   },
             style: ElevatedButton.styleFrom(
-              minimumSize: const Size(double.infinity, 50),
+              minimumSize: Size(double.infinity, 50.h),
               backgroundColor: AppColors.primary,
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(10.r),
               ),
             ),
-            child: const Text(
+            child: Text(
               'Checkout',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.bold,
-                fontSize: 16,
+                fontSize: 16.sp,
               ),
             ),
           ),

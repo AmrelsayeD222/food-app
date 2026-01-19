@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/text_style.dart';
 
 class CartItemInfo extends StatelessWidget {
@@ -22,15 +23,15 @@ class CartItemInfo extends StatelessWidget {
             style: TextStyles.textStyle16.copyWith(
               fontWeight: FontWeight.bold,
             )),
-        const SizedBox(height: 4),
+        SizedBox(height: 4.h),
         Text('\$${totalPrice.toStringAsFixed(2)}',
             style: TextStyles.textStyle16),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Container(
-          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+          padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
           decoration: BoxDecoration(
             color: Colors.grey[100],
-            borderRadius: BorderRadius.circular(6),
+            borderRadius: BorderRadius.circular(6.r),
           ),
           child: Text('Quantity: $quantity', style: TextStyles.textStyle14),
         ),

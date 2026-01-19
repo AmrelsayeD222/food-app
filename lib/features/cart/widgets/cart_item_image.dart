@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartItemImage extends StatelessWidget {
   final String image;
@@ -8,11 +9,11 @@ class CartItemImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8),
+      borderRadius: BorderRadius.circular(8.r),
       child: Image.network(
         image,
-        width: 100,
-        height: 100,
+        width: 100.w,
+        height: 100.h,
         fit: BoxFit.fill,
         errorBuilder: (_, __, ___) => _placeholder(),
         loadingBuilder: (_, child, progress) =>
@@ -23,8 +24,8 @@ class CartItemImage extends StatelessWidget {
 
   Widget _placeholder({bool isLoading = false}) {
     return Container(
-      width: 100,
-      height: 100,
+      width: 100.w,
+      height: 100.h,
       color: Colors.grey[200],
       child: Center(
         child: isLoading

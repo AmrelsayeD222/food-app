@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/data/manager/removeCart/remove_cubit.dart';
 
@@ -29,8 +30,8 @@ class CartItemRemoveButton extends StatelessWidget {
               ? null
               : () => context.read<RemoveCubit>().removeItem(itemId: itemId),
           icon: loading
-              ? const CircularProgressIndicator(strokeWidth: 2)
-              : const Icon(Icons.delete, color: Colors.red),
+              ? CircularProgressIndicator(strokeWidth: 2.w)
+              : Icon(Icons.delete, color: Colors.red, size: 24.sp),
         );
       },
     );

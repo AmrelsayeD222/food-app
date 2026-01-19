@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 
 import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
@@ -75,7 +76,7 @@ class CartView extends StatelessWidget {
           return Scaffold(
             body: Column(
               children: [
-                verticalSpace(30),
+                verticalSpace(30.h),
                 Expanded(
                   child: RefreshIndicator(
                     onRefresh: () async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/helper/text_style.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'cart_option_chip.dart';
 
 class CartItemSideOptions extends StatelessWidget {
@@ -16,13 +17,13 @@ class CartItemSideOptions extends StatelessWidget {
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         const Divider(height: 1),
-        const SizedBox(height: 12),
+        SizedBox(height: 12.h),
         Row(
           children: [
-            const Icon(Icons.dining, size: 18),
-            const SizedBox(width: 6),
+            Icon(Icons.dining, size: 18.sp),
+            SizedBox(width: 6.w),
             Text(
               'Side Options',
               style:
@@ -30,10 +31,10 @@ class CartItemSideOptions extends StatelessWidget {
             ),
           ],
         ),
-        const SizedBox(height: 8),
+        SizedBox(height: 8.h),
         Wrap(
-          spacing: 8,
-          runSpacing: 8,
+          spacing: 8.w,
+          runSpacing: 8.h,
           children: options.map((e) => CartOptionChip(option: e)).toList(),
         ),
       ],

@@ -6,6 +6,7 @@ import 'package:foods_app/features/cart/widgets/cart_item_remove_button.dart';
 import 'package:foods_app/features/cart/widgets/cart_item_side_options.dart';
 import 'package:foods_app/features/cart/widgets/cart_item_spicy_section.dart';
 import 'package:foods_app/features/cart/widgets/cart_item_toppings.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class CartCardItem extends StatelessWidget {
   final CartItem item;
@@ -17,15 +18,15 @@ class CartCardItem extends StatelessWidget {
     final totalPrice = item.price * item.quantity;
 
     return Container(
-      margin: const EdgeInsets.symmetric(vertical: 8, horizontal: 12),
-      padding: const EdgeInsets.all(12),
+      margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
+      padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(
             color: Colors.grey.withValues(alpha: .1),
-            blurRadius: 4,
+            blurRadius: 4.r,
             offset: const Offset(0, 2),
           ),
         ],
@@ -36,7 +37,7 @@ class CartCardItem extends StatelessWidget {
           Row(
             children: [
               CartItemImage(image: item.image),
-              const SizedBox(width: 12),
+              SizedBox(width: 12.w),
               Expanded(
                 child: CartItemInfo(
                   name: item.name,
