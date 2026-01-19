@@ -20,6 +20,15 @@ class CartResponseModel {
       items: (data['items'] as List).map((e) => CartItem.fromJson(e)).toList(),
     );
   }
+  Map<String, dynamic> toJson() {
+    return {
+      'data': {
+        'id': id,
+        'total_price': totalPrice,
+        'items': items.map((e) => e.toJson()).toList(),
+      }
+    };
+  }
 }
 
 class CartItem {
@@ -62,6 +71,20 @@ class CartItem {
           .toList(),
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'item_id': itemId,
+      'product_id': productId,
+      'name': name,
+      'image': image,
+      'quantity': quantity,
+      'price': price,
+      'spicy': spicy,
+      'toppings': toppings.map((e) => e.toJson()).toList(),
+      'side_options': sideOptions.map((e) => e.toJson()).toList(),
+    };
+  }
 }
 
 class CartOption {
@@ -81,5 +104,13 @@ class CartOption {
       name: json['name'] ?? '',
       image: json['image'] ?? '',
     );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'image': image,
+    };
   }
 }

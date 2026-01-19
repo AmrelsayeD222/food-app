@@ -10,17 +10,17 @@ import 'package:foods_app/features/favourite/data/repo/fav_repo_impl.dart';
 import 'package:get_it/get_it.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 
-import '../../features/auth/data/repo/repo_impl.dart';
-import '../../features/auth/manager/login_cubit/login_cubit.dart';
-import '../../features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
-import '../../features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
-import '../../features/cart/data/repo/cart_repo_impl.dart';
-import '../../features/home/data/manager/cubit/home_product_cubit.dart';
-import '../../features/home/data/repo/home_repo_impl.dart';
-import '../../features/productDetalis/data/manager/cubit/order_request_cubit.dart';
-import '../../features/productDetalis/data/repo/product_detalis_repoimpl.dart';
-import '../helper/shared_pref_storage.dart';
-import '../network/services/api_service.dart';
+import 'package:foods_app/features/auth/data/repo/repo_impl.dart';
+import 'package:foods_app/features/auth/manager/login_cubit/login_cubit.dart';
+import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
+import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
+import 'package:foods_app/features/cart/data/repo/cart_repo_impl.dart';
+import 'package:foods_app/features/home/data/manager/cubit/home_product_cubit.dart';
+import 'package:foods_app/features/home/data/repo/home_repo_impl.dart';
+import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
+import 'package:foods_app/features/productDetalis/data/repo/product_detalis_repoimpl.dart';
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
+import 'package:foods_app/core/network/services/api_service.dart';
 
 final getIt = GetIt.instance;
 
@@ -63,7 +63,10 @@ void setupServiceLocator() {
   );
 
   getIt.registerLazySingleton<CartRepoImpl>(
-    () => CartRepoImpl(apiServices: getIt<ApiServices>()),
+    () => CartRepoImpl(
+      apiServices: getIt<ApiServices>(),
+      sharedPrefsService: getIt<SharedPrefsService>(),
+    ),
   );
 
   getIt.registerLazySingleton<ProductDetalisRepoimpl>(

@@ -9,7 +9,7 @@ import 'package:foods_app/features/auth/data/model/login_model.dart';
 import 'package:foods_app/features/auth/data/model/post_profile_data_model.dart';
 import 'package:foods_app/features/auth/data/model/sign_up_model.dart';
 
-import '../../../../core/helper/shared_pref_storage.dart';
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
 import 'repo.dart';
 
 class RepoImpl implements Repo {

@@ -6,9 +6,13 @@ import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
 import 'package:foods_app/features/cart/data/model/remove_item_response_model.dart';
 import 'package:foods_app/features/cart/data/repo/cart_repo.dart';
 
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
+
 class CartRepoImpl implements CartRepo {
   final ApiServices apiServices;
-  CartRepoImpl({required this.apiServices});
+  final SharedPrefsService sharedPrefsService;
+
+  CartRepoImpl({required this.apiServices, required this.sharedPrefsService});
 
   @override
   Future<Either<Failure, CartResponseModel>> getCart() async {
@@ -17,11 +21,24 @@ class CartRepoImpl implements CartRepo {
         endPoint: 'cart',
       );
       if (response['data'] == null) {
+        // Try to load from cache if server says empty but maybe error?
+        // Actually if server response is valid but null data, it usually means empty cart.
+        // But let's stick to standard behavior: if network success, trust valid response.
         return Left(ServerFailure('Cart is empty or not created yet'));
       }
       final cartResponse = CartResponseModel.fromJson(response);
+
+      // Save to cache
+      await sharedPrefsService.saveCart(cartResponse);
+
       return Right(cartResponse);
     } on DioException catch (e) {
+      // Try to load from cache
+      final cachedCart = await sharedPrefsService.getCart();
+      if (cachedCart != null) {
+        return Right(cachedCart);
+      }
+
       if (e.response?.statusCode == 500) {
         final errorMsg = e.response?.data?['message'] ?? '';
         if (errorMsg.contains('property') || errorMsg.contains('null')) {
@@ -30,6 +47,11 @@ class CartRepoImpl implements CartRepo {
       }
       return Left(ServerFailure.fromDioError(e));
     } catch (e) {
+      // Try to load from cache
+      final cachedCart = await sharedPrefsService.getCart();
+      if (cachedCart != null) {
+        return Right(cachedCart);
+      }
       return Left(ServerFailure(e.toString()));
     }
   }
