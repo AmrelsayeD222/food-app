@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foods_app/core/helper/spacing.dart';
 
 import '../../../core/helper/text_style.dart';
 import '../../../core/shared/custom_bottom.dart';
@@ -19,7 +21,7 @@ class CustomBottomSheet extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 110,
+      height: 100.h,
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -31,8 +33,15 @@ class CustomBottomSheet extends StatelessWidget {
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(sheetText, style: TextStyles.textStyle18),
-              Text(price, style: TextStyles.textStyle32)
+              Text(
+                sheetText,
+                style: TextStyles.textStyle15,
+              ),
+              verticalSpace(5.h),
+              Text(
+                price,
+                style: TextStyles.textStyle25,
+              )
             ],
           ),
           CustomBottom(

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../../core/constants/app_colors.dart';
 import '../../../../core/helper/spacing.dart';
@@ -26,9 +27,9 @@ class _HomeCategoyListState extends State<HomeCategoyList> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 50,
+      height: 50.h,
       child: ListView.separated(
-        separatorBuilder: (context, index) => horizontalSpace(12),
+        separatorBuilder: (context, index) => horizontalSpace(12.w),
         scrollDirection: Axis.horizontal,
         itemCount: title.length,
         itemBuilder: (context, index) {

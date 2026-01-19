@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/core/routes/bottom_navi_bar.dart';
@@ -117,7 +118,7 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
           },
         ),
         body: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16),
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: SingleChildScrollView(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -127,7 +128,7 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                   children: [
                     ItemDetaliedImage(product: widget.product),
                     SizedBox(
-                      width: 200,
+                      width: 170.w,
                       child: Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
@@ -145,7 +146,7 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                     ),
                   ],
                 ),
-                verticalSpace(20),
+                verticalSpace(18.h),
                 ItemCount(
                   onQuantityChanged: (val) {
                     setState(() {
@@ -153,9 +154,9 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                     });
                   },
                 ),
-                verticalSpace(20),
-                const Text('Toppings', style: TextStyles.textStyle18),
-                verticalSpace(20),
+                verticalSpace(18.h),
+                Text('Toppings', style: TextStyles.textStyle18),
+                verticalSpace(18.h),
                 ListviewToppingBuilder(
                   onSelectionChanged: (ids) {
                     setState(() {
@@ -163,9 +164,9 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                     });
                   },
                 ),
-                verticalSpace(20),
-                const Text('Side Options', style: TextStyles.textStyle18),
-                verticalSpace(20),
+                verticalSpace(8.h),
+                Text('Side Options', style: TextStyles.textStyle18),
+                verticalSpace(8.h),
                 ListviewSideOptionBuilder(
                   onSelectionChanged: (ids) {
                     setState(() {
@@ -173,7 +174,7 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                     });
                   },
                 ),
-                verticalSpace(20),
+                verticalSpace(8.h),
               ],
             ),
           ),

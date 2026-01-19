@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
 import 'topping_item.dart';
@@ -40,7 +41,7 @@ class _ListviewSideOptionBuilderState extends State<ListviewSideOptionBuilder> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 150,
+      height: 130.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
         separatorBuilder: (_, __) => horizontalSpace(10),

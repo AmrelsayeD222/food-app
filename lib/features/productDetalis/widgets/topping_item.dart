@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 
 import '../../../core/constants/app_colors.dart';
@@ -18,18 +19,18 @@ class ToppingItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 110,
+      width: 100.w,
       decoration: BoxDecoration(
         color: color,
-        borderRadius: const BorderRadius.all(
-          Radius.circular(22),
+        borderRadius: BorderRadius.all(
+          Radius.circular(22.r),
         ),
       ),
       child: Column(
         children: [
           Container(
-            width: 110,
-            height: 100,
+            width: 100.w,
+            height: 90.h,
             decoration: BoxDecoration(
               color: AppColors.white,
               image: DecorationImage(
@@ -37,17 +38,17 @@ class ToppingItem extends StatelessWidget {
                 fit: BoxFit.fill,
                 image: AssetImage(itemImage),
               ),
-              borderRadius: const BorderRadius.all(
-                Radius.circular(22),
+              borderRadius: BorderRadius.all(
+                Radius.circular(22.r),
               ),
             ),
           ),
-          verticalSpace(10),
+          verticalSpace(10.h),
           Container(
-            decoration: const BoxDecoration(
+            decoration: BoxDecoration(
               borderRadius: BorderRadius.only(
-                bottomLeft: Radius.circular(22),
-                bottomRight: Radius.circular(22),
+                bottomLeft: Radius.circular(22.r),
+                bottomRight: Radius.circular(22.r),
               ),
             ),
             child: Text(

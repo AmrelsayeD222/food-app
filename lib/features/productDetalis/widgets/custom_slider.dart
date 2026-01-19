@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
@@ -39,7 +40,7 @@ class _CustomSliderState extends State<CustomSlider> {
   Widget build(BuildContext context) {
     return Column(
       children: [
-        verticalSpace(10),
+        verticalSpace(10.h),
 
         // Spicy Label
         Text(
@@ -61,7 +62,7 @@ class _CustomSliderState extends State<CustomSlider> {
             activeTrackColor: AppColors.primary,
             inactiveTrackColor: AppColors.greyLight,
             thumbColor: AppColors.primary,
-            overlayColor: AppColors.primary.withValues(alpha: .2),
+            overlayColor: AppColors.primary.withAlpha(51),
           ),
           child: Slider(
             value: value,
@@ -79,7 +80,7 @@ class _CustomSliderState extends State<CustomSlider> {
 
         // Fire Icons Row with Padding
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 8.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: List.generate(
@@ -90,7 +91,7 @@ class _CustomSliderState extends State<CustomSlider> {
 
                 return Icon(
                   Icons.local_fire_department,
-                  size: 24,
+                  size: 24.sp,
                   color: index < spicyLevel ? Colors.red : Colors.grey[300],
                 );
               },
@@ -102,7 +103,7 @@ class _CustomSliderState extends State<CustomSlider> {
 
         // Min/Max Labels
         Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 12),
+          padding: EdgeInsets.symmetric(horizontal: 12.w),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [

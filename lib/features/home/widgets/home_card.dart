@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
 import 'package:foods_app/features/home/data/model/home_product_model.dart';
@@ -17,62 +18,85 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return AspectRatio(
-      aspectRatio: 3 / 4,
-      child: Card(
-        color: AppColors.white,
-        elevation: 4,
-        child: Padding(
-          padding: const EdgeInsets.all(8),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              FavIcon(
-                productId: product.id,
-              ),
-              GestureDetector(
-                onTap: () {
-                  context.pushNamed(
-                    AppRoutes.productDetalisView,
-                    arguments: product,
-                  );
-                },
-                child: Column(
-                  children: [
-                    const SizedBox(height: 5),
-                    Image.network(
-                      height: 105,
+    return Card(
+      color: AppColors.white,
+      elevation: 4,
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+      child: Stack(
+        children: [
+          Padding(
+            padding: EdgeInsets.all(8.r),
+            child: GestureDetector(
+              onTap: () {
+                context.pushNamed(
+                  AppRoutes.productDetalisView,
+                  arguments: product,
+                );
+              },
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  SizedBox(height: 5.h),
+                  Hero(
+                    tag: 'product_${product.id}',
+                    child: Image.network(
+                      height: 100.h,
                       product.image,
-                      fit: BoxFit.fill,
+                      fit: BoxFit.contain,
                       errorBuilder: (_, __, ___) =>
                           const Icon(Icons.image_not_supported),
                     ),
-                    Text(
-                      maxLines: 1,
-                      overflow: TextOverflow.ellipsis,
-                      product.name,
-                      style: TextStyles.textStyle16.copyWith(
-                        fontWeight: FontWeight.bold,
-                      ),
+                  ),
+                  SizedBox(height: 5.h),
+                  Text(
+                    product.name,
+                    maxLines: 1,
+                    overflow: TextOverflow.ellipsis,
+                    style: TextStyles.textStyle16.copyWith(
+                      fontWeight: FontWeight.bold,
+                      color: AppColors.black,
                     ),
-                    Text(
-                      maxLines: 2,
-                      overflow: TextOverflow.ellipsis,
-                      product.description,
-                      style: const TextStyle(
-                        height: 1.1,
-                      ),
+                  ),
+                  SizedBox(height: 2.h),
+                  Text(
+                    product.description,
+                    maxLines: 2,
+                    overflow: TextOverflow.ellipsis,
+                    textAlign: TextAlign.center,
+                    style: TextStyles.textStyle14.copyWith(
+                      height: 1.1,
+                      color: Colors.grey,
                     ),
-                    const SizedBox(height: 5),
-                    Align(
-                        alignment: Alignment.centerLeft,
-                        child: Text("⭐ ${product.ratingAsDouble}")),
-                  ],
-                ),
+                  ),
+                  const Spacer(),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Text(
+                        "⭐ ${product.ratingAsDouble}",
+                        style: TextStyles.textStyle14,
+                      ),
+                      Text(
+                        "${product.priceAsDouble}\$",
+                        style: TextStyles.textStyle14.copyWith(
+                          color: AppColors.primary,
+                          fontWeight: FontWeight.bold,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
               ),
-            ],
+            ),
           ),
-        ),
+          Positioned(
+            top: 4.r,
+            right: 4.r,
+            child: FavIcon(
+              productId: product.id,
+            ),
+          ),
+        ],
       ),
     );
   }

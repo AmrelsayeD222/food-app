@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
 
 class FavIcon extends StatelessWidget {
@@ -28,10 +29,10 @@ class FavIcon extends StatelessWidget {
           child: Align(
             alignment: Alignment.topRight,
             child: data.isToggling
-                ? const SizedBox(
-                    width: 22,
-                    height: 22,
-                    child: CircularProgressIndicator(
+                ? SizedBox(
+                    width: 22.w,
+                    height: 22.h,
+                    child: const CircularProgressIndicator(
                       strokeWidth: 2,
                       color: Colors.red,
                     ),
@@ -39,7 +40,7 @@ class FavIcon extends StatelessWidget {
                 : Icon(
                     data.isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: data.isFavorite ? Colors.red : Colors.grey,
-                    size: 22,
+                    size: 22.sp,
                   ),
           ),
         );

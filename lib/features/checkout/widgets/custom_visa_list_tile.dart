@@ -36,7 +36,7 @@ class CustomVisaListTile extends StatelessWidget {
               width: 60,
             ),
             const SizedBox(width: 16),
-            const Expanded(
+            Expanded(
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,

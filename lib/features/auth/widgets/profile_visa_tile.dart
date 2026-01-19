@@ -21,12 +21,12 @@ class ProfileVisaTile extends StatelessWidget {
         width: 60.w,
         fit: BoxFit.fill,
       ),
-      title: const Text('Debit card', style: TextStyles.textStyle14),
+      title: Text('Debit card', style: TextStyles.textStyle14),
       subtitle: Text(
         visa ?? '**** **** **** ****',
         style: TextStyles.textStyle14,
       ),
-      trailing: const Text(
+      trailing: Text(
         'Default',
         style: TextStyles.textStyle14,
       ),

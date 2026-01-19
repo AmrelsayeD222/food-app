@@ -53,7 +53,7 @@ class CheckoutView extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text('Order summary', style: TextStyles.textStyle20),
+                Text('Order summary', style: TextStyles.textStyle20),
                 verticalSpace(10),
                 CustomDetalisRow(
                   text: 'Order',
@@ -80,13 +80,13 @@ class CheckoutView extends StatelessWidget {
                   padding: EdgeInsets.zero,
                 ),
                 verticalSpace(10),
-                const CustomDetalisRow(
+                CustomDetalisRow(
                   text: 'Estimated delivery time:',
                   price: '15 - 30 mins',
                   style: TextStyles.textStyle14,
                 ),
                 verticalSpace(30),
-                const Text('Payment methods', style: TextStyles.textStyle20),
+                Text('Payment methods', style: TextStyles.textStyle20),
                 verticalSpace(20),
                 Column(
                   children: [

@@ -26,7 +26,7 @@ class SuccessDialog extends StatelessWidget {
               child: Icon(Icons.check, size: 50),
             ),
             verticalSpace(20),
-            const Text('Success !', style: TextStyles.textStyle30),
+            Text('Success !', style: TextStyles.textStyle30),
             const SizedBox(height: 12),
             Text(
               'Your payment was successful.\nA receipt for this purchase has been sent to your email.',

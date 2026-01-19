@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
+import 'package:foods_app/features/home/data/model/home_product_model.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class SharedPrefsService {
@@ -61,6 +62,27 @@ class SharedPrefsService {
     if (cartJson != null && cartJson.isNotEmpty) {
       try {
         return CartResponseModel.fromJson(jsonDecode(cartJson));
+      } catch (e) {
+        return null;
+      }
+    }
+    return null;
+  }
+
+  static const String _productsKey = 'home_products';
+
+  Future<void> saveProducts(ProductResponse products) async {
+    final prefs = await SharedPreferences.getInstance();
+    String productsJson = jsonEncode(products.toJson());
+    await prefs.setString(_productsKey, productsJson);
+  }
+
+  Future<ProductResponse?> getProducts() async {
+    final prefs = await SharedPreferences.getInstance();
+    String? productsJson = prefs.getString(_productsKey);
+    if (productsJson != null && productsJson.isNotEmpty) {
+      try {
+        return ProductResponse.fromJson(jsonDecode(productsJson));
       } catch (e) {
         return null;
       }

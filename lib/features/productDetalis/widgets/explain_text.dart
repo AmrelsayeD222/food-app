@@ -16,7 +16,7 @@ class ExplainText extends StatelessWidget {
         style: TextStyles.textStyle16.copyWith(
           color: AppColors.black,
         ),
-        children: const [
+        children: [
           TextSpan(
               text: 'Your Burger \nTo Your Tast.Ultimate \nExperience',
               style: TextStyles.textStyle14),

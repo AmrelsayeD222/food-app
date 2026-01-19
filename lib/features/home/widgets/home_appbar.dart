@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 
 import '../../../../core/constants/app_colors.dart';
@@ -25,13 +26,13 @@ class HomeAppBar extends StatelessWidget {
                 children: [
                   SvgPicture.asset(
                     'assets/splash/splash_logo.svg',
-                    width: 160,
+                    width: 160.w,
                     colorFilter: const ColorFilter.mode(
                       AppColors.primary,
                       BlendMode.srcIn,
                     ),
                   ),
-                  const SizedBox(height: 4),
+                  SizedBox(height: 4.h),
                   Text(
                     isSuccess ? 'Hello, Mr ${profile!.name}' : 'Hello, Mr ...',
                     maxLines: 1,
@@ -41,20 +42,20 @@ class HomeAppBar extends StatelessWidget {
                 ],
               ),
             ),
-            const SizedBox(width: 8),
+            SizedBox(width: 8.w),
             CircleAvatar(
-              radius: 30,
+              radius: 30.r,
               backgroundColor: Colors.grey.shade200,
               child: ClipOval(
                 child: Image.network(
                   profile?.image ?? '',
-                  width: 60,
-                  height: 60,
+                  width: 60.w,
+                  height: 60.h,
                   fit: BoxFit.cover,
                   errorBuilder: (context, error, stackTrace) {
-                    return const Icon(
+                    return Icon(
                       Icons.person,
-                      size: 40,
+                      size: 40.sp,
                       color: Colors.grey,
                     );
                   },

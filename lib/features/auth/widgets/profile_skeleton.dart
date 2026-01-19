@@ -48,19 +48,19 @@ class ProfileSkeleton extends StatelessWidget {
             verticalSpace(30),
 
             // Profile Info Skeletons
-            const Text(
+            Text(
               'Nameeeeeeeeeeeeeeee:',
               style: TextStyles.textStyle18,
             ),
             verticalSpace(20),
 
-            const Text(
+            Text(
               'Emailllllllllll:',
               style: TextStyles.textStyle18,
             ),
             verticalSpace(20),
 
-            const Text(
+            Text(
               'Addresssssssssssssss:',
               style: TextStyles.textStyle18,
             ),
@@ -78,15 +78,15 @@ class ProfileSkeleton extends StatelessWidget {
                   width: 60.w,
                   height: 40.h,
                 ),
-                title: const Text(
+                title: Text(
                   'Debit card',
                   style: TextStyles.textStyle14,
                 ),
-                subtitle: const Text(
+                subtitle: Text(
                   '**** **** **** ****',
                   style: TextStyles.textStyle14,
                 ),
-                trailing: const Text(
+                trailing: Text(
                   'Default',
                   style: TextStyles.textStyle14,
                 ),

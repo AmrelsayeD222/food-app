@@ -59,7 +59,10 @@ void setupServiceLocator() {
   );
 
   getIt.registerLazySingleton<HomeRepoImpl>(
-    () => HomeRepoImpl(getIt<ApiServices>()),
+    () => HomeRepoImpl(
+      getIt<ApiServices>(),
+      getIt<SharedPrefsService>(),
+    ),
   );
 
   getIt.registerLazySingleton<CartRepoImpl>(

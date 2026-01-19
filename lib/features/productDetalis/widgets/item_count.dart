@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../../../core/constants/app_colors.dart';
 import '../../../core/helper/spacing.dart';
@@ -36,12 +37,12 @@ class _ItemCountState extends State<ItemCount> {
               onPressed: () {
                 if (count > 1) _updateCount(count - 1);
               },
-              icon: const Icon(Icons.remove),
+              icon: Icon(Icons.remove, size: 24.sp),
             ),
-            horizontalSpace(10),
+            horizontalSpace(10.w),
             SizedBox(
-              height: 30,
-              width: 30,
+              height: 30.h,
+              width: 30.w,
               child: FittedBox(
                   fit: BoxFit.scaleDown,
                   child: Text(count.toString(), style: TextStyles.textStyle16)),
@@ -54,13 +55,13 @@ class _ItemCountState extends State<ItemCount> {
               onPressed: () {
                 _updateCount(count + 1);
               },
-              icon: const Icon(Icons.add),
+              icon: Icon(Icons.add, size: 24.sp),
             ),
           ],
         ),
         ElevatedButton(
           style: ElevatedButton.styleFrom(
-              minimumSize: const Size(150, 40),
+              minimumSize: Size(150.w, 40.h),
               backgroundColor: AppColors.primary,
               foregroundColor: AppColors.white),
           onPressed: () {
