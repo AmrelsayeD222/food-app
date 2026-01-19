@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/constants/constants.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
@@ -49,24 +50,24 @@ class CheckoutView extends StatelessWidget {
             price: '\$${totalPrice.toStringAsFixed(2)}',
           ),
           body: Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16.0),
+            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text('Order summary', style: TextStyles.textStyle20),
-                verticalSpace(10),
+                verticalSpace(10.h),
                 CustomDetalisRow(
                   text: 'Order',
                   price: '\$${orderPrice.toStringAsFixed(2)}',
                   style: TextStyles.textStyle16,
                 ),
-                verticalSpace(5),
+                verticalSpace(5.h),
                 CustomDetalisRow(
                   text: 'Tax',
                   price: '\$${tax.toStringAsFixed(2)}',
                   style: TextStyles.textStyle16,
                 ),
-                verticalSpace(5),
+                verticalSpace(5.h),
                 CustomDetalisRow(
                   text: 'Delivery fees',
                   price: '\$${deliveryFees.toStringAsFixed(2)}',
@@ -79,29 +80,29 @@ class CheckoutView extends StatelessWidget {
                   style: TextStyles.textStyle20,
                   padding: EdgeInsets.zero,
                 ),
-                verticalSpace(10),
+                verticalSpace(10.h),
                 CustomDetalisRow(
                   text: 'Estimated delivery time:',
                   price: '15 - 30 mins',
                   style: TextStyles.textStyle14,
                 ),
-                verticalSpace(30),
+                verticalSpace(30.h),
                 Text('Payment methods', style: TextStyles.textStyle20),
-                verticalSpace(20),
+                verticalSpace(20.h),
                 Column(
                   children: [
                     CustomCashListTile(
                       isSelected: selectedPayment == 'cash',
                       onTap: () => selectedPaymentNotifier.value = 'cash',
                     ),
-                    const SizedBox(height: 20),
+                    verticalSpace(20.h),
                     CustomVisaListTile(
                       isSelected: selectedPayment == 'visa',
                       onTap: () => selectedPaymentNotifier.value = 'visa',
                     ),
                   ],
                 ),
-                verticalSpace(20),
+                verticalSpace(20.h),
                 const CheckBox(),
               ],
             ),

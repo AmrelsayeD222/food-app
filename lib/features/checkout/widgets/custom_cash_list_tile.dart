@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
-
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import '../../../core/constants/app_colors.dart';
+import '../../../core/helper/spacing.dart';
 import '../../../core/helper/text_style.dart';
 
 class CustomCashListTile extends StatelessWidget {
@@ -16,26 +17,26 @@ class CustomCashListTile extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return InkWell(
-      borderRadius: BorderRadius.circular(16),
+      borderRadius: BorderRadius.circular(16.r),
       onTap: onTap,
       child: Container(
-        height: 80,
-        padding: const EdgeInsets.symmetric(horizontal: 16),
+        height: 80.h,
+        padding: EdgeInsets.symmetric(horizontal: 16.w),
         decoration: BoxDecoration(
           color: AppColors.brown,
-          borderRadius: BorderRadius.circular(16),
+          borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
             color: isSelected ? AppColors.primary : Colors.transparent,
-            width: 2,
+            width: 2.w,
           ),
         ),
         child: Row(
           children: [
             Image.asset(
               'assets/detalis/dollar_Background_Removed.png',
-              width: 40,
+              width: 40.w,
             ),
-            const SizedBox(width: 16),
+            horizontalSpace(16.w),
             Expanded(
               child: Text(
                 'Cash on Delivery',
@@ -45,18 +46,18 @@ class CustomCashListTile extends StatelessWidget {
 
             /// ✔️ Custom indicator
             Container(
-              width: 22,
-              height: 22,
+              width: 22.w,
+              height: 22.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected ? AppColors.primary : Colors.transparent,
                 border: Border.all(
                   color: AppColors.white,
-                  width: 2,
+                  width: 2.w,
                 ),
               ),
               child: isSelected
-                  ? const Icon(Icons.check, size: 14, color: Colors.white)
+                  ? Icon(Icons.check, size: 14.sp, color: Colors.white)
                   : null,
             ),
           ],
