@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
@@ -24,17 +25,17 @@ class CustomLoginForms extends StatelessWidget {
         key: cubit.loginFormKey,
         child: Container(
           width: double.infinity,
-          padding: const EdgeInsets.all(16),
-          decoration: const BoxDecoration(
+          padding: EdgeInsets.all(16.w),
+          decoration: BoxDecoration(
             color: AppColors.grey,
             borderRadius: BorderRadius.all(
-              Radius.circular(20),
+              Radius.circular(20.r),
             ),
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              verticalSpace(10),
+              verticalSpace(10.h),
               CustomTextFormField(
                 controller: cubit.loginEmailController,
                 hintText: 'Email Address',
@@ -43,7 +44,7 @@ class CustomLoginForms extends StatelessWidget {
                 validator: (value) =>
                     value == null || value.isEmpty ? 'Enter your Email' : null,
               ),
-              verticalSpace(10),
+              verticalSpace(10.h),
               CustomTextFormField(
                 controller: cubit.loginPasswordController,
                 hintText: 'Password',
@@ -61,7 +62,7 @@ class CustomLoginForms extends StatelessWidget {
                     ? 'Enter your password'
                     : null,
               ),
-              verticalSpace(20),
+              verticalSpace(20.h),
               Column(
                 children: [
                   CustomAuthButton(
@@ -79,7 +80,7 @@ class CustomLoginForms extends StatelessWidget {
                             style: TextStyle(color: AppColors.white),
                           ),
                   ),
-                  verticalSpace(10),
+                  verticalSpace(10.h),
                   Row(
                     children: [
                       Expanded(
@@ -97,7 +98,7 @@ class CustomLoginForms extends StatelessWidget {
                           ),
                         ),
                       ),
-                      horizontalSpace(10),
+                      horizontalSpace(10.w),
                       Expanded(
                         child: CustomAuthButton(
                           backGroundColor: AppColors.white,

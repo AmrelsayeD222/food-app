@@ -27,7 +27,7 @@ class CustomAuthAppBar extends StatelessWidget {
                 BlendMode.srcIn,
               ),
             ),
-            verticalSpace(10),
+            verticalSpace(10.h),
             Padding(
               padding: EdgeInsets.symmetric(horizontal: 20.w),
               child: Text(

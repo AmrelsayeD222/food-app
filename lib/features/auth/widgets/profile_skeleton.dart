@@ -30,7 +30,7 @@ class ProfileSkeleton extends StatelessWidget {
                 ),
               ),
             ),
-            verticalSpace(20),
+            verticalSpace(20.h),
 
             // Update Image Button Skeleton (shape only)
             Center(
@@ -45,26 +45,26 @@ class ProfileSkeleton extends StatelessWidget {
                 ),
               ),
             ),
-            verticalSpace(30),
+            verticalSpace(30.h),
 
             // Profile Info Skeletons
             Text(
               'Nameeeeeeeeeeeeeeee:',
               style: TextStyles.textStyle18,
             ),
-            verticalSpace(20),
+            verticalSpace(20.h),
 
             Text(
               'Emailllllllllll:',
               style: TextStyles.textStyle18,
             ),
-            verticalSpace(20),
+            verticalSpace(20.h),
 
             Text(
               'Addresssssssssssssss:',
               style: TextStyles.textStyle18,
             ),
-            verticalSpace(20),
+            verticalSpace(20.h),
 
             // Visa Tile Skeleton
             DecoratedBox(
@@ -92,7 +92,7 @@ class ProfileSkeleton extends StatelessWidget {
                 ),
               ),
             ),
-            verticalSpace(20),
+            verticalSpace(20.h),
           ],
         ),
       ),

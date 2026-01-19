@@ -79,7 +79,7 @@ class ProfileView extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Text(state.error),
-            verticalSpace(20),
+            verticalSpace(20.h),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
                 backgroundColor: AppColors.primary,
@@ -117,22 +117,22 @@ class ProfileView extends StatelessWidget {
         Center(
           child: CustomProfileImage(imageUrl: profile.image),
         ),
-        verticalSpace(20),
+        verticalSpace(20.h),
 
         // Update Image Button
         buildUpdateImageButton(context, profile),
-        verticalSpace(30),
+        verticalSpace(30.h),
 
         // Profile Information
         Text('Name: ${profile.name ?? 'N/A'}', style: TextStyles.textStyle18),
-        verticalSpace(20),
+        verticalSpace(20.h),
         Text('Email: ${profile.email ?? 'N/A'}', style: TextStyles.textStyle18),
-        verticalSpace(20),
+        verticalSpace(20.h),
         Text('Address: ${profile.address ?? 'No address provided'}',
             style: TextStyles.textStyle18),
-        verticalSpace(20),
+        verticalSpace(20.h),
         ProfileVisaTile(visa: profile.visa ?? '**** **** **** ****'),
-        verticalSpace(20),
+        verticalSpace(20.h),
       ],
     );
   }

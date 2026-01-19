@@ -35,7 +35,7 @@ class CustomSignUpforms extends StatelessWidget {
           child: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
-              verticalSpace(10),
+              verticalSpace(10.h),
               CustomTextFormField(
                 controller: cubit.nameController,
                 hintText: 'Your Name',
@@ -50,7 +50,7 @@ class CustomSignUpforms extends StatelessWidget {
                   return null;
                 },
               ),
-              verticalSpace(10),
+              verticalSpace(10.h),
               CustomTextFormField(
                 controller: cubit.signUpEmailController,
                 keyboardType: TextInputType.emailAddress,
@@ -70,7 +70,7 @@ class CustomSignUpforms extends StatelessWidget {
                   return null;
                 },
               ),
-              verticalSpace(10),
+              verticalSpace(10.h),
               CustomTextFormField(
                 controller: cubit.signUpPasswordController,
                 hintText: 'Password',
@@ -95,7 +95,7 @@ class CustomSignUpforms extends StatelessWidget {
                   return null;
                 },
               ),
-              verticalSpace(20),
+              verticalSpace(20.h),
               Column(
                 children: [
                   CustomAuthButton(
@@ -113,7 +113,7 @@ class CustomSignUpforms extends StatelessWidget {
                             style: TextStyle(color: AppColors.white),
                           ),
                   ),
-                  verticalSpace(10),
+                  verticalSpace(10.h),
                   Row(
                     children: [
                       Expanded(
@@ -129,7 +129,7 @@ class CustomSignUpforms extends StatelessWidget {
                           ),
                         ),
                       ),
-                      horizontalSpace(10),
+                      horizontalSpace(10.w),
                       Expanded(
                         child: CustomAuthButton(
                           onpressed: isLoading ? null : cubit.signUpAsGuest,
