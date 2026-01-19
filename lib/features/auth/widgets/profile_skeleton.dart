@@ -49,19 +49,19 @@ class ProfileSkeleton extends StatelessWidget {
 
             // Profile Info Skeletons
             const Text(
-              'Name:',
+              'Nameeeeeeeeeeeeeeee:',
               style: TextStyles.textStyle18,
             ),
             verticalSpace(20),
 
             const Text(
-              'Email:',
+              'Emailllllllllll:',
               style: TextStyles.textStyle18,
             ),
             verticalSpace(20),
 
             const Text(
-              'Address:',
+              'Addresssssssssssssss:',
               style: TextStyles.textStyle18,
             ),
             verticalSpace(20),

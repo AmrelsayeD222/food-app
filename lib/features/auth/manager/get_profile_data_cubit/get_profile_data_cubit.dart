@@ -33,13 +33,30 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
         emit(GetProfileDataLoading());
       }
 
+      // Try to load from local storage first
+      final cachedProfile = await _sharedPrefsService.getProfile();
+      if (cachedProfile != null && !forceRefresh) {
+        if (!isClosed) {
+          emit(GetProfileDataSuccess(profileData: cachedProfile));
+        }
+      }
+
       final result = await repo.getProfileData();
 
       if (isClosed) return;
 
       result.fold(
-        (failure) => emit(GetProfileDataFailure(error: failure.errMessage)),
-        (profileData) => emit(GetProfileDataSuccess(profileData: profileData)),
+        (failure) {
+          final hasCachedData = state is GetProfileDataSuccess;
+
+          if (!hasCachedData) {
+            emit(GetProfileDataFailure(error: failure.errMessage));
+          }
+        },
+        (profileData) async {
+          await _sharedPrefsService.saveProfile(profileData);
+          emit(GetProfileDataSuccess(profileData: profileData));
+        },
       );
     } catch (e) {
       if (!isClosed) {
@@ -50,8 +67,11 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   }
 
   /// 🔹 Update profile from upload response (without API call)
-  void updateProfileFromUpload(GetProfileDataModel updatedProfile) {
+  Future<void> updateProfileFromUpload(
+      GetProfileDataModel updatedProfile) async {
     if (!isClosed) {
+      // Save to local storage
+      await _sharedPrefsService.saveProfile(updatedProfile);
       emit(GetProfileDataSuccess(profileData: updatedProfile));
     }
   }
@@ -62,7 +82,7 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
       // Clear cart data
       getIt<CartCubitCubit>().clearCart();
 
-      // Clear token
+      // Clear token and profile
       await _sharedPrefsService.clearToken();
 
       if (!isClosed) {

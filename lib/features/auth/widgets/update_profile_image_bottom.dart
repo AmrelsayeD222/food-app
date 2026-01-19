@@ -15,12 +15,17 @@ Widget buildUpdateImageButton(
       if (uploadState is PostProfileDataSuccess) {
         final data = uploadState.response.data;
 
-        // Create updated profile model
+        final newImageUrl = (data.image != null && data.image!.isNotEmpty)
+            ? data.image!
+            : (profile.image != null && profile.image!.isNotEmpty)
+                ? profile.image!
+                : null;
+
         final updatedProfile = GetProfileDataModel(
           name: data.name ?? profile.name,
           email: data.email ?? profile.email,
           address: data.address ?? profile.address,
-          image: data.image ?? profile.image,
+          image: newImageUrl,
           visa: data.visa ?? profile.visa,
         );
 
@@ -50,16 +55,20 @@ Widget buildUpdateImageButton(
 
       return Center(
         child: CustomAuthButton(
+          width: 120.w,
+          height: 50.h,
           backGroundColor: AppColors.primary,
           foreGroundColor: AppColors.white,
           onpressed: isLoading ? null : () => pickAndUploadImage(context),
           child: isLoading
               ? SizedBox(
-                  width: 20.w,
-                  height: 20.h,
-                  child: CircularProgressIndicator(
-                    strokeWidth: 2.w,
-                    color: Colors.white,
+                  width: 100.w,
+                  height: 50.h,
+                  child: Center(
+                    child: CircularProgressIndicator(
+                      strokeWidth: 2.w,
+                      color: Colors.white,
+                    ),
                   ),
                 )
               : const Text("Update Image"),
