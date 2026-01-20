@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -39,11 +40,17 @@ class HomeCard extends StatelessWidget {
                   SizedBox(height: 5.h),
                   Hero(
                     tag: 'product_${product.id}',
-                    child: Image.network(
+                    child: CachedNetworkImage(
+                      imageUrl: product.image,
                       height: 100.h,
-                      product.image,
                       fit: BoxFit.contain,
-                      errorBuilder: (_, __, ___) =>
+                      placeholder: (context, url) => SizedBox(
+                        height: 100.h,
+                        child: const Center(
+                          child: CircularProgressIndicator(strokeWidth: 2),
+                        ),
+                      ),
+                      errorWidget: (context, url, error) =>
                           const Icon(Icons.image_not_supported),
                     ),
                   ),

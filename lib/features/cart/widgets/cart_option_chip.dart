@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/text_style.dart';
@@ -21,7 +22,18 @@ class CartOptionChip extends StatelessWidget {
         mainAxisSize: MainAxisSize.min,
         children: [
           if (option.image.isNotEmpty)
-            Image.network(option.image, width: 20.w, height: 20.h),
+            CachedNetworkImage(
+              imageUrl: option.image,
+              width: 20.w,
+              height: 20.h,
+              placeholder: (context, url) => SizedBox(
+                width: 20.w,
+                height: 20.h,
+                child: const CircularProgressIndicator(strokeWidth: 1),
+              ),
+              errorWidget: (context, url, error) =>
+                  const Icon(Icons.error, size: 10),
+            ),
           if (option.image.isNotEmpty) SizedBox(width: 6.w),
           Text(option.name, style: TextStyles.textStyle14),
         ],

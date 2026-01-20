@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -47,24 +48,21 @@ class HomeAppBar extends StatelessWidget {
               radius: 30.r,
               backgroundColor: Colors.grey.shade200,
               child: ClipOval(
-                child: Image.network(
-                  profile?.image ?? '',
+                child: CachedNetworkImage(
+                  imageUrl: profile?.image ?? '',
                   width: 60.w,
                   height: 60.h,
                   fit: BoxFit.cover,
-                  errorBuilder: (context, error, stackTrace) {
+                  errorWidget: (context, url, error) {
                     return Icon(
                       Icons.person,
                       size: 40.sp,
                       color: Colors.grey,
                     );
                   },
-                  loadingBuilder: (context, child, loadingProgress) {
-                    if (loadingProgress == null) return child;
-                    return const Center(
-                      child: CircularProgressIndicator(strokeWidth: 2),
-                    );
-                  },
+                  placeholder: (context, url) => const Center(
+                    child: CircularProgressIndicator(strokeWidth: 2),
+                  ),
                 ),
               ),
             ),

@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -14,22 +15,19 @@ class CustomProfileImage extends StatelessWidget {
     return ClipRRect(
       borderRadius: BorderRadius.circular(100.r),
       child: imageUrl != null && imageUrl!.isNotEmpty
-          ? Image.network(
-              imageUrl!,
+          ? CachedNetworkImage(
+              imageUrl: imageUrl!,
               width: 150.w,
               height: 150.h,
               fit: BoxFit.cover,
-              errorBuilder: (context, error, stackTrace) {
-                return _placeholder();
-              },
-              loadingBuilder: (context, child, loadingProgress) {
-                if (loadingProgress == null) return child;
-                return SizedBox(
-                    width: 150.w,
-                    height: 150.h,
-                    child: Center(
-                        child: CircularProgressIndicator(strokeWidth: 2.w)));
-              },
+              placeholder: (context, url) => SizedBox(
+                width: 150.w,
+                height: 150.h,
+                child: Center(
+                  child: CircularProgressIndicator(strokeWidth: 2.w),
+                ),
+              ),
+              errorWidget: (context, url, error) => _placeholder(),
             )
           : _placeholder(),
     );

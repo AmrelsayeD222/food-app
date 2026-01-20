@@ -1,3 +1,4 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -10,14 +11,13 @@ class CartItemImage extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(8.r),
-      child: Image.network(
-        image,
+      child: CachedNetworkImage(
+        imageUrl: image,
         width: 100.w,
         height: 100.h,
         fit: BoxFit.fill,
-        errorBuilder: (_, __, ___) => _placeholder(),
-        loadingBuilder: (_, child, progress) =>
-            progress == null ? child : _placeholder(isLoading: true),
+        errorWidget: (_, __, ___) => _placeholder(),
+        placeholder: (_, __) => _placeholder(isLoading: true),
       ),
     );
   }

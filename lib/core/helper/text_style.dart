@@ -1,51 +1,50 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import '../constants/app_colors.dart';
 
 class TextStyles {
-  static TextStyle textStyle13 = TextStyle(
-    fontSize: 13.sp,
+  static TextStyle textStyle13 = const TextStyle(
+    fontSize: 13,
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
-  static TextStyle textStyle16 = TextStyle(
-    fontSize: 15.sp,
+  static TextStyle textStyle16 = const TextStyle(
+    fontSize: 15,
     fontWeight: FontWeight.w500,
-    color: const Color(0xff6A6A6A),
+    color: Color(0xff6A6A6A),
   );
-  static TextStyle textStyle14 = TextStyle(
-    fontSize: 14.sp,
+  static TextStyle textStyle14 = const TextStyle(
+    fontSize: 14,
     fontWeight: FontWeight.w400,
   );
-  static TextStyle textStyle18 = TextStyle(
-    fontSize: 18.sp,
+  static TextStyle textStyle18 = const TextStyle(
+    fontSize: 18,
     fontWeight: FontWeight.w600,
   );
-  static TextStyle textStyle12 = TextStyle(
-    fontSize: 12.sp,
+  static TextStyle textStyle12 = const TextStyle(
+    fontSize: 12,
     fontWeight: FontWeight.w500,
     color: Colors.white,
   );
-  static TextStyle textStyle32 = TextStyle(
-    fontSize: 32.sp,
+  static TextStyle textStyle32 = const TextStyle(
+    fontSize: 32,
     fontWeight: FontWeight.w400,
   );
-  static TextStyle textStyle20 = TextStyle(
-    fontSize: 20.sp,
+  static TextStyle textStyle20 = const TextStyle(
+    fontSize: 20,
     fontWeight: FontWeight.w600,
   );
-  static TextStyle textStyle30 = TextStyle(
-    fontSize: 30.sp,
+  static TextStyle textStyle30 = const TextStyle(
+    fontSize: 30,
     fontWeight: FontWeight.w700,
     color: AppColors.primary,
   );
-  static TextStyle textStyle15 = TextStyle(
-    fontSize: 15.sp,
+  static TextStyle textStyle15 = const TextStyle(
+    fontSize: 15,
     fontWeight: FontWeight.w600,
   );
-  static TextStyle textStyle25 = TextStyle(
-    fontSize: 25.sp,
+  static TextStyle textStyle25 = const TextStyle(
+    fontSize: 25,
     fontWeight: FontWeight.w400,
   );
 }
