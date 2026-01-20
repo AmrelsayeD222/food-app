@@ -37,7 +37,7 @@ class Product {
   final String price;
   final bool isFavorite;
 
-  Product({
+  const Product({
     required this.id,
     required this.name,
     required this.description,

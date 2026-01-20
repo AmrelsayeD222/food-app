@@ -1,19 +1,19 @@
 part of 'fav_cubit.dart';
 
-sealed class FavState {
+sealed class ToggleFavState {
   final Set<int> favoriteIds;
   final Set<int> togglingProductIds;
   final List<FavoriteProduct>? favoriteProducts;
 
-  const FavState({
+  const ToggleFavState({
     required this.favoriteIds,
     this.togglingProductIds = const {},
     this.favoriteProducts,
   });
 }
 
-final class FavInitial extends FavState {
-  const FavInitial()
+final class ToggleFavInitial extends ToggleFavState {
+  const ToggleFavInitial()
       : super(
           favoriteIds: const {},
           togglingProductIds: const {},
@@ -21,25 +21,25 @@ final class FavInitial extends FavState {
         );
 }
 
-final class FavLoading extends FavState {
-  const FavLoading({
+final class ToggleFavLoading extends ToggleFavState {
+  const ToggleFavLoading({
     required super.favoriteIds,
     super.togglingProductIds = const {},
     super.favoriteProducts,
   });
 }
 
-final class FavSuccess extends FavState {
-  const FavSuccess({
+final class ToggleFavSuccess extends ToggleFavState {
+  const ToggleFavSuccess({
     required super.favoriteIds,
     super.togglingProductIds = const {},
     super.favoriteProducts,
   });
 }
 
-final class FavError extends FavState {
+final class ToggleFavError extends ToggleFavState {
   final String message;
-  const FavError({
+  const ToggleFavError({
     required super.favoriteIds,
     super.togglingProductIds = const {},
     super.favoriteProducts,
@@ -47,9 +47,9 @@ final class FavError extends FavState {
   });
 }
 
-final class FavEmpty extends FavState {
+final class ToggleFavEmpty extends ToggleFavState {
   final String message;
-  const FavEmpty({
+  const ToggleFavEmpty({
     required super.favoriteIds,
     super.togglingProductIds = const {},
     super.favoriteProducts,

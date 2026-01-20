@@ -1,39 +1,63 @@
 import 'package:bloc/bloc.dart';
-import 'package:foods_app/features/favourite/data/model/getFav/get_fav_response.dart';
+import 'package:foods_app/features/favourite/data/model/get_fav_response.dart';
 import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
+import 'package:foods_app/core/helper/shared_pref_storage.dart';
 
 part 'fav_state.dart';
 
-class FavCubit extends Cubit<FavState> {
+class FavCubit extends Cubit<ToggleFavState> {
   final FavRepo favRepo;
+  final SharedPrefsService _sharedPrefsService;
 
-  FavCubit(this.favRepo) : super(const FavInitial());
+  FavCubit(this.favRepo, this._sharedPrefsService)
+      : super(const ToggleFavInitial());
 
-  Future<void> loadFavorites() async {
+  Future<void> loadFavorites({bool forceRefresh = false}) async {
+    // 1. Try to load from cache first
+    if (!forceRefresh) {
+      final cachedFavs = await _sharedPrefsService.getFavorites();
+      if (cachedFavs != null && cachedFavs.data.isNotEmpty) {
+        Set<int> favoriteIds = cachedFavs.data.map((e) => e.id).toSet();
+        emit(ToggleFavSuccess(
+          favoriteIds: favoriteIds,
+          favoriteProducts: cachedFavs.data,
+        ));
+      }
+    }
+
+    // Skip if already loaded and not forcing refresh
+    if (!forceRefresh &&
+        (state is ToggleFavSuccess || state is ToggleFavEmpty)) {
+      return;
+    }
+
     final currentIds = state.favoriteIds;
     final currentProducts = state.favoriteProducts;
-    emit(FavLoading(
+    emit(ToggleFavLoading(
       favoriteIds: currentIds,
       favoriteProducts: currentProducts,
     ));
 
     final result = await favRepo.getFavorites();
     result.fold(
-      (failure) => emit(FavError(
+      (failure) => emit(ToggleFavError(
         favoriteIds: currentIds,
         favoriteProducts: currentProducts,
         message: failure.errMessage,
       )),
-      (success) {
+      (success) async {
+        // 2. Save to cache
+        await _sharedPrefsService.saveFavorites(success);
+
         Set<int> favoriteIds = success.data.map((e) => e.id).toSet();
         if (success.data.isEmpty) {
-          emit(FavEmpty(
+          emit(ToggleFavEmpty(
             favoriteIds: favoriteIds,
             favoriteProducts: const [],
             message: "No Favourites Found",
           ));
         } else {
-          emit(FavSuccess(
+          emit(ToggleFavSuccess(
             favoriteIds: favoriteIds,
             favoriteProducts: success.data,
           ));
@@ -57,24 +81,35 @@ class FavCubit extends Cubit<FavState> {
       updatedProducts = previousProducts;
     }
 
-    emit(FavSuccess(
+    emit(ToggleFavSuccess(
       favoriteIds: previousIds,
       favoriteProducts: updatedProducts,
       togglingProductIds: {productId},
     ));
 
-    final result = await favRepo.addFav(productId: productId);
+    final result = await favRepo.toggleFav(productId: productId);
     result.fold(
-      (failure) => emit(FavError(
+      (failure) => emit(ToggleFavError(
         favoriteIds: state.favoriteIds,
         favoriteProducts: state.favoriteProducts,
         message: failure.errMessage,
       )),
-      (success) => emit(FavSuccess(
-        favoriteIds: previousIds,
-        favoriteProducts: updatedProducts,
-        togglingProductIds: const {},
-      )),
+      (success) async {
+        // Update cache
+        if (updatedProducts != null) {
+          await _sharedPrefsService.saveFavorites(GetFavResponseModel(
+            code: 200,
+            message: 'Success',
+            data: updatedProducts,
+          ));
+        }
+
+        emit(ToggleFavSuccess(
+          favoriteIds: previousIds,
+          favoriteProducts: updatedProducts,
+          togglingProductIds: const {},
+        ));
+      },
     );
   }
 

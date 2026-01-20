@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/spacing.dart';
-import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';
 
 import '../widgets/home_appbar.dart';
 import '../widgets/home_card_field.dart';
@@ -25,16 +25,16 @@ class HomeView extends StatelessWidget {
                   const HomeAppBar(),
                   verticalSpace(20.h),
                   const SearchField(),
-                  verticalSpace(40.h),
+                  verticalSpace(20.h),
                   // const HomeCategoyList(),
                   // verticalSpace(20.h),
                 ],
               ),
             ),
-            BlocListener<FavCubit, FavState>(
+            BlocListener<FavCubit, ToggleFavState>(
               listener: (context, state) {
-                if (state is FavSuccess) {
-                } else if (state is FavError) {
+                if (state is ToggleFavSuccess) {
+                } else if (state is ToggleFavError) {
                   ScaffoldMessenger.of(context).showSnackBar(
                     SnackBar(
                       content: Text(state.message),

@@ -9,7 +9,7 @@ import 'package:foods_app/features/auth/views/profile_view.dart';
 import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/data/manager/removeCart/remove_cubit.dart';
 import 'package:foods_app/features/cart/views/cart_view.dart';
-import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';
 import 'package:foods_app/features/favourite/views/favourire_view.dart';
 import 'package:foods_app/features/home/data/manager/cubit/home_product_cubit.dart';
 import 'package:foods_app/features/home/views/home_view.dart';

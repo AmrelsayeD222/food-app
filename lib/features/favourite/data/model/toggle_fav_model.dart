@@ -1,18 +1,18 @@
 import 'package:equatable/equatable.dart';
 
-class AddAndRemoveModel extends Equatable {
+class ToggleFavModel extends Equatable {
   final int code;
   final String message;
   final List<dynamic> data;
 
-  const AddAndRemoveModel({
+  const ToggleFavModel({
     required this.code,
     required this.message,
     required this.data,
   });
 
-  factory AddAndRemoveModel.fromJson(Map<String, dynamic> json) {
-    return AddAndRemoveModel(
+  factory ToggleFavModel.fromJson(Map<String, dynamic> json) {
+    return ToggleFavModel(
       code: json['code'] as int,
       message: json['message'] as String,
       data: json['data'] != null ? json['data'] as List<dynamic> : [],
@@ -27,12 +27,12 @@ class AddAndRemoveModel extends Equatable {
     };
   }
 
-  AddAndRemoveModel copyWith({
+  ToggleFavModel copyWith({
     int? code,
     String? message,
     List<dynamic>? data,
   }) {
-    return AddAndRemoveModel(
+    return ToggleFavModel(
       code: code ?? this.code,
       message: message ?? this.message,
       data: data ?? this.data,

@@ -1,4 +1,5 @@
 import 'package:equatable/equatable.dart';
+import 'package:foods_app/features/home/data/model/home_product_model.dart';
 
 class GetFavResponseModel extends Equatable {
   final int code;
@@ -47,23 +48,15 @@ class GetFavResponseModel extends Equatable {
   List<Object?> get props => [code, message, data];
 }
 
-class FavoriteProduct extends Equatable {
-  final int id;
-  final String name;
-  final String description;
-  final String image;
-  final String rating;
-  final String price;
-  final bool isFavorite;
-
+class FavoriteProduct extends Product with EquatableMixin {
   const FavoriteProduct({
-    required this.id,
-    required this.name,
-    required this.description,
-    required this.image,
-    required this.rating,
-    required this.price,
-    required this.isFavorite,
+    required super.id,
+    required super.name,
+    required super.description,
+    required super.image,
+    required super.rating,
+    required super.price,
+    required super.isFavorite,
   });
 
   factory FavoriteProduct.fromJson(Map<String, dynamic> json) {
@@ -78,6 +71,7 @@ class FavoriteProduct extends Equatable {
     );
   }
 
+  @override
   Map<String, dynamic> toJson() {
     return {
       'id': id,
@@ -90,6 +84,7 @@ class FavoriteProduct extends Equatable {
     };
   }
 
+  @override
   FavoriteProduct copyWith({
     int? id,
     String? name,

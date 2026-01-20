@@ -110,30 +110,43 @@ class ProfileView extends StatelessWidget {
 
   Widget _buildProfileContent(
       BuildContext context, GetProfileDataModel profile) {
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        // Profile Image
-        Center(
-          child: CustomProfileImage(imageUrl: profile.image),
+    return RefreshIndicator(
+      onRefresh: () async {
+        await context
+            .read<GetProfileDataCubit>()
+            .getProfileData(forceRefresh: true);
+      },
+      color: AppColors.primary,
+      child: SingleChildScrollView(
+        physics: const AlwaysScrollableScrollPhysics(),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            // Profile Image
+            Center(
+              child: CustomProfileImage(imageUrl: profile.image),
+            ),
+            verticalSpace(20.h),
+
+            // Update Image Button
+            buildUpdateImageButton(context, profile),
+            verticalSpace(30.h),
+
+            // Profile Information
+            Text('Name: ${profile.name ?? 'N/A'}',
+                style: TextStyles.textStyle18),
+            verticalSpace(20.h),
+            Text('Email: ${profile.email ?? 'N/A'}',
+                style: TextStyles.textStyle18),
+            verticalSpace(20.h),
+            Text('Address: ${profile.address ?? 'No address provided'}',
+                style: TextStyles.textStyle18),
+            verticalSpace(20.h),
+            ProfileVisaTile(visa: profile.visa ?? '**** **** **** ****'),
+            verticalSpace(20.h),
+          ],
         ),
-        verticalSpace(20.h),
-
-        // Update Image Button
-        buildUpdateImageButton(context, profile),
-        verticalSpace(30.h),
-
-        // Profile Information
-        Text('Name: ${profile.name ?? 'N/A'}', style: TextStyles.textStyle18),
-        verticalSpace(20.h),
-        Text('Email: ${profile.email ?? 'N/A'}', style: TextStyles.textStyle18),
-        verticalSpace(20.h),
-        Text('Address: ${profile.address ?? 'No address provided'}',
-            style: TextStyles.textStyle18),
-        verticalSpace(20.h),
-        ProfileVisaTile(visa: profile.visa ?? '**** **** **** ****'),
-        verticalSpace(20.h),
-      ],
+      ),
     );
   }
 }

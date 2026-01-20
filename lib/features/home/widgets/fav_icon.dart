@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foods_app/features/favourite/data/manager/fav/fav_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';
 
 class FavIcon extends StatelessWidget {
   final int productId;
@@ -13,7 +13,7 @@ class FavIcon extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocSelector<FavCubit, FavState,
+    return BlocSelector<FavCubit, ToggleFavState,
         ({bool isFavorite, bool isToggling})>(
       selector: (state) => (
         isFavorite: state.favoriteIds.contains(productId),
