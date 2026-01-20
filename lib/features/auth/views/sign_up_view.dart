@@ -29,9 +29,6 @@ class SignUpView extends StatelessWidget {
         } else if (state is SignUpSuccess) {
           final token = state.signUpModel.data?.token;
           if (token != null && token.isNotEmpty) {
-            // Clear previous user's data
-            cubit.clearPreviousData();
-
             // Get fresh profile data
             final profileCubit = getIt<GetProfileDataCubit>();
             profileCubit.getProfileData(forceRefresh: true);

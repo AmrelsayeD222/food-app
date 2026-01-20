@@ -53,7 +53,8 @@ class CartCubitCubit extends Cubit<CartCubitState> {
   }
 
   /// 🔹 Clear cart state on logout or new user sign in
-  void clearCart() {
+  Future<void> clearCart() async {
+    await _sharedPrefsService.clearCart();
     if (!isClosed) {
       emit(CartCubitInitial());
     }

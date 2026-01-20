@@ -27,9 +27,12 @@ class LoginCubit extends Cubit<LoginState> {
 
     result.fold(
       (failure) => emit(LoginFailure(failure.errMessage)),
-      (response) => emit(LoginSuccess(
-        response,
-      )),
+      (response) async {
+        await clearPreviousData();
+        emit(LoginSuccess(
+          response,
+        ));
+      },
     );
   }
 
@@ -52,18 +55,18 @@ class LoginCubit extends Cubit<LoginState> {
     emit(LoginInitial());
   }
 
-  void clearPreviousData() {
+  Future<void> clearPreviousData() async {
     try {
-      getIt<CartCubitCubit>().clearCart();
+      await getIt<CartCubitCubit>().clearCart();
       getIt<GetProfileDataCubit>().clearProfile();
     } catch (e) {
       debugPrint('Error clearing data on login: $e');
     }
   }
 
-  void loginAsGuest() {
+  Future<void> loginAsGuest() async {
     try {
-      getIt<CartCubitCubit>().clearCart();
+      await getIt<CartCubitCubit>().clearCart();
       getIt<GetProfileDataCubit>().clearProfile();
       emit(GuestModeSuccess());
     } catch (e) {

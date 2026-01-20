@@ -80,7 +80,7 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
   Future<void> logout() async {
     try {
       // Clear cart data
-      getIt<CartCubitCubit>().clearCart();
+      await getIt<CartCubitCubit>().clearCart();
 
       // Clear token and profile
       await _sharedPrefsService.clearToken();

@@ -118,7 +118,6 @@ class ProfileView extends StatelessWidget {
             .read<GetProfileDataCubit>()
             .getProfileData(forceRefresh: true);
       },
-      color: AppColors.primary,
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(

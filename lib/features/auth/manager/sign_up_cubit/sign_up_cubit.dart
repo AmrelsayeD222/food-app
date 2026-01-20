@@ -32,7 +32,10 @@ class SignUpCubit extends Cubit<SignUpState> {
 
     result.fold(
       (failure) => emit(SignUpFailure(failure.errMessage)),
-      (response) => emit(SignUpSuccess(response)),
+      (response) async {
+        await clearPreviousData();
+        emit(SignUpSuccess(response));
+      },
     );
   }
 
@@ -56,18 +59,18 @@ class SignUpCubit extends Cubit<SignUpState> {
     emit(SignUpInitial());
   }
 
-  void clearPreviousData() {
+  Future<void> clearPreviousData() async {
     try {
-      getIt<CartCubitCubit>().clearCart();
+      await getIt<CartCubitCubit>().clearCart();
       getIt<GetProfileDataCubit>().clearProfile();
     } catch (e) {
       debugPrint('Error clearing data on Sign Up: $e');
     }
   }
 
-  void signUpAsGuest() {
+  Future<void> signUpAsGuest() async {
     try {
-      getIt<CartCubitCubit>().clearCart();
+      await getIt<CartCubitCubit>().clearCart();
       getIt<GetProfileDataCubit>().clearProfile();
       emit(SignUpGuestModeSuccess());
     } catch (e) {

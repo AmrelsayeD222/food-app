@@ -30,9 +30,6 @@ class LoginView extends StatelessWidget {
         } else if (state is LoginSuccess) {
           final token = state.loginModel.data?.token;
           if (token != null && token.isNotEmpty) {
-            // Clear previous user's data
-            cubit.clearPreviousData();
-
             // Get fresh profile data
             final profileCubit = getIt<GetProfileDataCubit>();
             profileCubit.getProfileData(forceRefresh: true);
