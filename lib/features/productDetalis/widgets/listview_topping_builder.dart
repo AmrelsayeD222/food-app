@@ -40,7 +40,7 @@ class _ListviewToppingBuilderState extends State<ListviewToppingBuilder> {
       height: 130.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (_, __) => horizontalSpace(10),
+        separatorBuilder: (_, __) => horizontalSpace(10.w),
         itemCount: toppingList.length,
         itemBuilder: (context, index) {
           final topping = toppingList[index];

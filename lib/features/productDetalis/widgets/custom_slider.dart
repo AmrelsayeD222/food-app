@@ -51,14 +51,14 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
 
-        verticalSpace(8),
+        verticalSpace(8.h),
 
         // Slider
         SliderTheme(
           data: SliderThemeData(
-            trackHeight: 4,
-            thumbShape: const RoundSliderThumbShape(enabledThumbRadius: 8),
-            overlayShape: const RoundSliderOverlayShape(overlayRadius: 16),
+            trackHeight: 4.h,
+            thumbShape: RoundSliderThumbShape(enabledThumbRadius: 8.r),
+            overlayShape: RoundSliderOverlayShape(overlayRadius: 16.r),
             activeTrackColor: AppColors.primary,
             inactiveTrackColor: AppColors.greyLight,
             thumbColor: AppColors.primary,
@@ -99,7 +99,7 @@ class _CustomSliderState extends State<CustomSlider> {
           ),
         ),
 
-        verticalSpace(8),
+        verticalSpace(8.h),
 
         // Min/Max Labels
         Padding(
@@ -111,14 +111,14 @@ class _CustomSliderState extends State<CustomSlider> {
                 'Not Spicy',
                 style: TextStyles.textStyle14.copyWith(
                   color: Colors.grey[600],
-                  fontSize: 12,
+                  fontSize: 12.sp,
                 ),
               ),
               Text(
                 'Extra Hot',
                 style: TextStyles.textStyle14.copyWith(
                   color: Colors.grey[600],
-                  fontSize: 12,
+                  fontSize: 12.sp,
                 ),
               ),
             ],

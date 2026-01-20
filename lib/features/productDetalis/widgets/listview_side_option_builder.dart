@@ -44,7 +44,7 @@ class _ListviewSideOptionBuilderState extends State<ListviewSideOptionBuilder> {
       height: 130.h,
       child: ListView.separated(
         scrollDirection: Axis.horizontal,
-        separatorBuilder: (_, __) => horizontalSpace(10),
+        separatorBuilder: (_, __) => horizontalSpace(10.w),
         itemCount: sideOptionList.length,
         itemBuilder: (context, index) {
           final option = sideOptionList[index];

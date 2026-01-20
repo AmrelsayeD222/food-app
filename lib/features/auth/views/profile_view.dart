@@ -111,6 +111,8 @@ class ProfileView extends StatelessWidget {
   Widget _buildProfileContent(
       BuildContext context, GetProfileDataModel profile) {
     return RefreshIndicator(
+      backgroundColor: AppColors.white,
+      color: AppColors.primary,
       onRefresh: () async {
         await context
             .read<GetProfileDataCubit>()

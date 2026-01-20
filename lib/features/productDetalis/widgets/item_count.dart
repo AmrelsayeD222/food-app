@@ -47,7 +47,7 @@ class _ItemCountState extends State<ItemCount> {
                   fit: BoxFit.scaleDown,
                   child: Text(count.toString(), style: TextStyles.textStyle16)),
             ),
-            horizontalSpace(10),
+            horizontalSpace(10.w),
             IconButton(
               style: IconButton.styleFrom(
                   foregroundColor: AppColors.white,

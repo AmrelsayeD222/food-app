@@ -41,7 +41,7 @@ class CartView extends StatelessWidget {
               enabled: true,
               child: Column(
                 children: [
-                  verticalSpace(30),
+                  verticalSpace(30.h),
                   Expanded(
                     child: CartCardItemBuilder(
                       items: _getDummyItems(),
@@ -58,7 +58,7 @@ class CartView extends StatelessWidget {
             body: Center(
               child: Text(
                 state.message,
-                style: const TextStyle(fontSize: 16, color: Colors.grey),
+                style: TextStyle(fontSize: 16.sp, color: Colors.grey),
               ),
             ),
           );
@@ -79,12 +79,13 @@ class CartView extends StatelessWidget {
                 verticalSpace(30.h),
                 Expanded(
                   child: RefreshIndicator(
+                    backgroundColor: AppColors.white,
+                    color: AppColors.primary,
                     onRefresh: () async {
                       await context
                           .read<CartCubitCubit>()
                           .getCart(forceRefresh: true);
                     },
-                    color: AppColors.primary,
                     child: CartCardItemBuilder(items: items),
                   ),
                 ),

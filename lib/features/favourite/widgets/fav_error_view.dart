@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 
 class FavErrorView extends StatelessWidget {
@@ -32,6 +33,10 @@ class FavErrorView extends StatelessWidget {
           ),
           verticalSpace(20.h),
           ElevatedButton.icon(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: AppColors.primary,
+              foregroundColor: Colors.white,
+            ),
             onPressed: onRetry,
             icon: Icon(Icons.refresh, size: 20.sp),
             label: Text('Retry', style: TextStyle(fontSize: 14.sp)),

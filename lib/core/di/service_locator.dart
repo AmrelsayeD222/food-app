@@ -42,8 +42,8 @@ void setupServiceLocator() {
     return dio;
   });
 
-  getIt.registerLazySingleton<SharedPrefsService>(
-    () => SharedPrefsService(),
+  getIt.registerSingleton<SharedPrefsService>(
+    SharedPrefsService(),
   );
 
   getIt.registerLazySingleton<ApiServices>(
@@ -111,7 +111,6 @@ void setupServiceLocator() {
   );
 
   getIt.registerLazySingleton<FavCubit>(
-    () => FavCubit(getIt<FavRepo>(), getIt<SharedPrefsService>())
-      ..loadFavorites(),
+    () => FavCubit(getIt<FavRepo>(), getIt<SharedPrefsService>()),
   );
 }
