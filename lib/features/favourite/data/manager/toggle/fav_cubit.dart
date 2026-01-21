@@ -40,11 +40,24 @@ class FavCubit extends Cubit<ToggleFavState> {
 
     final result = await favRepo.getFavorites();
     result.fold(
-      (failure) => emit(ToggleFavError(
-        favoriteIds: currentIds,
-        favoriteProducts: currentProducts,
-        message: failure.errMessage,
-      )),
+      (failure) {
+        // Check if user is in guest mode (not authenticated)
+        if (failure.errMessage.toLowerCase().contains('unauthenticated')) {
+          // Show empty state for guest users instead of error
+          emit(const ToggleFavEmpty(
+            favoriteIds: {},
+            favoriteProducts: [],
+            message: "No Favourites Found",
+          ));
+        } else {
+          // Show error for other failure types
+          emit(ToggleFavError(
+            favoriteIds: currentIds,
+            favoriteProducts: currentProducts,
+            message: failure.errMessage,
+          ));
+        }
+      },
       (success) async {
         // 2. Save to cache
         await _sharedPrefsService.saveFavorites(success);
@@ -115,5 +128,14 @@ class FavCubit extends Cubit<ToggleFavState> {
 
   bool isFavorite(int productId) {
     return state.favoriteIds.contains(productId);
+  }
+
+  Future<void> clearFavorites() async {
+    await _sharedPrefsService.saveFavorites(const GetFavResponseModel(
+      code: 200,
+      message: 'Success',
+      data: [],
+    ));
+    emit(const ToggleFavInitial());
   }
 }

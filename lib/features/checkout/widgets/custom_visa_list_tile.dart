@@ -20,21 +20,38 @@ class CustomVisaListTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.r),
       onTap: onTap,
       child: Container(
-        height: 80.h,
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        height: 85.h,
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
-          color: AppColors.greyLight,
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF1E3A8A).withValues(alpha: 0.9),
+              const Color(0xFF3B82F6).withValues(alpha: 0.9),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected
+                ? AppColors.primary
+                : Colors.white.withValues(alpha: 0.3),
             width: 2.w,
           ),
         ),
         child: Row(
           children: [
-            Image.asset(
-              'assets/detalis/visa.png',
-              width: 60.w,
+            Container(
+              padding: EdgeInsets.all(10.w),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Image.asset(
+                'assets/detalis/visa.png',
+                width: 50.w,
+                fit: BoxFit.contain,
+              ),
             ),
             horizontalSpace(16.w),
             Expanded(
@@ -42,24 +59,38 @@ class CustomVisaListTile extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('Debit card', style: TextStyles.textStyle14),
-                  Text('3566 **** **** 0505', style: TextStyles.textStyle14),
+                  Text(
+                    'Debit Card',
+                    style: TextStyles.textStyle14.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  verticalSpace(2.h),
+                  Text(
+                    '3566 **** **** 0505',
+                    style: TextStyles.textStyle14.copyWith(
+                      color: Colors.white.withValues(alpha: 0.9),
+                      fontSize: 12.sp,
+                      letterSpacing: 1.2,
+                    ),
+                  ),
                 ],
               ),
             ),
             Container(
-              width: 22.w,
-              height: 22.h,
+              width: 24.w,
+              height: 24.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected ? AppColors.primary : Colors.transparent,
                 border: Border.all(
-                  color: Colors.grey,
+                  color: Colors.white,
                   width: 2.w,
                 ),
               ),
               child: isSelected
-                  ? Icon(Icons.check, size: 14.sp, color: Colors.white)
+                  ? Icon(Icons.check, size: 16.sp, color: Colors.white)
                   : null,
             ),
           ],

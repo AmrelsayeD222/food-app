@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';
 import '../../data/repo/repo.dart';
 import 'login_state.dart';
 
@@ -59,6 +60,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       await getIt<CartCubitCubit>().clearCart();
       getIt<GetProfileDataCubit>().clearProfile();
+      await getIt<FavCubit>().clearFavorites();
     } catch (e) {
       debugPrint('Error clearing data on login: $e');
     }
@@ -68,6 +70,7 @@ class LoginCubit extends Cubit<LoginState> {
     try {
       await getIt<CartCubitCubit>().clearCart();
       getIt<GetProfileDataCubit>().clearProfile();
+      await getIt<FavCubit>().clearFavorites();
       emit(GuestModeSuccess());
     } catch (e) {
       emit(LoginFailure('Failed to enter guest mode'));

@@ -3,16 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/helper/spacing.dart';
-import 'package:foods_app/core/helper/text_style.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_profile_image.dart';
 import 'package:foods_app/features/auth/widgets/guest_profile.dart';
+import 'package:foods_app/features/auth/widgets/profile_card_info.dart';
 import 'package:foods_app/features/auth/widgets/profile_dialog.dart';
 import 'package:foods_app/features/auth/widgets/profile_skeleton.dart';
-import 'package:foods_app/features/auth/widgets/profile_visa_tile.dart';
 import 'package:foods_app/features/auth/widgets/update_profile_image_bottom.dart';
+import 'package:foods_app/core/helper/text_style.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
@@ -119,30 +119,76 @@ class ProfileView extends StatelessWidget {
       child: SingleChildScrollView(
         physics: const AlwaysScrollableScrollPhysics(),
         child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            // Profile Image
-            Center(
-              child: CustomProfileImage(imageUrl: profile.image),
+            // Gradient Header Section
+            Container(
+              decoration: BoxDecoration(
+                gradient: LinearGradient(
+                  colors: [
+                    AppColors.primary.withValues(alpha: 0.08),
+                    Colors.white,
+                  ],
+                  begin: Alignment.topCenter,
+                  end: Alignment.bottomCenter,
+                ),
+              ),
+              padding: EdgeInsets.symmetric(vertical: 20.h),
+              child: Column(
+                children: [
+                  // Profile Image
+                  CustomProfileImage(imageUrl: profile.image),
+                  verticalSpace(16.h),
+
+                  // Update Image Button
+                  buildUpdateImageButton(context, profile),
+                ],
+              ),
             ),
+
             verticalSpace(20.h),
 
-            // Update Image Button
-            buildUpdateImageButton(context, profile),
-            verticalSpace(30.h),
+            // Profile Information Cards
+            Padding(
+              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Profile Information',
+                    style: TextStyles.textStyle18.copyWith(
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18.sp,
+                    ),
+                  ),
+                  verticalSpace(12.h),
 
-            // Profile Information
-            Text('Name: ${profile.name ?? 'N/A'}',
-                style: TextStyles.textStyle18),
-            verticalSpace(20.h),
-            Text('Email: ${profile.email ?? 'N/A'}',
-                style: TextStyles.textStyle18),
-            verticalSpace(20.h),
-            Text('Address: ${profile.address ?? 'No address provided'}',
-                style: TextStyles.textStyle18),
-            verticalSpace(20.h),
-            ProfileVisaTile(visa: profile.visa ?? '**** **** **** ****'),
-            verticalSpace(20.h),
+                  // Name Card
+                  buildInfoCard(
+                    icon: Icons.person_outline,
+                    label: 'Full Name',
+                    value: profile.name ?? 'N/A',
+                  ),
+                  verticalSpace(12.h),
+
+                  // Email Card
+                  buildInfoCard(
+                    icon: Icons.email_outlined,
+                    label: 'Email Address',
+                    value: profile.email ?? 'N/A',
+                  ),
+                  verticalSpace(12.h),
+
+                  // Address Card
+                  buildInfoCard(
+                    icon: Icons.location_on_outlined,
+                    label: 'Address',
+                    value: profile.address ?? 'No address provided',
+                  ),
+                  verticalSpace(30.h),
+                ],
+              ),
+            ),
           ],
         ),
       ),

@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/foundation.dart';
 import 'package:foods_app/features/auth/data/repo/repo.dart';
-import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
+import 'package:foods_app/features/auth/manager/post_profile_data_cubit/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/cart/data/manager/removeCart/remove_cubit.dart';
 import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';

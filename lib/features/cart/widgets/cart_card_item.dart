@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
 import 'package:foods_app/features/cart/widgets/cart_item_image.dart';
 import 'package:foods_app/features/cart/widgets/cart_item_info.dart';
@@ -21,7 +22,14 @@ class CartCardItem extends StatelessWidget {
       margin: EdgeInsets.symmetric(vertical: 8.h, horizontal: 12.w),
       padding: EdgeInsets.all(12.r),
       decoration: BoxDecoration(
-        color: Colors.white,
+        gradient: LinearGradient(
+          colors: [
+            AppColors.primary.withValues(alpha: 0.08),
+            Colors.white,
+          ],
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+        ),
         borderRadius: BorderRadius.circular(12.r),
         boxShadow: [
           BoxShadow(

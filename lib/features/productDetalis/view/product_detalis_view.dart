@@ -9,7 +9,6 @@ import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cub
 import 'package:foods_app/features/home/data/model/home_product_model.dart';
 import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
 import 'package:foods_app/features/productDetalis/data/model/oreder_request_model.dart';
-import 'package:foods_app/features/productDetalis/widgets/item_count.dart';
 
 import '../../../core/helper/text_style.dart';
 import '../widgets/custom_slider.dart';
@@ -31,14 +30,9 @@ class ProductDetalisView extends StatefulWidget {
 }
 
 class _ProductDetalisViewState extends State<ProductDetalisView> {
-  int quantity = 1;
   double spicyLevel = 0.5;
   List<int> selectedToppings = [];
   List<int> selectedSideOptions = [];
-
-  double _calculateTotalPrice() {
-    return (double.tryParse(widget.product.price.toString()) ?? 0.0) * quantity;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -89,14 +83,14 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
             return CustomBottomSheet(
               sheetText: 'Burger Price',
               bottomText: 'Add to Cart',
-              price: _calculateTotalPrice().toStringAsFixed(2),
+              price: widget.product.price,
               isLoading: state is OrderRequestLoading,
               onpressed: () async {
                 if (!mounted) return;
 
                 final orderItem = OrderItem(
                   productId: widget.product.id,
-                  quantity: quantity,
+                  quantity: 1,
                   spicy: spicyLevel,
                   toppings: selectedToppings,
                   sideOptions: selectedSideOptions,
@@ -142,14 +136,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                   ],
                 ),
                 verticalSpace(18.h),
-                ItemCount(
-                  onQuantityChanged: (val) {
-                    setState(() {
-                      quantity = val;
-                    });
-                  },
-                ),
-                verticalSpace(18.h),
                 Text('Toppings', style: TextStyles.textStyle18),
                 verticalSpace(18.h),
                 ListviewToppingBuilder(
@@ -159,9 +145,9 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                     });
                   },
                 ),
-                verticalSpace(8.h),
+                verticalSpace(18.h),
                 Text('Side Options', style: TextStyles.textStyle18),
-                verticalSpace(8.h),
+                verticalSpace(18.h),
                 ListviewSideOptionBuilder(
                   onSelectionChanged: (ids) {
                     setState(() {

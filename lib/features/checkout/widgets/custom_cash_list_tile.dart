@@ -20,44 +20,78 @@ class CustomCashListTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.r),
       onTap: onTap,
       child: Container(
-        height: 80.h,
-        padding: EdgeInsets.symmetric(horizontal: 16.w),
+        height: 85.h,
+        padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
-          color: AppColors.brown,
+          gradient: LinearGradient(
+            colors: [
+              const Color(0xFF2E7D32).withValues(alpha: 0.9),
+              const Color(0xFF66BB6A).withValues(alpha: 0.9),
+            ],
+            begin: Alignment.topLeft,
+            end: Alignment.bottomRight,
+          ),
           borderRadius: BorderRadius.circular(16.r),
           border: Border.all(
-            color: isSelected ? AppColors.primary : Colors.transparent,
+            color: isSelected
+                ? AppColors.primary
+                : Colors.white.withValues(alpha: 0.3),
             width: 2.w,
           ),
         ),
         child: Row(
           children: [
-            Image.asset(
-              'assets/detalis/dollar_Background_Removed.png',
-              width: 40.w,
+            Container(
+              padding: EdgeInsets.all(10.w),
+              decoration: BoxDecoration(
+                color: Colors.white.withValues(alpha: 0.2),
+                borderRadius: BorderRadius.circular(12.r),
+              ),
+              child: Image.asset(
+                'assets/detalis/dollar_Background_Removed.png',
+                width: 32.w,
+                height: 32.w,
+              ),
             ),
             horizontalSpace(16.w),
             Expanded(
-              child: Text(
-                'Cash on Delivery',
-                style: TextStyles.textStyle16.copyWith(color: AppColors.white),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    'Cash on Delivery',
+                    style: TextStyles.textStyle16.copyWith(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  verticalSpace(2.h),
+                  Text(
+                    'Pay when you receive',
+                    style: TextStyles.textStyle14.copyWith(
+                      color: Colors.white.withValues(alpha: 0.8),
+                      fontSize: 12.sp,
+                    ),
+                  ),
+                ],
               ),
             ),
 
             /// ✔️ Custom indicator
             Container(
-              width: 22.w,
-              height: 22.h,
+              width: 24.w,
+              height: 24.h,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 color: isSelected ? AppColors.primary : Colors.transparent,
                 border: Border.all(
-                  color: AppColors.white,
+                  color: Colors.white,
                   width: 2.w,
                 ),
               ),
               child: isSelected
-                  ? Icon(Icons.check, size: 14.sp, color: Colors.white)
+                  ? Icon(Icons.check, size: 16.sp, color: Colors.white)
                   : null,
             ),
           ],

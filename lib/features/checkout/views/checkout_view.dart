@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/constants/constants.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/spacing.dart';
@@ -7,7 +8,6 @@ import 'package:foods_app/core/helper/text_style.dart';
 import 'package:foods_app/core/routes/app_routes.dart';
 import 'package:foods_app/core/shared/custom_bottom_sheet.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
-import 'package:foods_app/features/checkout/widgets/check_box.dart';
 import 'package:foods_app/features/checkout/widgets/custom_cash_list_tile.dart';
 import 'package:foods_app/features/checkout/widgets/custom_detalis_row.dart';
 import 'package:foods_app/features/checkout/widgets/custom_visa_list_tile.dart';
@@ -47,61 +47,131 @@ class CheckoutView extends StatelessWidget {
             bottomText: 'Pay now',
             price: '\$${totalPrice.toStringAsFixed(2)}',
           ),
-          body: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 16.0.w),
+          body: SingleChildScrollView(
             child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                Text('Order summary', style: TextStyles.textStyle20),
-                verticalSpace(10.h),
-                CustomDetalisRow(
-                  text: 'Order',
-                  price: '\$${orderPrice.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle16,
-                ),
-                verticalSpace(5.h),
-                CustomDetalisRow(
-                  text: 'Tax',
-                  price: '\$${tax.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle16,
-                ),
-                verticalSpace(5.h),
-                CustomDetalisRow(
-                  text: 'Delivery fees',
-                  price: '\$${deliveryFees.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle16,
-                ),
-                const Divider(height: 20),
-                CustomDetalisRow(
-                  text: 'Total',
-                  price: '\$${totalPrice.toStringAsFixed(2)}',
-                  style: TextStyles.textStyle20,
-                  padding: EdgeInsets.zero,
-                ),
-                verticalSpace(10.h),
-                CustomDetalisRow(
-                  text: 'Estimated delivery time:',
-                  price: '15 - 30 mins',
-                  style: TextStyles.textStyle14,
-                ),
-                verticalSpace(30.h),
-                Text('Payment methods', style: TextStyles.textStyle20),
-                verticalSpace(20.h),
-                Column(
-                  children: [
-                    CustomCashListTile(
-                      isSelected: selectedPayment == 'cash',
-                      onTap: () => selectedPaymentNotifier.value = 'cash',
+                // Gradient Header Section
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [
+                        AppColors.primary.withValues(alpha: 0.08),
+                        Colors.white,
+                      ],
+                      begin: Alignment.topCenter,
+                      end: Alignment.bottomCenter,
                     ),
-                    verticalSpace(20.h),
-                    CustomVisaListTile(
-                      isSelected: selectedPayment == 'visa',
-                      onTap: () => selectedPaymentNotifier.value = 'visa',
-                    ),
-                  ],
+                  ),
+                  padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 24.h),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Order Summary',
+                        style: TextStyles.textStyle20.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 22.sp,
+                        ),
+                      ),
+                      verticalSpace(16.h),
+
+                      // Order Summary Card
+                      Container(
+                        padding: EdgeInsets.all(16.w),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16.r),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withValues(alpha: 0.06),
+                              blurRadius: 12.r,
+                              offset: Offset(0, 4.h),
+                            ),
+                          ],
+                        ),
+                        child: Column(
+                          children: [
+                            CustomDetalisRow(
+                              text: 'Order',
+                              price: '\$${orderPrice.toStringAsFixed(2)}',
+                              style: TextStyles.textStyle16,
+                            ),
+                            verticalSpace(12.h),
+                            CustomDetalisRow(
+                              text: 'Tax',
+                              price: '\$${tax.toStringAsFixed(2)}',
+                              style: TextStyles.textStyle16,
+                            ),
+                            verticalSpace(12.h),
+                            CustomDetalisRow(
+                              text: 'Delivery fees',
+                              price: '\$${deliveryFees.toStringAsFixed(2)}',
+                              style: TextStyles.textStyle16,
+                            ),
+                            Divider(height: 24.h, thickness: 1),
+                            CustomDetalisRow(
+                              text: 'Total',
+                              price: '\$${totalPrice.toStringAsFixed(2)}',
+                              style: TextStyles.textStyle20.copyWith(
+                                fontWeight: FontWeight.bold,
+                              ),
+                              padding: EdgeInsets.zero,
+                            ),
+                          ],
+                        ),
+                      ),
+                      verticalSpace(12.h),
+
+                      // Delivery Time Info
+                      Row(
+                        children: [
+                          Icon(
+                            Icons.access_time,
+                            size: 18.sp,
+                            color: AppColors.primary,
+                          ),
+                          horizontalSpace(8.w),
+                          Text(
+                            'Estimated delivery: 15 - 30 mins',
+                            style: TextStyles.textStyle14.copyWith(
+                              color: Colors.grey.shade700,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-                verticalSpace(20.h),
-                const CheckBox(),
+
+                // Payment Methods Section
+                Padding(
+                  padding: EdgeInsets.symmetric(horizontal: 16.w),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      verticalSpace(24.h),
+                      Text(
+                        'Payment Method',
+                        style: TextStyles.textStyle20.copyWith(
+                          fontWeight: FontWeight.bold,
+                          fontSize: 20.sp,
+                        ),
+                      ),
+                      verticalSpace(16.h),
+                      CustomCashListTile(
+                        isSelected: selectedPayment == 'cash',
+                        onTap: () => selectedPaymentNotifier.value = 'cash',
+                      ),
+                      verticalSpace(12.h),
+                      CustomVisaListTile(
+                        isSelected: selectedPayment == 'visa',
+                        onTap: () => selectedPaymentNotifier.value = 'visa',
+                      ),
+                      verticalSpace(20.h),
+                    ],
+                  ),
+                ),
               ],
             ),
           ),

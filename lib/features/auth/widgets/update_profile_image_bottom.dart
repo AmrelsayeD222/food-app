@@ -3,7 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
-import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
+import 'package:foods_app/features/auth/manager/post_profile_data_cubit/post_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_auth_button.dart';
 import 'package:foods_app/features/auth/widgets/upload_profile_image.dart';

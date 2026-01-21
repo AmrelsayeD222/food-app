@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foods_app/features/auth/manager/Post_profile_data_cubit.dart/post_profile_data_cubit.dart';
+import 'package:foods_app/features/auth/manager/post_profile_data_cubit/post_profile_data_cubit.dart';
 import 'package:image_picker/image_picker.dart';
 
 Future<void> pickAndUploadImage(BuildContext context) async {
