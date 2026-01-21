@@ -57,6 +57,9 @@ class ProfileView extends StatelessWidget {
             appBar: state is GetProfileDataEmpty
                 ? null
                 : AppBar(
+                    scrolledUnderElevation: 0,
+                    shadowColor: Colors.transparent,
+                    surfaceTintColor: Colors.transparent,
                     automaticallyImplyLeading: false,
                     actions: [
                       IconButton(
@@ -198,7 +201,7 @@ class ProfileView extends StatelessWidget {
                     label: 'Address',
                     value: profile.address ?? 'No address provided',
                   ),
-                  verticalSpace(30.h),
+                  verticalSpace(100.h),
                 ],
               ),
             ),

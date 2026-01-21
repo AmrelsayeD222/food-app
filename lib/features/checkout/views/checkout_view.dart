@@ -33,7 +33,9 @@ class CheckoutView extends StatelessWidget {
       builder: (context, selectedPayment, _) {
         return Scaffold(
           appBar: AppBar(
-            elevation: 0,
+            scrolledUnderElevation: 0,
+            shadowColor: Colors.transparent,
+            surfaceTintColor: Colors.transparent,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back),
@@ -168,7 +170,7 @@ class CheckoutView extends StatelessWidget {
                         isSelected: selectedPayment == 'visa',
                         onTap: () => selectedPaymentNotifier.value = 'visa',
                       ),
-                      verticalSpace(20.h),
+                      verticalSpace(120.h),
                     ],
                   ),
                 ),

@@ -184,7 +184,7 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
                     });
                   },
                 ),
-                verticalSpace(8.h),
+                verticalSpace(120.h),
               ],
             ),
           ),

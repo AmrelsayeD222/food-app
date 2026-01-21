@@ -20,7 +20,6 @@ class CustomVisaListTile extends StatelessWidget {
       borderRadius: BorderRadius.circular(16.r),
       onTap: onTap,
       child: Container(
-        height: 85.h,
         padding: EdgeInsets.all(16.w),
         decoration: BoxDecoration(
           gradient: LinearGradient(
