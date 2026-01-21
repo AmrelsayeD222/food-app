@@ -17,11 +17,12 @@ class HomeCardBuilder extends StatelessWidget {
       6,
       (index) => Product(
         id: index,
-        name: 'Product Name',
-        description: 'Product Description goes here in this field',
-        image: '',
+        name: 'Chicken Burger Meal',
+        description:
+            'Delicious chicken burger with extra cheese and spicy sauce',
+        image: 'https://via.placeholder.com/150',
         rating: '4.5',
-        price: '100.0',
+        price: '15.00',
       ),
     );
   }

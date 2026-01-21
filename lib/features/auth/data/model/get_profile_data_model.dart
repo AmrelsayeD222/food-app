@@ -23,7 +23,7 @@ class GetProfileDataModel {
           : json['address'],
       visa: (json['Visa'] == null || json['Visa'].isEmpty)
           ? '**** **** **** ****'
-          : json['address'],
+          : json['Visa'],
     );
   }
 

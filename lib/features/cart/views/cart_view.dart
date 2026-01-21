@@ -17,14 +17,14 @@ class CartView extends StatelessWidget {
 
   List<CartItem> _getDummyItems() {
     return List.generate(
-      5,
+      2,
       (index) => CartItem(
         itemId: index,
         productId: index,
-        name: 'Dataset Name',
+        name: 'Chicken Burger Meal with Cheese',
         image: 'https://via.placeholder.com/150',
         quantity: 1,
-        price: 100.0,
+        price: 15.00,
         spicy: 0,
         toppings: [],
         sideOptions: [],

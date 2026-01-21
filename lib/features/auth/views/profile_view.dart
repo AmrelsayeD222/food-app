@@ -10,12 +10,22 @@ import 'package:foods_app/features/auth/widgets/custom_profile_image.dart';
 import 'package:foods_app/features/auth/widgets/guest_profile.dart';
 import 'package:foods_app/features/auth/widgets/profile_card_info.dart';
 import 'package:foods_app/features/auth/widgets/profile_dialog.dart';
-import 'package:foods_app/features/auth/widgets/profile_skeleton.dart';
 import 'package:foods_app/features/auth/widgets/update_profile_image_bottom.dart';
 import 'package:foods_app/core/helper/text_style.dart';
+import 'package:skeletonizer/skeletonizer.dart';
 
 class ProfileView extends StatelessWidget {
   const ProfileView({super.key});
+
+  GetProfileDataModel _getDummyProfile() {
+    return GetProfileDataModel(
+      name: 'John Doe',
+      email: 'john.doe@example.com',
+      image: 'https://via.placeholder.com/150',
+      address: '123 Main St, New York, NY 10001',
+      visa: '4242 **** **** 4242',
+    );
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +78,10 @@ class ProfileView extends StatelessWidget {
 
   Widget _buildBody(BuildContext context, GetProfileDataState state) {
     if (state is GetProfileDataLoading || state is LogoutLoading) {
-      return const ProfileSkeleton();
+      return Skeletonizer(
+        enabled: true,
+        child: _buildProfileContent(context, _getDummyProfile()),
+      );
     }
 
     if (state is GetProfileDataFailure) {
