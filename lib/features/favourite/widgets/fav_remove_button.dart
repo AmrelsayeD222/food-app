@@ -16,26 +16,32 @@ class FavRemoveButton extends StatelessWidget {
     return BlocSelector<FavCubit, ToggleFavState, bool>(
       selector: (state) => state.togglingProductIds.contains(productId),
       builder: (context, isToggling) {
-        return IconButton(
-          onPressed: isToggling
-              ? null
-              : () {
-                  context.read<FavCubit>().toggleFavorite(productId);
-                },
-          icon: isToggling
-              ? SizedBox(
-                  width: 20.w,
-                  height: 20.w,
-                  child: const CircularProgressIndicator(
-                    strokeWidth: 2,
+        return Container(
+          decoration: BoxDecoration(
+            color: Colors.red.shade50,
+            shape: BoxShape.circle,
+          ),
+          child: IconButton(
+            onPressed: isToggling
+                ? null
+                : () {
+                    context.read<FavCubit>().toggleFavorite(productId);
+                  },
+            icon: isToggling
+                ? SizedBox(
+                    width: 20.w,
+                    height: 20.w,
+                    child: const CircularProgressIndicator(
+                      strokeWidth: 2,
+                      color: Colors.red,
+                    ),
+                  )
+                : Icon(
+                    Icons.favorite,
                     color: Colors.red,
+                    size: 22.sp,
                   ),
-                )
-              : Icon(
-                  Icons.favorite,
-                  color: Colors.red,
-                  size: 28.sp,
-                ),
+          ),
         );
       },
     );

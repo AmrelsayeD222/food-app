@@ -6,7 +6,6 @@ import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profi
 import 'package:foods_app/features/auth/widgets/custom_auth_appbar.dart';
 import 'package:foods_app/features/auth/widgets/custom_login_forms.dart';
 import '../../../core/helper/navigation_extentions.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/routes/app_routes.dart';
 import '../manager/login_cubit/login_cubit.dart';
 import '../manager/login_cubit/login_state.dart';
@@ -48,7 +47,6 @@ class LoginView extends StatelessWidget {
         return PopScope(
           canPop: false,
           child: Scaffold(
-            backgroundColor: AppColors.white,
             resizeToAvoidBottomInset: true,
             body: SafeArea(
               child: Padding(

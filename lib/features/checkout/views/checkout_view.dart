@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:foods_app/core/constants/constants.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
 import 'package:foods_app/core/helper/spacing.dart';
@@ -35,7 +34,6 @@ class CheckoutView extends StatelessWidget {
         return Scaffold(
           appBar: AppBar(
             elevation: 0,
-            backgroundColor: AppColors.white,
             leading: IconButton(
               onPressed: () => Navigator.pop(context),
               icon: const Icon(Icons.arrow_back),

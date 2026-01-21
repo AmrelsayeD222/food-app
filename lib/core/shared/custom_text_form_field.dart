@@ -15,6 +15,7 @@ class CustomTextFormField extends StatelessWidget {
     this.label,
     this.enabled,
     this.keyboardType,
+    this.onChanged,
   });
   final String? hintText;
   final bool? obscureText;
@@ -27,12 +28,14 @@ class CustomTextFormField extends StatelessWidget {
   final String? label;
   final bool? enabled;
   final TextInputType? keyboardType;
+  final void Function(String)? onChanged;
 
   @override
   Widget build(BuildContext context) {
     return TextFormField(
       keyboardType: keyboardType,
       onTapOutside: (_) => FocusScope.of(context).unfocus(),
+      onChanged: onChanged,
       cursorHeight: 20,
       controller: controller,
       obscureText: obscureText ?? false,

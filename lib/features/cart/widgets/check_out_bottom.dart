@@ -15,7 +15,7 @@ Widget checkoutBottomSheet(BuildContext context, List<CartItem> items) {
   return SafeArea(
     child: Container(
       padding: EdgeInsets.symmetric(horizontal: 16.w, vertical: 12.h),
-      color: AppColors.white,
+      color: AppColors.greyLight,
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: [

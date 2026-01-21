@@ -1,4 +1,4 @@
-import 'dart:ui';
+import 'package:flutter/material.dart';
 
 class AppColors {
   static const Color primary = Color(0xff103e34);
@@ -11,4 +11,10 @@ class AppColors {
   static const Color green = Color(0xff00FF00);
   static const Color blue = Color(0xff0000FF);
   static const Color orange = Color(0xffFF7F00);
+
+  static const LinearGradient primaryGradient = LinearGradient(
+    colors: [Color(0xff103e34), Color(0xff1a6b5a)],
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+  );
 }

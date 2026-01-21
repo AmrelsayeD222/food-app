@@ -14,7 +14,7 @@ class ProductImage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ClipRRect(
-      borderRadius: BorderRadius.circular(8.r),
+      borderRadius: BorderRadius.circular(16.r),
       child: CachedNetworkImage(
         imageUrl: image,
         width: 100.w,

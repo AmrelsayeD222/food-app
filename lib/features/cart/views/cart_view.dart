@@ -8,6 +8,7 @@ import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/cart/data/model/cart_response_model.dart';
 import 'package:foods_app/features/cart/widgets/cart_card_item_builder.dart';
+import 'package:foods_app/features/cart/widgets/cart_empty.dart';
 import 'package:foods_app/features/cart/widgets/check_out_bottom.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -54,14 +55,7 @@ class CartView extends StatelessWidget {
         }
 
         if (state is CartCubitEmpty) {
-          return Scaffold(
-            body: Center(
-              child: Text(
-                state.message,
-                style: TextStyle(fontSize: 16.sp, color: Colors.grey),
-              ),
-            ),
-          );
+          return const Scaffold(body: CartEmpty());
         }
 
         if (state is CartCubitFailure) {

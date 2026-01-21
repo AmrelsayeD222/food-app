@@ -13,10 +13,19 @@ class FavItemCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      elevation: 4,
-      color: Colors.grey.shade100,
+    return Container(
       margin: EdgeInsets.only(bottom: 16.h),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(20.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .2),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
       child: Padding(
         padding: EdgeInsets.all(12.w),
         child: Row(

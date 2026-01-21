@@ -6,6 +6,7 @@ part 'home_product_state.dart';
 
 class HomeProductCubit extends Cubit<HomeProductState> {
   final HomeRepo homeRepo;
+  List<Product> _allProducts = [];
 
   HomeProductCubit(this.homeRepo) : super(HomeProductInitial());
 
@@ -22,7 +23,22 @@ class HomeProductCubit extends Cubit<HomeProductState> {
 
     result.fold(
       (failure) => emit(HomeProductError(failure.errMessage)),
-      (data) => emit(HomeProductLoaded(data.data)),
+      (data) {
+        _allProducts = data.data;
+        emit(HomeProductLoaded(_allProducts));
+      },
     );
+  }
+
+  void searchProducts(String query) {
+    if (query.isEmpty) {
+      emit(HomeProductLoaded(_allProducts));
+    } else {
+      final filteredProducts = _allProducts
+          .where((product) =>
+              product.name.toLowerCase().contains(query.toLowerCase()))
+          .toList();
+      emit(HomeProductLoaded(filteredProducts));
+    }
   }
 }

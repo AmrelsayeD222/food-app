@@ -44,12 +44,10 @@ class ProfileView extends StatelessWidget {
       child: BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
         builder: (context, state) {
           return Scaffold(
-            backgroundColor: AppColors.white,
             appBar: state is GetProfileDataEmpty
                 ? null
                 : AppBar(
                     automaticallyImplyLeading: false,
-                    backgroundColor: AppColors.white,
                     actions: [
                       IconButton(
                         onPressed: () => showLogoutDialog(context),

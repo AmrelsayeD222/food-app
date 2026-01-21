@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:foods_app/core/constants/app_colors.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/spacing.dart';
@@ -47,14 +46,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
       listener: (context, state) async {
         if (!mounted) return;
 
-        if (state is OrderRequestLoading) {
-          showDialog(
-            context: context,
-            barrierDismissible: false,
-            builder: (_) => const Center(child: CircularProgressIndicator()),
-          );
-        }
-
         if (state is OrderRequestSuccess || state is OrderRequestFailure) {
           if (Navigator.canPop(context)) Navigator.pop(context);
         }
@@ -88,33 +79,37 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
           elevation: 0,
           scrolledUnderElevation: 0,
           surfaceTintColor: Colors.transparent,
-          backgroundColor: AppColors.white,
           leading: IconButton(
             onPressed: () => Navigator.pop(context),
             icon: const Icon(Icons.arrow_back),
           ),
         ),
-        bottomSheet: CustomBottomSheet(
-          sheetText: 'Burger Price',
-          bottomText: 'Add to Cart',
-          price: _calculateTotalPrice().toStringAsFixed(2),
-          onpressed: () async {
-            if (!mounted) return;
+        bottomSheet: BlocBuilder<OrderRequestCubit, OrderRequestState>(
+          builder: (context, state) {
+            return CustomBottomSheet(
+              sheetText: 'Burger Price',
+              bottomText: 'Add to Cart',
+              price: _calculateTotalPrice().toStringAsFixed(2),
+              isLoading: state is OrderRequestLoading,
+              onpressed: () async {
+                if (!mounted) return;
 
-            final orderItem = OrderItem(
-              productId: widget.product.id,
-              quantity: quantity,
-              spicy: spicyLevel,
-              toppings: selectedToppings,
-              sideOptions: selectedSideOptions,
-            );
-
-            final orderRequest = OrderRequest(items: [orderItem]);
-
-            // ignore: use_build_context_synchronously
-            context.read<OrderRequestCubit>().createOrder(
-                  request: orderRequest,
+                final orderItem = OrderItem(
+                  productId: widget.product.id,
+                  quantity: quantity,
+                  spicy: spicyLevel,
+                  toppings: selectedToppings,
+                  sideOptions: selectedSideOptions,
                 );
+
+                final orderRequest = OrderRequest(items: [orderItem]);
+
+                // ignore: use_build_context_synchronously
+                context.read<OrderRequestCubit>().createOrder(
+                      request: orderRequest,
+                    );
+              },
+            );
           },
         ),
         body: Padding(

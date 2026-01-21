@@ -11,7 +11,8 @@ class CustomBottom extends StatelessWidget {
       this.width,
       this.backgroundColor,
       this.foregroundColor,
-      this.onPressed});
+      this.onPressed,
+      this.isLoading = false});
   final String text;
   final double? height;
   final double? width;
@@ -19,11 +20,12 @@ class CustomBottom extends StatelessWidget {
   final Color? backgroundColor;
   final Color? foregroundColor;
   final Function()? onPressed;
+  final bool isLoading;
 
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      onPressed: onPressed,
+      onPressed: isLoading ? null : onPressed,
       style: ElevatedButton.styleFrom(
         backgroundColor: backgroundColor ?? AppColors.primary,
         foregroundColor: foregroundColor ?? AppColors.white,
@@ -32,7 +34,11 @@ class CustomBottom extends StatelessWidget {
           borderRadius: BorderRadius.circular(borderRadius ?? 20),
         ),
       ),
-      child: Text(text),
+      child: isLoading
+          ? const CircularProgressIndicator(
+              color: AppColors.white,
+            )
+          : Text(text),
     );
   }
 }

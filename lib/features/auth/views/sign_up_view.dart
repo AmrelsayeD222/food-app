@@ -7,7 +7,6 @@ import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profi
 import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_auth_appbar.dart';
 import 'package:foods_app/features/auth/widgets/custom_signup_forms.dart';
-import '../../../core/constants/app_colors.dart';
 import '../../../core/routes/app_routes.dart';
 
 class SignUpView extends StatelessWidget {
@@ -47,7 +46,6 @@ class SignUpView extends StatelessWidget {
         return PopScope(
           canPop: false,
           child: Scaffold(
-            backgroundColor: AppColors.white,
             resizeToAvoidBottomInset: true,
             body: SafeArea(
               child: Padding(

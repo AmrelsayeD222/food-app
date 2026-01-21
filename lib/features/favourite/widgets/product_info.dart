@@ -19,41 +19,55 @@ class ProductInfo extends StatelessWidget {
       children: [
         Text(
           product.name,
-          maxLines: 2,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
             fontSize: 16.sp,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w700,
+            color: AppColors.brown,
           ),
         ),
-        verticalSpace(4.h),
+        verticalSpace(2.h),
         Text(
           product.description,
-          maxLines: 2,
+          maxLines: 1,
           overflow: TextOverflow.ellipsis,
           style: TextStyle(
-            fontSize: 13.sp,
-            color: Colors.grey.shade600,
+            fontSize: 12.sp,
+            color: Colors.grey.shade500,
+            height: 1.2,
           ),
         ),
-        verticalSpace(8.h),
+        verticalSpace(12.h),
         Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(Icons.star, size: 16.sp, color: Colors.amber.shade700),
-            horizontalSpace(4.w),
-            Text(
-              product.rating,
-              style: TextStyle(
-                fontSize: 13.sp,
-                fontWeight: FontWeight.w600,
+            Container(
+              padding: EdgeInsets.symmetric(horizontal: 8.w, vertical: 4.h),
+              decoration: BoxDecoration(
+                color: Colors.amber.shade50,
+                borderRadius: BorderRadius.circular(8.r),
+              ),
+              child: Row(
+                children: [
+                  Icon(Icons.star, size: 14.sp, color: Colors.amber.shade700),
+                  horizontalSpace(4.w),
+                  Text(
+                    product.rating,
+                    style: TextStyle(
+                      fontSize: 12.sp,
+                      fontWeight: FontWeight.w700,
+                      color: Colors.amber.shade900,
+                    ),
+                  ),
+                ],
               ),
             ),
-            const Spacer(),
             Text(
               '\$${product.price}',
               style: TextStyle(
                 fontSize: 18.sp,
-                fontWeight: FontWeight.bold,
+                fontWeight: FontWeight.w800,
                 color: AppColors.primary,
               ),
             ),

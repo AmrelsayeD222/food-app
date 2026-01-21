@@ -53,7 +53,6 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         ],
         child: const HomeView(),
       ),
-
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
@@ -65,13 +64,10 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
         ],
         child: const CartView(),
       ),
-
       BlocProvider.value(
         value: getIt<FavCubit>(),
         child: const FavourireView(),
       ),
-
-      /// ✅ Profile Tab
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
@@ -106,49 +102,58 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     return PopScope(
       canPop: false,
       child: Scaffold(
+        extendBody: true,
         body: PageView(
           physics: const NeverScrollableScrollPhysics(),
           controller: _viewController,
           children: views!,
         ),
-        bottomNavigationBar: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: const BoxDecoration(
-            color: AppColors.primary,
-            borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(20),
-              topRight: Radius.circular(20),
-            ),
-          ),
-          child: Theme(
-            data: Theme.of(context).copyWith(
-              splashColor: Colors.transparent,
-              highlightColor: Colors.transparent,
-            ),
-            child: BottomNavigationBar(
-              backgroundColor: Colors.transparent,
-              selectedItemColor: Colors.white,
-              unselectedItemColor: Colors.grey,
-              type: BottomNavigationBarType.fixed,
-              iconSize: 30,
-              selectedFontSize: 15,
-              unselectedFontSize: 12,
-              elevation: 0,
-              currentIndex: _selectedIndex,
-              items: const [
-                BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.shopping_cart), label: "Cart"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.favorite_border), label: "Favourite"),
-                BottomNavigationBarItem(
-                    icon: Icon(Icons.person), label: "Profile"),
+        bottomNavigationBar: SafeArea(
+          child: Container(
+            margin: const EdgeInsets.fromLTRB(20, 0, 20, 10),
+            padding: const EdgeInsets.symmetric(vertical: 5),
+            decoration: BoxDecoration(
+              gradient: AppColors.primaryGradient,
+              borderRadius: BorderRadius.circular(30),
+              boxShadow: [
+                BoxShadow(
+                  color: AppColors.primary.withValues(alpha: .3),
+                  blurRadius: 10,
+                  offset: const Offset(0, 5),
+                ),
               ],
-              onTap: (index) {
-                _selectedIndex = index;
-                _viewController.jumpToPage(index);
-                setState(() {});
-              },
+            ),
+            child: Theme(
+              data: Theme.of(context).copyWith(
+                splashColor: Colors.transparent,
+                highlightColor: Colors.transparent,
+              ),
+              child: BottomNavigationBar(
+                backgroundColor: Colors.transparent,
+                selectedItemColor: Colors.white,
+                unselectedItemColor: Colors.white.withValues(alpha: .6),
+                type: BottomNavigationBarType.fixed,
+                iconSize: 26,
+                selectedFontSize: 14,
+                unselectedFontSize: 12,
+                elevation: 0,
+                currentIndex: _selectedIndex,
+                items: const [
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.home), label: "Home"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.shopping_cart), label: "Cart"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.favorite_border), label: "Favourite"),
+                  BottomNavigationBarItem(
+                      icon: Icon(Icons.person), label: "Profile"),
+                ],
+                onTap: (index) {
+                  _selectedIndex = index;
+                  _viewController.jumpToPage(index);
+                  setState(() {});
+                },
+              ),
             ),
           ),
         ),

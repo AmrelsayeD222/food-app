@@ -19,14 +19,22 @@ class HomeCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Card(
-      color: AppColors.white,
-      elevation: 4,
-      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.r)),
+    return Container(
+      decoration: BoxDecoration(
+        color: AppColors.white,
+        borderRadius: BorderRadius.circular(16.r),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.black.withValues(alpha: .05),
+            blurRadius: 10,
+            offset: const Offset(0, 5),
+          ),
+        ],
+      ),
       child: Stack(
         children: [
           Padding(
-            padding: EdgeInsets.all(8.r),
+            padding: EdgeInsets.all(12.r),
             child: GestureDetector(
               onTap: () {
                 context.pushNamed(
@@ -37,24 +45,21 @@ class HomeCard extends StatelessWidget {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(height: 5.h),
-                  Hero(
-                    tag: 'product_${product.id}',
-                    child: CachedNetworkImage(
-                      imageUrl: product.image,
-                      height: 100.h,
-                      fit: BoxFit.contain,
-                      placeholder: (context, url) => SizedBox(
-                        height: 100.h,
-                        child: const Center(
+                  Expanded(
+                    child: Hero(
+                      tag: 'product_${product.id}',
+                      child: CachedNetworkImage(
+                        imageUrl: product.image,
+                        fit: BoxFit.contain,
+                        placeholder: (context, url) => const Center(
                           child: CircularProgressIndicator(strokeWidth: 2),
                         ),
+                        errorWidget: (context, url, error) =>
+                            const Icon(Icons.image_not_supported),
                       ),
-                      errorWidget: (context, url, error) =>
-                          const Icon(Icons.image_not_supported),
                     ),
                   ),
-                  SizedBox(height: 5.h),
+                  SizedBox(height: 12.h),
                   Text(
                     product.name,
                     maxLines: 1,
@@ -64,28 +69,45 @@ class HomeCard extends StatelessWidget {
                       color: AppColors.black,
                     ),
                   ),
-                  SizedBox(height: 2.h),
+                  SizedBox(height: 4.h),
                   Text(
                     product.description,
-                    maxLines: 2,
+                    maxLines: 1,
                     overflow: TextOverflow.ellipsis,
                     textAlign: TextAlign.center,
                     style: TextStyles.textStyle14.copyWith(
-                      height: 1.1,
                       color: Colors.grey,
                     ),
                   ),
-                  const Spacer(),
+                  SizedBox(height: 12.h),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Text(
-                        "⭐ ${product.ratingAsDouble}",
-                        style: TextStyles.textStyle14,
+                      Container(
+                        padding: EdgeInsets.symmetric(
+                            horizontal: 6.w, vertical: 2.h),
+                        decoration: BoxDecoration(
+                          color: AppColors.primary.withValues(alpha: .1),
+                          borderRadius: BorderRadius.circular(6.r),
+                        ),
+                        child: Row(
+                          children: [
+                            Icon(Icons.star,
+                                color: AppColors.primary, size: 14.sp),
+                            SizedBox(width: 4.w),
+                            Text(
+                              product.ratingAsDouble.toString(),
+                              style: TextStyles.textStyle14.copyWith(
+                                color: AppColors.primary,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
                       Text(
                         "${product.priceAsDouble}\$",
-                        style: TextStyles.textStyle14.copyWith(
+                        style: TextStyles.textStyle16.copyWith(
                           color: AppColors.primary,
                           fontWeight: FontWeight.bold,
                         ),
@@ -97,8 +119,8 @@ class HomeCard extends StatelessWidget {
             ),
           ),
           Positioned(
-            top: 4.r,
-            right: 4.r,
+            top: 8.r,
+            right: 8.r,
             child: FavIcon(
               productId: product.id,
             ),
