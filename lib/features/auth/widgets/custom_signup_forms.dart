@@ -52,6 +52,21 @@ class CustomSignUpforms extends StatelessWidget {
               ),
               verticalSpace(10.h),
               CustomTextFormField(
+                controller: cubit.addressController,
+                hintText: 'Address',
+                enabled: !isLoading,
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Enter your address';
+                  }
+                  if (value.trim().length < 3) {
+                    return 'Address must be at least 3 characters';
+                  }
+                  return null;
+                },
+              ),
+              verticalSpace(10.h),
+              CustomTextFormField(
                 controller: cubit.signUpEmailController,
                 keyboardType: TextInputType.emailAddress,
                 hintText: 'Email Address',

@@ -18,9 +18,7 @@ class GetProfileDataModel {
       name: json['name'] ?? '',
       email: json['email'] ?? '',
       image: json['image'] ?? '',
-      address: (json['address'] == null || json['address'].isEmpty)
-          ? 'No address provided'
-          : json['address'],
+      address: json['address'] ?? 'No address provided',
       visa: (json['Visa'] == null || json['Visa'].isEmpty)
           ? '**** **** **** ****'
           : json['Visa'],

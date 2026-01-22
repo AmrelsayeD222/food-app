@@ -54,6 +54,7 @@ class RepoImpl implements Repo {
   @override
   Future<Either<Failure, SignUpModel>> signUp(
       {required String name,
+      required String address,
       required String email,
       required String password}) async {
     try {
@@ -63,6 +64,7 @@ class RepoImpl implements Repo {
           'name': name,
           'email': email,
           'password': password,
+          'address': address,
         },
       );
       final signUpModel = SignUpModel.fromJson(response);

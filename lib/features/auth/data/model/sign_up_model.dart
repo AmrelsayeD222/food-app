@@ -24,12 +24,14 @@ class Data {
     required this.name,
     required this.email,
     required this.image,
+    required this.address,
   });
 
   final String? token;
   final String? name;
   final String? email;
   final String? image;
+  final String? address;
 
   factory Data.fromJson(Map<String, dynamic> json) {
     return Data(
@@ -37,6 +39,7 @@ class Data {
       name: json["name"],
       email: json["email"],
       image: json["image"],
+      address: json["address"],
     );
   }
 }

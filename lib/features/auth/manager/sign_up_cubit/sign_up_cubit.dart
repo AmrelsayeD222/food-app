@@ -16,6 +16,7 @@ class SignUpCubit extends Cubit<SignUpState> {
   final TextEditingController signUpPasswordController =
       TextEditingController();
   final TextEditingController nameController = TextEditingController();
+  final TextEditingController addressController = TextEditingController();
   final GlobalKey<FormState> signUpFormKey = GlobalKey<FormState>();
 
   bool signUpIsObscure = true;
@@ -29,11 +30,17 @@ class SignUpCubit extends Cubit<SignUpState> {
       email: signUpEmailController.text.trim(),
       password: signUpPasswordController.text.trim(),
       name: nameController.text.trim(),
+      address: addressController.text.trim(),
     );
 
     result.fold(
       (failure) => emit(SignUpFailure(failure.errMessage)),
       (response) async {
+        if (addressController.text.trim().isNotEmpty) {
+          await signUpRepo.postProfileData(
+            address: addressController.text.trim(),
+          );
+        }
         await clearPreviousData();
         emit(SignUpSuccess(response));
       },
@@ -55,6 +62,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     signUpEmailController.clear();
     signUpPasswordController.clear();
     nameController.clear();
+    addressController.clear();
     signUpIsObscure = true;
     signUpFormKey.currentState?.reset();
     emit(SignUpInitial());
@@ -86,6 +94,7 @@ class SignUpCubit extends Cubit<SignUpState> {
     signUpEmailController.dispose();
     signUpPasswordController.dispose();
     nameController.dispose();
+    addressController.dispose();
     return super.close();
   }
 }

@@ -182,7 +182,7 @@ class ProfileView extends StatelessWidget {
                   // Name Card
                   buildInfoCard(
                     icon: Icons.person_outline,
-                    label: 'Full Name',
+                    label: 'Name',
                     value: profile.name ?? 'N/A',
                   ),
                   verticalSpace(12.h),

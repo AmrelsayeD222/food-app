@@ -11,7 +11,10 @@ abstract class Repo {
       {required String email, required String password});
 
   Future<Either<Failure, SignUpModel>> signUp(
-      {required String name, required String email, required String password});
+      {required String name,
+      required String email,
+      required String password,
+      required String address});
 
   Future<Either<Failure, GetProfileDataModel>> getProfileData();
   Future<Either<Failure, PostProfileResponse>> postProfileData({
