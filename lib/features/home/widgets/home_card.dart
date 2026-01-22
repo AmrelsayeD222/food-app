@@ -130,6 +130,7 @@ class HomeCard extends StatelessWidget {
             right: 8.r,
             child: FavIcon(
               productId: product.id,
+              product: product,
             ),
           ),
         ],

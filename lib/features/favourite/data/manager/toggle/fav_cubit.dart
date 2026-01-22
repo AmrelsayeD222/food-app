@@ -2,6 +2,7 @@ import 'package:bloc/bloc.dart';
 import 'package:foods_app/features/favourite/data/model/get_fav_response.dart';
 import 'package:foods_app/features/favourite/data/repo/fav_repo.dart';
 import 'package:foods_app/core/helper/shared_pref_storage.dart';
+import 'package:foods_app/features/home/data/model/home_product_model.dart';
 
 part 'fav_state.dart';
 
@@ -79,7 +80,8 @@ class FavCubit extends Cubit<ToggleFavState> {
     );
   }
 
-  Future<void> toggleFavorite(int productId) async {
+  Future<void> toggleFavorite(
+      {required int productId, Product? product}) async {
     final previousIds = Set<int>.from(state.favoriteIds);
     final previousProducts = state.favoriteProducts;
     final wasFavorite = previousIds.contains(productId);
@@ -91,7 +93,21 @@ class FavCubit extends Cubit<ToggleFavState> {
           previousProducts?.where((p) => p.id != productId).toList();
     } else {
       previousIds.add(productId);
-      updatedProducts = previousProducts;
+      if (product != null) {
+        // Create FavoriteProduct from Product
+        final newFav = FavoriteProduct(
+          id: product.id,
+          name: product.name,
+          image: product.image,
+          price: product.price,
+          description: product.description,
+          isFavorite: true,
+          rating: product.rating,
+        );
+        updatedProducts = List.from(previousProducts ?? [])..add(newFav);
+      } else {
+        updatedProducts = previousProducts;
+      }
     }
 
     emit(ToggleFavSuccess(

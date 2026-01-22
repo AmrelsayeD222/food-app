@@ -2,13 +2,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';
+import 'package:foods_app/features/home/data/model/home_product_model.dart';
 
 class FavIcon extends StatelessWidget {
   final int productId;
+  final Product? product;
 
   const FavIcon({
     super.key,
     required this.productId,
+    this.product,
   });
 
   @override
@@ -24,7 +27,10 @@ class FavIcon extends StatelessWidget {
           onTap: data.isToggling
               ? null
               : () {
-                  context.read<FavCubit>().toggleFavorite(productId);
+                  context.read<FavCubit>().toggleFavorite(
+                        productId: productId,
+                        product: product,
+                      );
                 },
           child: Align(
             alignment: Alignment.topRight,

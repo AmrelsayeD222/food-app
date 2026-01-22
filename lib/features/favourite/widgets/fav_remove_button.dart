@@ -25,7 +25,9 @@ class FavRemoveButton extends StatelessWidget {
             onPressed: isToggling
                 ? null
                 : () {
-                    context.read<FavCubit>().toggleFavorite(productId);
+                    context.read<FavCubit>().toggleFavorite(
+                          productId: productId,
+                        );
                   },
             icon: isToggling
                 ? SizedBox(
