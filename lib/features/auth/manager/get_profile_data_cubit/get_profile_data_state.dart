@@ -1,12 +1,15 @@
 part of 'get_profile_data_cubit.dart';
 
-abstract class GetProfileDataState {}
+abstract class GetProfileDataState {
+  GetProfileDataModel? get profileData => null;
+}
 
 class GetProfileDataInitial extends GetProfileDataState {}
 
 class GetProfileDataLoading extends GetProfileDataState {}
 
 class GetProfileDataSuccess extends GetProfileDataState {
+  @override
   final GetProfileDataModel profileData;
 
   GetProfileDataSuccess({required this.profileData});

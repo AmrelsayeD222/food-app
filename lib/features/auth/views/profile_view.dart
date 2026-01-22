@@ -19,7 +19,7 @@ class ProfileView extends StatelessWidget {
 
   GetProfileDataModel _getDummyProfile() {
     return GetProfileDataModel(
-      name: 'John Doe',
+      name: '...',
       email: 'john.doe@example.com',
       image: 'https://via.placeholder.com/150',
       address: '123 Main St, New York, NY 10001',

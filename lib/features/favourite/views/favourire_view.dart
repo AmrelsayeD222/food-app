@@ -51,7 +51,9 @@ class _FavourireViewState extends State<FavourireView>
       child: RefreshIndicator(
         color: AppColors.primary,
         backgroundColor: AppColors.white,
-        onRefresh: () async => context.read<FavCubit>().loadFavorites(),
+        onRefresh: () async => context.read<FavCubit>().loadFavorites(
+              forceRefresh: true,
+            ),
         child: Scaffold(
           body: BlocListener<FavCubit, ToggleFavState>(
             listener: _listener,

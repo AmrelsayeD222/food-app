@@ -133,11 +133,20 @@ class FavCubit extends Cubit<ToggleFavState> {
           ));
         }
 
-        emit(ToggleFavSuccess(
-          favoriteIds: previousIds,
-          favoriteProducts: updatedProducts,
-          togglingProductIds: const {},
-        ));
+        // Check if favorites list is now empty
+        if (updatedProducts == null || updatedProducts.isEmpty) {
+          emit(const ToggleFavEmpty(
+            favoriteIds: {},
+            favoriteProducts: [],
+            message: "No Favourites Found",
+          ));
+        } else {
+          emit(ToggleFavSuccess(
+            favoriteIds: previousIds,
+            favoriteProducts: updatedProducts,
+            togglingProductIds: const {},
+          ));
+        }
       },
     );
   }

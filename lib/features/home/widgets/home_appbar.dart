@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:foods_app/features/auth/data/model/get_profile_data_model.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:skeletonizer/skeletonizer.dart';
 
@@ -17,17 +16,8 @@ class HomeAppBar extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocBuilder<GetProfileDataCubit, GetProfileDataState>(
       builder: (context, state) {
-        final bool isSuccess = state is GetProfileDataSuccess;
         final bool isLoading =
             state is GetProfileDataLoading || state is LogoutLoading;
-
-        // Create a dummy profile for skeleton loading
-        final dummyProfile = GetProfileDataModel(
-          name: 'John Doe',
-          image: '',
-        );
-
-        final profile = isSuccess ? state.profileData : dummyProfile;
 
         // Use Skeletonizer if loading
         return Skeletonizer(
@@ -48,7 +38,7 @@ class HomeAppBar extends StatelessWidget {
                     ),
                     SizedBox(height: 4.h),
                     Text(
-                      'Hello, Mr ${profile.name ?? '...'}',
+                      'Hello, Mr ${state.profileData?.name ?? '...'}',
                       maxLines: 1,
                       overflow: TextOverflow.ellipsis,
                       style: TextStyles.textStyle16,
@@ -62,7 +52,7 @@ class HomeAppBar extends StatelessWidget {
                 backgroundColor: Colors.grey.shade200,
                 child: ClipOval(
                   child: CachedNetworkImage(
-                    imageUrl: profile.image ?? '',
+                    imageUrl: state.profileData?.image ?? '',
                     width: 60.w,
                     height: 60.h,
                     fit: BoxFit.cover,

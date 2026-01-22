@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
+import 'package:foods_app/features/favourite/data/manager/toggle/fav_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_auth_appbar.dart';
 import 'package:foods_app/features/auth/widgets/custom_login_forms.dart';
 import '../../../core/helper/navigation_extentions.dart';
@@ -32,6 +33,10 @@ class LoginView extends StatelessWidget {
             // Get fresh profile data
             final profileCubit = getIt<GetProfileDataCubit>();
             profileCubit.getProfileData(forceRefresh: true);
+
+            // Refresh favorites to update fav icons
+            final favCubit = getIt<FavCubit>();
+            favCubit.loadFavorites(forceRefresh: true);
 
             if (!context.mounted) return;
             context.pushReplacementNamed(AppRoutes.bottomNaviBar);
