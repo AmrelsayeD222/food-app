@@ -20,13 +20,6 @@ class CustomProfileImage extends StatelessWidget {
               width: 150.w,
               height: 150.h,
               fit: BoxFit.cover,
-              placeholder: (context, url) => SizedBox(
-                width: 150.w,
-                height: 150.h,
-                child: Center(
-                  child: CircularProgressIndicator(strokeWidth: 2.w),
-                ),
-              ),
               errorWidget: (context, url, error) => _placeholder(),
             )
           : _placeholder(),

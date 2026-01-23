@@ -34,6 +34,12 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     _selectedIndex = widget.initialIndex;
     _viewController = PageController(initialPage: _selectedIndex);
     _initViews();
+
+    // Fetch initial data once
+    getIt<GetProfileDataCubit>().getProfileData();
+    getIt<FavCubit>().loadFavorites();
+    getIt<CartCubitCubit>().getCart();
+    getIt<HomeProductCubit>().fetchProduct();
   }
 
   void _initViews() {
@@ -44,8 +50,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
             value: getIt<HomeProductCubit>(),
           ),
           BlocProvider.value(
-            value: getIt<GetProfileDataCubit>()
-              ..getProfileData(forceRefresh: true),
+            value: getIt<GetProfileDataCubit>(),
           ),
           BlocProvider.value(
             value: getIt<FavCubit>(),
@@ -56,7 +61,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
-            value: getIt<CartCubitCubit>()..getCart(forceRefresh: true),
+            value: getIt<CartCubitCubit>(),
           ),
           BlocProvider.value(
             value: getIt<RemoveCubit>(),
@@ -71,8 +76,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
       MultiBlocProvider(
         providers: [
           BlocProvider.value(
-            value: getIt<GetProfileDataCubit>()
-              ..getProfileData(forceRefresh: true),
+            value: getIt<GetProfileDataCubit>(),
           ),
           BlocProvider(
             create: (_) => getIt<PostProfileDataCubit>(),

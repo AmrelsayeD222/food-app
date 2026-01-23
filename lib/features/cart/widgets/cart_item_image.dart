@@ -17,7 +17,6 @@ class CartItemImage extends StatelessWidget {
         height: 100.h,
         fit: BoxFit.fill,
         errorWidget: (_, __, ___) => _placeholder(),
-        placeholder: (_, __) => _placeholder(isLoading: true),
       ),
     );
   }

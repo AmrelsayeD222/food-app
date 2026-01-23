@@ -58,9 +58,7 @@ class HomeCard extends StatelessWidget {
                       child: CachedNetworkImage(
                         imageUrl: product.image,
                         fit: BoxFit.contain,
-                        placeholder: (context, url) => const Center(
-                          child: CircularProgressIndicator(strokeWidth: 2),
-                        ),
+                        placeholder: (context, url) => const SizedBox.shrink(),
                         errorWidget: (context, url, error) =>
                             const Icon(Icons.image_not_supported),
                       ),
