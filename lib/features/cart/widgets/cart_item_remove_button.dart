@@ -17,6 +17,8 @@ class CartItemRemoveButton extends StatelessWidget {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(content: Text(state.errMessage)),
           );
+          // Restore state by fetching from server on failure
+          context.read<CartCubitCubit>().getCart(forceRefresh: true);
         }
         if (state is RemoveSuccess && state.itemId == itemId) {
           context.read<CartCubitCubit>().getCart(forceRefresh: true);
@@ -28,7 +30,15 @@ class CartItemRemoveButton extends StatelessWidget {
         return IconButton(
           onPressed: loading
               ? null
-              : () => context.read<RemoveCubit>().removeItem(itemId: itemId),
+              : () {
+                  // Optimistic UI Update: Remove item instantly from the list
+                  context
+                      .read<CartCubitCubit>()
+                      .deleteItemOptimistically(itemId);
+
+                  // Trigger server-side removal in the background
+                  context.read<RemoveCubit>().removeItem(itemId: itemId);
+                },
           icon: loading
               ? CircularProgressIndicator(strokeWidth: 2.w)
               : Icon(Icons.delete, color: Colors.red, size: 24.sp),

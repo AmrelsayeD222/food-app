@@ -13,6 +13,7 @@ class HomeProductCubit extends Cubit<HomeProductState> {
   Future<void> fetchProduct({bool forceRefresh = false}) async {
     if (isClosed) return;
 
+    if (state is HomeProductLoading) return;
     if (!forceRefresh && state is HomeProductLoaded) return;
 
     emit(HomeProductLoading());

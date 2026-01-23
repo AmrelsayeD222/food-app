@@ -2,8 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/helper/navigation_extentions.dart';
-import 'package:foods_app/core/di/service_locator.dart';
-import 'package:foods_app/features/auth/manager/get_profile_data_cubit/get_profile_data_cubit.dart';
 import 'package:foods_app/features/auth/manager/sign_up_cubit/sign_up_cubit.dart';
 import 'package:foods_app/features/auth/widgets/custom_auth_appbar.dart';
 import 'package:foods_app/features/auth/widgets/custom_signup_forms.dart';
@@ -28,10 +26,6 @@ class SignUpView extends StatelessWidget {
         } else if (state is SignUpSuccess) {
           final token = state.signUpModel.data?.token;
           if (token != null && token.isNotEmpty) {
-            // Get fresh profile data
-            final profileCubit = getIt<GetProfileDataCubit>();
-            profileCubit.getProfileData(forceRefresh: true);
-
             if (!context.mounted) return;
             context.pushReplacementNamed(AppRoutes.bottomNaviBar);
           }

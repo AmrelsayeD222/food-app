@@ -38,7 +38,7 @@ class _BottomNaviBarState extends State<BottomNaviBar> {
     // Fetch initial data once
     getIt<GetProfileDataCubit>().getProfileData();
     getIt<FavCubit>().loadFavorites();
-    getIt<CartCubitCubit>().getCart();
+    getIt<CartCubitCubit>().getCart(forceRefresh: true);
     getIt<HomeProductCubit>().fetchProduct();
   }
 

@@ -23,6 +23,7 @@ class CartCubitCubit extends Cubit<CartCubitState> {
       return;
     }
 
+    if (state is CartCubitLoading) return;
     if (!forceRefresh && state is CartCubitSuccess) return;
 
     emit(CartCubitLoading());
@@ -50,6 +51,28 @@ class CartCubitCubit extends Cubit<CartCubitState> {
         }
       },
     );
+  }
+
+  /// 🔹 Optimistic Delete
+  void deleteItemOptimistically(int itemId) {
+    if (state is CartCubitSuccess) {
+      final currentState = state as CartCubitSuccess;
+      final updatedItems = currentState.cartResponse.items
+          .where((item) => item.itemId != itemId)
+          .toList();
+
+      if (updatedItems.isEmpty) {
+        emit(CartCubitEmpty(message: "Your cart is empty. Start shopping!"));
+      } else {
+        emit(
+          CartCubitSuccess(
+            cartResponse: currentState.cartResponse.copyWith(
+              items: updatedItems,
+            ),
+          ),
+        );
+      }
+    }
   }
 
   /// 🔹 Clear cart state on logout or new user sign in

@@ -89,7 +89,7 @@ void setupServiceLocator() {
     () => SignUpCubit(getIt<Repo>()),
   );
   getIt.registerLazySingleton<HomeProductCubit>(
-    () => HomeProductCubit(getIt<HomeRepoImpl>())..fetchProduct(),
+    () => HomeProductCubit(getIt<HomeRepoImpl>()),
   );
 
   getIt.registerLazySingleton<CartCubitCubit>(

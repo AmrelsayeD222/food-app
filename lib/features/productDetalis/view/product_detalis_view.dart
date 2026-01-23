@@ -2,11 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:foods_app/core/constants/app_colors.dart';
-import 'package:foods_app/core/di/service_locator.dart';
 import 'package:foods_app/core/helper/spacing.dart';
 import 'package:foods_app/core/routes/bottom_navi_bar.dart';
 import 'package:foods_app/core/shared/custom_bottom_sheet.dart';
-import 'package:foods_app/features/cart/data/manager/getCartCubit/cart_cubit_cubit.dart';
 import 'package:foods_app/features/home/data/model/home_product_model.dart';
 import 'package:foods_app/features/productDetalis/data/manager/cubit/order_request_cubit.dart';
 import 'package:foods_app/features/productDetalis/data/model/oreder_request_model.dart';
@@ -54,9 +52,6 @@ class _ProductDetalisViewState extends State<ProductDetalisView> {
         if (state is OrderRequestSuccess) {
           ScaffoldMessenger.of(context)
               .showSnackBar(SnackBar(content: Text(state.successMessage)));
-
-          // 🔥 تحديث CartCubit بعد إضافة الطلب
-          getIt<CartCubitCubit>().getCart(forceRefresh: true);
 
           // الانتقال للكارت مباشرة
           Navigator.pushAndRemoveUntil(

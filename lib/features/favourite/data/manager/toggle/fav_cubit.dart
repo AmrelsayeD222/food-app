@@ -26,7 +26,8 @@ class FavCubit extends Cubit<ToggleFavState> {
       }
     }
 
-    // Skip if already loaded and not forcing refresh
+    // Skip if already loading or already loaded and not forcing refresh
+    if (state is ToggleFavLoading) return;
     if (!forceRefresh &&
         (state is ToggleFavSuccess || state is ToggleFavEmpty)) {
       return;

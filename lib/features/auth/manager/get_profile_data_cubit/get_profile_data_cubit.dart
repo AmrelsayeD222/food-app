@@ -26,7 +26,8 @@ class GetProfileDataCubit extends Cubit<GetProfileDataState> {
         return;
       }
 
-      // Skip if already loaded and not forcing refresh
+      // Skip if already loading or already loaded and not forcing refresh
+      if (state is GetProfileDataLoading) return;
       if (!forceRefresh && state is GetProfileDataSuccess) return;
 
       if (!isClosed) {

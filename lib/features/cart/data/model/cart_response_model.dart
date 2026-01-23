@@ -9,6 +9,18 @@ class CartResponseModel {
     required this.items,
   });
 
+  CartResponseModel copyWith({
+    int? id,
+    double? totalPrice,
+    List<CartItem>? items,
+  }) {
+    return CartResponseModel(
+      id: id ?? this.id,
+      totalPrice: totalPrice ?? this.totalPrice,
+      items: items ?? this.items,
+    );
+  }
+
   factory CartResponseModel.fromJson(Map<String, dynamic> json) {
     final data = json['data'];
     if (data == null) {
